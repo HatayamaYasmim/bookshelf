@@ -5,6 +5,14 @@
 **/dist/
 **/build/
 
+# Angular cache
+**/.angular/
+
+# Tests / coverage
+**/coverage/
+**/.nyc_output/
+
+
 # Environment
 **/.env
 **/.env.local
@@ -16,17 +24,39 @@
 backend/src/generated/prisma/
 
 # Logs
+logs/
 *.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+**/.temp/
+**/.tmp/
+
+# Runtime
+**/pids/
+*.pid
+*.seed
+*.pid.lock
 
 # IDE
-.idea/
-.vscode/
+**/.idea/
+**/.vscode/
+**/.project
+**/.classpath
+**/.settings/
+*.sublime-workspace
 
 # AI / editor tooling
 **/.agents/
 **/.claude/
 **/.windsurf/
 **/skills-lock.json
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # OS
 .DS_Store

@@ -1,0 +1,21 @@
+<h1>My Bookshelf</h1>
+
+<h2>Books</h2>
+
+@for (book of books; track book.id) {
+  <div>
+    <h3>{{ book.title }}</h3>
+
+    <p>
+      Author: {{ book.author.name }}
+    </p>
+
+    <p>
+      Status: {{ book.status }}
+    </p>
+  </div>
+
+  <hr />
+} @empty {
+  <p>No books found.</p>
+}

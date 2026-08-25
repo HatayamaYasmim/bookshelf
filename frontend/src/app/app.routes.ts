@@ -1,3 +1,15 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { BookListComponent } from './features/books/book-list/book-list.component';
+
+export const routes: Routes = [
+  {
+    path: 'books',
+    component: BookListComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'books',
+    pathMatch: 'full',
+  },
+];

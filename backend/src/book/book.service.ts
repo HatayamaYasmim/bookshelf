@@ -26,7 +26,7 @@ export class BookService {
                 `Author with id ${data.authorId} not found`,
             );
         }
-        
+
         return this.prisma.book.create({
             data: {
                 title: data.title,
@@ -38,6 +38,21 @@ export class BookService {
                         id: data.authorId,
                     },
                 },
+            },
+            include: {
+                author: true,
+            },
+        });
+    }
+
+    async updateStatus(
+        id: number,
+        status: 'UNREAD' | 'READING' | 'READ',
+    ) {
+        return this.prisma.book.update({
+            where: { id },
+            data: {
+                status,
             },
             include: {
                 author: true,

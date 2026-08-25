@@ -1,0 +1,54 @@
+:root {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  --bookshelf-background: #e8eaf0;
+  --bookshelf-primary: #6366f1;
+  --bookshelf-secondary: #7c3aed;
+
+  --bookshelf-text: #2f3142;
+  --bookshelf-text-muted: #6b6f80;
+
+  --bookshelf-shadow-dark: rgba(0, 0, 0, 0.08);
+  --bookshelf-shadow-light: rgba(255, 255, 255, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+
+  min-width: 320px;
+  min-height: 100vh;
+
+  background: var(--bookshelf-background);
+
+  color: var(--bookshelf-text);
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* neomorphism */
+.neo-raised {
+  background: var(--bookshelf-background);
+  /* background: red!important; */
+
+  box-shadow:
+    6px 6px 12px var(--bookshelf-shadow-dark),
+    -6px -6px 12px var(--bookshelf-shadow-light);
+}
+
+.neo-inset {
+  background: var(--bookshelf-background);
+
+box-shadow:
+  8px 8px 16px rgba(0, 0, 0, 0.1),
+  -8px -8px 16px rgba(255, 255, 255, 0.75);
+}

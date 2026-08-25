@@ -1,13 +1,10 @@
 import {
-    Button,
     Center,
     Container,
-    Group,
     Loader,
     Paper,
     Stack,
     Text,
-    Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
@@ -15,8 +12,7 @@ import {
     useQuery,
     useQueryClient,
 } from '@tanstack/react-query';
-import { RiBookAiFill } from 'react-icons/ri';
-import { GiSpellBook, GiMagicPalm  } from 'react-icons/gi';
+
 import {
     createBook,
     getBooks,
@@ -27,6 +23,8 @@ import { BooksTable } from './components/BooksTable';
 import { CreateBookModal } from './components/CreateBookModal';
 import { notifications } from '@mantine/notifications';
 import { CreateAuthorModal } from './components/CreateAuthorModal';
+import { BooksHeader } from './components/BooksHeader';
+import { BooksStats } from './components/BooksStats';
 
 export function BooksPage() {
     const queryClient = useQueryClient();
@@ -171,79 +169,53 @@ export function BooksPage() {
     // =========================
 
     return (
-        <Container size="lg" py="xl">
-            <Stack gap="xl">
-
-                <Group justify="space-between">
-                    <div>
-                        <Group gap="xs">
-                            <GiSpellBook size={32} />
-
-                            <Title order={1}>
-                                bookshelf
-                            </Title>
-                        </Group>
-
-                        <Text c="dimmed" mt={4}>
-                            Manage the books in your collection
-                        </Text>
-                    </div>
-
-                    <Button
-                        color="black"
-                        leftSection={<RiBookAiFill size={18} />}
-                        onClick={openCreateModal}
-                        disabled={isAuthorsLoading}
-                    >
-                        add book
-                    </Button>
-
-                    <Button
-                        color="black"
-                        leftSection={<GiMagicPalm size={18} />}
-                        onClick={openCreateAuthorModal}
-                        disabled={isAuthorsLoading}
-                    >
-                        add author
-                    </Button>
-                </Group>
-
-                <Paper
-                    withBorder
-                    radius="md"
-                    p="md"
-                >
-                    <BooksTable
-                        books={books}
-                        onStatusChange={(id, status) => {
-                            updateStatusMutation.mutate({
-                                id,
-                                status,
-                            });
-                        }}
-                    />
-                </Paper>
-
-            </Stack>
-
-            <CreateBookModal
-                opened={createModalOpened}
-                onClose={closeCreateModal}
-                authors={authors}
-                onSubmit={(data) =>
-                    createBookMutation.mutateAsync(data)
-                }
-                isSubmitting={createBookMutation.isPending}
+        <>
+            <BooksHeader
+                onAddBook={openCreateModal}
+                onAddAuthor={openCreateAuthorModal}
             />
+            <Container size="xl" py="xl">
+                <Stack gap="xl">
 
-            <CreateAuthorModal
-                opened={createAuthorModalOpened}
-                onClose={closeCreateAuthorModal}
-                onSubmit={(data) =>
-                    createAuthorMutation.mutateAsync(data)
-                }
-                isSubmitting={createAuthorMutation.isPending}
-            />
-        </Container>
+                    <BooksStats books={books} />
+
+                    <Paper
+                        className="neo-raised"
+                        radius="md"
+                        p="md"
+                    >
+                        <BooksTable
+                            books={books}
+                            onStatusChange={(id, status) => {
+                                updateStatusMutation.mutate({
+                                    id,
+                                    status,
+                                });
+                            }}
+                        />
+                    </Paper>
+
+                </Stack>
+
+                <CreateBookModal
+                    opened={createModalOpened}
+                    onClose={closeCreateModal}
+                    authors={authors}
+                    onSubmit={(data) =>
+                        createBookMutation.mutateAsync(data)
+                    }
+                    isSubmitting={createBookMutation.isPending}
+                />
+
+                <CreateAuthorModal
+                    opened={createAuthorModalOpened}
+                    onClose={closeCreateAuthorModal}
+                    onSubmit={(data) =>
+                        createAuthorMutation.mutateAsync(data)
+                    }
+                    isSubmitting={createAuthorMutation.isPending}
+                />
+            </Container>
+        </>
     );
 }

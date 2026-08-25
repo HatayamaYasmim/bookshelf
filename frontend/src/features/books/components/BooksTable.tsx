@@ -55,15 +55,15 @@ export function BooksTable({
                     data={[
                         {
                             value: 'UNREAD',
-                            label: 'Não lido',
+                            label: 'Unread',
                         },
                         {
                             value: 'READING',
-                            label: 'Lendo',
+                            label: 'Reading',
                         },
                         {
                             value: 'READ',
-                            label: 'Lido',
+                            label: 'Read',
                         },
                     ]}
                     onChange={(value) => {

@@ -12,7 +12,6 @@ export async function getBooks(): Promise<Book[]> {
   return response.json();
 }
 
-
 interface UpdateBookStatusParams {
   id: number;
   status: ReadingStatus;
@@ -39,6 +38,32 @@ export async function updateBookStatus({
 
   if (!response.ok) {
     throw new Error('Failed to update book status');
+  }
+
+  return response.json();
+}
+
+export interface CreateBookData {
+  title: string;
+  authorId: number;
+  status: ReadingStatus;
+}
+
+export async function createBook(
+  data: CreateBookData,
+): Promise<Book> {
+  const response = await fetch(`${apiUrl}/books`, {
+    method: 'POST',
+
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to create book');
   }
 
   return response.json();

@@ -1,39 +1,7 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "bundler",
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
-    "paths": {
-      "@spartan-ng/helm/table": [
-        "./libs/ui/table/src/index.ts"
-      ],
-      "@spartan-ng/helm/utils": [
-        "./libs/ui/utils/src/index.ts"
-      ],
-      "@spartan-ng/helm/badge": [
-        "./libs/ui/badge/src/index.ts"
-      ],
-      "@spartan-ng/helm/button": [
-        "./libs/ui/button/src/index.ts"
-      ]
-    }
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

@@ -25,6 +25,7 @@ import { notifications } from '@mantine/notifications';
 import { CreateAuthorModal } from './components/CreateAuthorModal';
 import { BooksHeader } from './components/BooksHeader';
 import { BooksStats } from './components/BooksStats';
+import { BooksLibrary } from './components/BooksLibrary';
 
 export function BooksPage() {
     const queryClient = useQueryClient();
@@ -179,21 +180,16 @@ export function BooksPage() {
 
                     <BooksStats books={books} />
 
-                    <Paper
-                        className="neo-raised"
-                        radius="md"
-                        p="md"
-                    >
-                        <BooksTable
-                            books={books}
-                            onStatusChange={(id, status) => {
-                                updateStatusMutation.mutate({
-                                    id,
-                                    status,
-                                });
-                            }}
-                        />
-                    </Paper>
+                    <BooksLibrary
+                        books={books}
+                        authors={authors}
+                        onStatusChange={(id, status) => {
+                            updateStatusMutation.mutate({
+                                id,
+                                status,
+                            });
+                        }}
+                    />
 
                 </Stack>
 

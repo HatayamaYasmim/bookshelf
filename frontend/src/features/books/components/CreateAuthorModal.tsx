@@ -12,6 +12,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { CreateAuthorData } from '../../../services/authors';
 import { GiMagicPalm } from 'react-icons/gi';
+import { BookshelfModal } from './ui/BookshellfModal';
 
 const createAuthorSchema = z.object({
     name: z
@@ -72,16 +73,16 @@ export function CreateAuthorModal({
     }
 
     return (
-        <Modal
+        <BookshelfModal
             opened={opened}
             onClose={handleClose}
-            title={
-                <Group gap="xs">
-                    <GiMagicPalm size={18} />
-                    <Text fw={600}>Author</Text>
-                </Group>
+            title="Author"
+            icon={
+                <GiMagicPalm
+                    size={21}
+                    color="var(--bookshelf-primary)"
+                />
             }
-            centered
         >
             <form
                 onSubmit={handleSubmit(handleCreateAuthor)}
@@ -93,12 +94,16 @@ export function CreateAuthorModal({
                         withAsterisk
                         error={errors.name?.message}
                         {...register('name')}
+                        classNames={{
+                            input: 'bookshelf-input',
+                        }}
                     />
 
                     <Group justify="flex-end" mt="md">
                         <Button
                             type="button"
-                            variant="default"
+                            variant="transparent"
+                            className='bookshelf-button'
                             onClick={handleClose}
                         >
                             Cancel
@@ -106,13 +111,15 @@ export function CreateAuthorModal({
 
                         <Button
                             type="submit"
+                            variant="transparent"
                             loading={isSubmitting}
+                            className="bookshelf-button bookshelf-button-primary"
                         >
                             Save
                         </Button>
                     </Group>
                 </Stack>
             </form>
-        </Modal>
+        </ BookshelfModal>
     );
 }

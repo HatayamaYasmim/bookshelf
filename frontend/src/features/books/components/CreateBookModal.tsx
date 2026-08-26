@@ -15,6 +15,7 @@ import type { CreateBookData } from '../../../services/books';
 import type { Author } from '../../../types/author';
 import type { ReadingStatus } from '../../../types/book';
 import { RiBookAiFill } from 'react-icons/ri';
+import { BookshelfModal } from './ui/BookshellfModal';
 
 const createBookSchema = z.object({
   title: z
@@ -91,22 +92,25 @@ export function CreateBookModal({
   }
 
   return (
-    <Modal
+    <BookshelfModal
       opened={opened}
       onClose={handleClose}
-            title={
-                <Group gap="xs">
-                    <RiBookAiFill size={18} />
-                    <Text fw={600}>Book</Text>
-                </Group>
-            }
-      centered
+      title="Book"
+      icon={
+        <RiBookAiFill
+          size={21}
+          color="var(--bookshelf-primary)"
+        />
+      }
     >
       <form
         onSubmit={handleSubmit(handleCreateBook)}
       >
         <Stack>
           <TextInput
+            classNames={{
+              input: 'bookshelf-input',
+            }}
             label="Title"
             placeholder="Ex: The Hobbit"
             withAsterisk
@@ -119,6 +123,9 @@ export function CreateBookModal({
             control={control}
             render={({ field }) => (
               <Select
+                classNames={{
+                  input: 'bookshelf-input',
+                }}
                 label="Author"
                 placeholder="Select an author"
                 withAsterisk
@@ -144,6 +151,9 @@ export function CreateBookModal({
                 label="Status"
                 withAsterisk
                 allowDeselect={false}
+                classNames={{
+                  input: 'bookshelf-input',
+                }}
                 data={[
                   {
                     value: 'UNREAD',
@@ -169,7 +179,8 @@ export function CreateBookModal({
 
           <Group justify="flex-end" mt="md">
             <Button
-              variant="default"
+              variant="transparent"
+              className="bookshelf-button"
               onClick={handleClose}
             >
               Cancel
@@ -177,6 +188,8 @@ export function CreateBookModal({
 
             <Button
               type="submit"
+              variant='transparent'
+              className="bookshelf-button bookshelf-button-primary"
               loading={isSubmitting}
             >
               Save
@@ -184,6 +197,6 @@ export function CreateBookModal({
           </Group>
         </Stack>
       </form>
-    </Modal>
+    </BookshelfModal>
   );
 }

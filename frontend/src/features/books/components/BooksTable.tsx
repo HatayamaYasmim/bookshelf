@@ -1,6 +1,15 @@
-import { Badge, Select, Table } from '@mantine/core';
+import {
+    Badge,
+    Menu,
+    Table,
+} from '@mantine/core';
 
-import type { Book, ReadingStatus } from '../../../types/book';
+import { IconCheck, IconChevronDown } from '@tabler/icons-react';
+
+import type {
+    Book,
+    ReadingStatus,
+} from '../../../types/book';
 
 interface BooksTableProps {
     books: Book[];
@@ -11,7 +20,7 @@ interface BooksTableProps {
     ) => void;
 }
 
-function getStatusColor(status: Book['status']) {
+function getStatusColor(status: ReadingStatus) {
     switch (status) {
         case 'READ':
             return 'green';
@@ -24,16 +33,29 @@ function getStatusColor(status: Book['status']) {
     }
 }
 
-function getStatusLabel(status: Book['status']) {
+function getStatusLabel(status: ReadingStatus) {
     switch (status) {
         case 'READ':
-            return 'read';
+            return 'Read';
 
         case 'READING':
-            return 'reading';
+            return 'Reading';
 
         case 'UNREAD':
-            return 'unread';
+            return 'Unread';
+    }
+}
+
+function getStatusDotColor(status: ReadingStatus) {
+    switch (status) {
+        case 'READ':
+            return '#2f9e44';
+
+        case 'READING':
+            return '#1971c2';
+
+        case 'UNREAD':
+            return '#868e96';
     }
 }
 
@@ -41,40 +63,103 @@ export function BooksTable({
     books,
     onStatusChange,
 }: BooksTableProps) {
+    function handleStatusChange(
+        book: Book,
+        status: ReadingStatus,
+    ) {
+        if (book.status === status) {
+            return;
+        }
+
+        onStatusChange(book.id, status);
+    }
+
+    const statusOptions: ReadingStatus[] = [
+        'READ',
+        'READING',
+        'UNREAD',
+    ];
+
     const rows = books.map((book) => (
         <Table.Tr key={book.id}>
-            <Table.Td>{book.title}</Table.Td>
-
-            <Table.Td>{book.author.name}</Table.Td>
+            <Table.Td fw={500}>
+                {book.title}
+            </Table.Td>
 
             <Table.Td>
-                <Select
-                    value={book.status}
-                    allowDeselect={false}
-                    w={130}
-                    data={[
-                        {
-                            value: 'UNREAD',
-                            label: 'Unread',
-                        },
-                        {
-                            value: 'READING',
-                            label: 'Reading',
-                        },
-                        {
-                            value: 'READ',
-                            label: 'Read',
-                        },
-                    ]}
-                    onChange={(value) => {
-                        if (value) {
-                            onStatusChange(
-                                book.id,
-                                value as ReadingStatus,
-                            );
-                        }
-                    }}
-                />
+                {book.author.name}
+            </Table.Td>
+
+            <Table.Td>
+                <Menu
+                    shadow="md"
+                    width={160}
+                    position="bottom-start"
+                >
+                    <Menu.Target>
+                        <Badge
+                            color={getStatusColor(book.status)}
+                            variant="light"
+                            size="lg"
+                            radius="xl"
+                            leftSection={
+                                <span
+                                    style={{
+                                        width: 7,
+                                        height: 7,
+                                        borderRadius: '50%',
+                                        backgroundColor:
+                                            getStatusDotColor(book.status),
+                                        display: 'block',
+                                    }}
+                                />
+                            }
+                            rightSection={
+                                <IconChevronDown size={12} />
+                            }
+                            styles={{
+                                root: {
+                                    cursor: 'pointer',
+                                    textTransform: 'none',
+                                },
+                            }}
+                        >
+                            {getStatusLabel(book.status)}
+                        </Badge>
+                    </Menu.Target>
+
+                    <Menu.Dropdown>
+                        {statusOptions.map((status) => (
+                            <Menu.Item
+                                key={status}
+                                leftSection={
+                                    <span
+                                        style={{
+                                            width: 7,
+                                            height: 7,
+                                            borderRadius: '50%',
+                                            backgroundColor:
+                                                getStatusDotColor(status),
+                                        }}
+                                    />
+                                }
+                                rightSection={
+                                    book.status === status
+                                        ? <IconCheck size={15} />
+                                        : undefined
+                                }
+                                onClick={() =>
+                                    handleStatusChange(
+                                        book,
+                                        status,
+                                    )
+                                }
+                            >
+                                {getStatusLabel(status)}
+                            </Menu.Item>
+                        ))}
+                    </Menu.Dropdown>
+                </Menu>
             </Table.Td>
         </Table.Tr>
     ));
@@ -93,7 +178,9 @@ export function BooksTable({
                 </Table.Tr>
             </Table.Thead>
 
-            <Table.Tbody>{rows}</Table.Tbody>
+            <Table.Tbody>
+                {rows}
+            </Table.Tbody>
         </Table>
     );
 }

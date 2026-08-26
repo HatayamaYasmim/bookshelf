@@ -1,9 +1,30 @@
-import type { Book, ReadingStatus } from '../types/book';
+import type { Book, BooksQueryParams, BooksResponse, ReadingStatus } from '../types/book';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export async function getBooks(): Promise<Book[]> {
-  const response = await fetch(`${apiUrl}/books`);
+export async function getBooks(params: BooksQueryParams = {},): Promise<BooksResponse> {
+  const query = new URLSearchParams();
+   if (params.page) {
+    query.set('page', String(params.page));
+  }
+
+  if (params.limit) {
+    query.set('limit', String(params.limit));
+  }
+
+  if (params.search) {
+    query.set('search', params.search);
+  }
+
+  if (params.status) {
+    query.set('status', params.status);
+  }
+
+  if (params.authorId) {
+    query.set('authorId', String(params.authorId));
+  }
+
+  const response = await fetch(`${apiUrl}/books?${query.toString()}`);
 
   if (!response.ok) {
     throw new Error('Failed to load books');

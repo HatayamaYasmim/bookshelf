@@ -17,3 +17,22 @@ export interface Book {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface BooksQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?: ReadingStatus;
+  authorId?: number;
+}
+
+export interface BooksResponse {
+  data: Book[];
+
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}

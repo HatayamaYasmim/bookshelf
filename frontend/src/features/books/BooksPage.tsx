@@ -6,7 +6,7 @@ import {
     Stack,
     Text,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDebouncedValue, useDisclosure } from '@mantine/hooks';
 import {
     useMutation,
     useQuery,
@@ -19,16 +19,27 @@ import {
     updateBookStatus,
 } from '../../services/books';
 import { createAuthor, getAuthors } from '../../services/authors';
-import { BooksTable } from './components/BooksTable';
 import { CreateBookModal } from './components/CreateBookModal';
 import { notifications } from '@mantine/notifications';
 import { CreateAuthorModal } from './components/CreateAuthorModal';
 import { BooksHeader } from './components/BooksHeader';
 import { BooksStats } from './components/BooksStats';
 import { BooksLibrary } from './components/BooksLibrary';
+import { useState } from 'react';
+import type { ReadingStatus } from '../../types/book';
 
 export function BooksPage() {
     const queryClient = useQueryClient();
+
+    const [search, setSearch] = useState('')
+    const [status, setStatus] =
+        useState<ReadingStatus | null>(null);
+    const [authorId, setAuthorId] =
+        useState<number | null>(null);
+    const [debouncedSearch] = useDebouncedValue(search, 400)
+
+    const [page, setPage] = useState(1);
+    const limit = 10;
 
     const [
         createModalOpened,
@@ -51,13 +62,16 @@ export function BooksPage() {
     // =========================
 
     const {
-        data: books = [],
+        data: booksResponse,
         isLoading: isBooksLoading,
         isError: isBooksError,
     } = useQuery({
-        queryKey: ['books'],
-        queryFn: getBooks,
+        queryKey: ['books', 1, 10, debouncedSearch, status, authorId],
+        queryFn: () => getBooks({ page: page, limit: limit, search: debouncedSearch || undefined, status: status ?? undefined, authorId: authorId ?? undefined, })
     });
+
+    const books = booksResponse?.data ?? [];
+    const meta = booksResponse?.meta;
 
     const {
         data: authors = [],
@@ -165,6 +179,25 @@ export function BooksPage() {
         );
     }
 
+    function handleSearchChange(value: string) {
+        setSearch(value);
+        setPage(1);
+    }
+
+    function handleStatusFilterChange(
+        value: ReadingStatus | null,
+    ) {
+        setStatus(value);
+        setPage(1);
+    }
+
+    function handleAuthorFilterChange(
+        value: number | null,
+    ) {
+        setAuthorId(value);
+        setPage(1);
+    }
+
     // =========================
     // Render
     // =========================
@@ -183,6 +216,17 @@ export function BooksPage() {
                     <BooksLibrary
                         books={books}
                         authors={authors}
+                        search={search}
+                        onSearchChange={handleSearchChange}
+                        status={status}
+                        onStatusFilterChange={handleStatusFilterChange}
+                        authorId={authorId}
+                        onAuthorFilterChange={handleAuthorFilterChange}
+                        page={page}
+                        limit={limit}
+                        totalPages={meta?.totalPages ?? 1}
+                        totalBooks={meta?.total ?? 0}
+                        onPageChange={setPage}
                         onStatusChange={(id, status) => {
                             updateStatusMutation.mutate({
                                 id,

@@ -1,5 +1,6 @@
 import {
     Group,
+    Pagination,
     Paper,
     Select,
     Stack,
@@ -11,7 +12,7 @@ import {
 import { IoSearchOutline } from 'react-icons/io5';
 import { LuBookOpen } from 'react-icons/lu';
 
-import type { Book } from '../../../types/book';
+import type { Book, ReadingStatus } from '../../../types/book';
 import type { Author } from '../../../types/author';
 
 import { BooksTable } from './BooksTable';
@@ -19,17 +20,42 @@ import { BooksTable } from './BooksTable';
 interface BooksLibraryProps {
     books: Book[];
     authors: Author[];
-
+    search: string;
+    onSearchChange: (value: string) => void;
+    status: ReadingStatus | null;
+    onStatusFilterChange: (
+        value: ReadingStatus | null,
+    ) => void;
+    authorId: number | null;
+    onAuthorFilterChange: (
+        value: number | null,
+    ) => void;
     onStatusChange: (
         id: number,
         status: Book['status'],
     ) => void;
+    page: number;
+    totalPages: number;
+    totalBooks: number;
+    limit: number;
+    onPageChange: (page: number) => void;
 }
 
 export function BooksLibrary({
     books,
     authors,
+    search,
+    status,
+    authorId,
+    page,
+    totalPages,
+    totalBooks,
+    limit,
+    onPageChange,
     onStatusChange,
+    onSearchChange,
+    onStatusFilterChange,
+    onAuthorFilterChange,
 }: BooksLibraryProps) {
     return (
         <Paper
@@ -63,6 +89,10 @@ export function BooksLibrary({
                         <TextInput
                             placeholder="Search books..."
                             leftSection={<IoSearchOutline size={18} />}
+                            value={search}
+                            onChange={(event) =>
+                                onSearchChange(event.currentTarget.value)
+                            }
                             w={260}
                             styles={{
                                 input: {
@@ -76,12 +106,15 @@ export function BooksLibrary({
                         />
 
                         <Select
-                            placeholder="Status"
+                            placeholder="All status"
+                            clearable
+                            value={status}
+                            onChange={(value) =>
+                                onStatusFilterChange(
+                                    value as ReadingStatus | null,
+                                )
+                            }
                             data={[
-                                {
-                                    value: 'ALL',
-                                    label: 'All status',
-                                },
                                 {
                                     value: 'READ',
                                     label: 'Read',
@@ -95,6 +128,7 @@ export function BooksLibrary({
                                     label: 'Unread',
                                 },
                             ]}
+
                             w={140}
                             styles={{
                                 input: {
@@ -110,10 +144,22 @@ export function BooksLibrary({
                         <Select
                             placeholder="Author"
                             searchable
-                            data={authors.map((author) => ({
-                                value: String(author.id),
-                                label: author.name,
-                            }))}
+                            clearable
+                            value={
+                                authorId !== null
+                                    ? String(authorId)
+                                    : null
+                            }
+                            onChange={(value) =>
+                                onAuthorFilterChange(
+                                    value ? Number(value) : null,
+                                )}
+                            data={
+                                authors.map((author) => ({
+                                    value: String(author.id),
+                                    label: author.name,
+                                }))
+                            }
                             w={180}
                             styles={{
                                 input: {
@@ -132,6 +178,34 @@ export function BooksLibrary({
                     books={books}
                     onStatusChange={onStatusChange}
                 />
+                <Group
+                    justify="space-between"
+                    align="center"
+                    mt="md"
+                >
+                    <Text
+                        size="sm"
+                        c="dimmed"
+                    >
+                        Showing{' '}
+                        {totalBooks === 0
+                            ? 0
+                            : (page - 1) * limit + 1}
+                        {' - '}
+                        {Math.min(
+                            page * limit,
+                            totalBooks,
+                        )}{' '}
+                        of {totalBooks} books
+                    </Text>
+
+                    <Pagination
+                        value={page}
+                        onChange={onPageChange}
+                        total={totalPages}
+                        radius="xl"
+                    />
+                </Group>
 
             </Stack>
         </Paper>

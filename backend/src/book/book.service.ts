@@ -1,17 +1,66 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateBookDto } from './dto/create-book.dto';
+import { FindBooksQueryDto } from './dto/find-books-query.dto';
 
 @Injectable()
 export class BookService {
     constructor(private readonly prisma: PrismaService) { }
 
-    findAll() {
-        return this.prisma.book.findMany({
-            include: {
-                author: true,
+    async findAll(query: FindBooksQueryDto) {
+        const {
+            page,
+            limit,
+            search,
+            status,
+            authorId,
+        } = query;
+        
+        const skip = (page - 1 ) * limit;
+
+        const where = {
+            ...(search && {
+                title: {
+                    contains: search,
+                    mode: 'insensitive' as const,
+                }
+            }),
+
+            ...(status && {
+                status,
+            }),
+
+            ...(authorId && {
+                authorId,
+            })
+        }
+
+        const [books, total] = await Promise.all([
+            this.prisma.book.findMany({
+                where, 
+                include: {
+                    author: true
+                },
+                orderBy: {
+                    title: 'asc'
+                },
+                skip,
+                take: limit,
+            }),
+            this.prisma.book.count({
+                where,
+            })
+        ])
+
+        return {
+            data: books,
+            meta: {
+                page, 
+                limit,
+                total,
+                totalPages: Math.ceil(total/limit)
             }
-        });
+        }
     }
 
     async create(data: CreateBookDto) {

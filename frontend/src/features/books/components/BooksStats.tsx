@@ -14,6 +14,7 @@ import {
 } from 'react-icons/lu';
 
 import type { BooksStatsResponse } from '../../../types/book';
+import { GiBookCover, GiBookshelf } from 'react-icons/gi';
 
 interface BooksStatsProps {
   stats: BooksStatsResponse;
@@ -28,19 +29,19 @@ export function BooksStats({
       label: 'TOTAL BOOKS',
       value: stats.total,
       color: 'indigo',
-      icon: LuBookOpen,
+      icon: GiBookshelf,
     },
     {
       label: 'READ',
       value: stats.read,
       color: 'green',
-      icon: LuCircleCheck,
+      icon: LuBookOpenCheck,
     },
     {
       label: 'READING',
       value: stats.reading,
       color: 'blue',
-      icon: LuBookOpenCheck,
+      icon: GiBookCover,
     },
     {
       label: 'UNREAD',
@@ -68,6 +69,10 @@ export function BooksStats({
             p="xl"
             radius="xl"
             className="neo-raised"
+            style={{
+              background: '#e8eaf0',
+              minHeight: 135,
+            }}
           >
             <Group justify="space-between">
               <div>
@@ -96,8 +101,12 @@ export function BooksStats({
               <ThemeIcon
                 size={52}
                 radius="xl"
-                variant="light"
+                variant="transparent"
                 color={stat.color}
+                style={{
+                  boxShadow:
+                    '4px 4px 8px rgba(0,0,0,0.07), -4px -4px 8px rgba(255,255,255,0.65)',
+                }}
               >
                 <Icon size={26} />
               </ThemeIcon>

@@ -92,15 +92,15 @@ export function BooksTable({
 
             <Table.Td>
                 <Menu
-                    shadow="md"
+                    shadow="sm"
                     width={160}
                     position="bottom-start"
                 >
                     <Menu.Target>
                         <Badge
                             color={getStatusColor(book.status)}
-                            variant="light"
-                            size="lg"
+                            variant="transparent"
+                            size="md"
                             radius="xl"
                             leftSection={
                                 <span
@@ -121,6 +121,12 @@ export function BooksTable({
                                 root: {
                                     cursor: 'pointer',
                                     textTransform: 'none',
+                                    background: 'var(--bookshelf-background)',
+                                    border: 'none',
+                                    borderRadius: '999px',
+                                    color: getStatusDotColor(book.status),
+                                    boxShadow:
+                                        'inset 3px 3px 6px rgba(0,0,0,0.05), inset -3px -3px 6px rgba(255,255,255,0.5)',
                                 },
                             }}
                         >
@@ -128,9 +134,20 @@ export function BooksTable({
                         </Badge>
                     </Menu.Target>
 
-                    <Menu.Dropdown>
+                    <Menu.Dropdown
+                        style={{
+                            background: 'rgba(255, 255, 255, 0.18)',
+                            backdropFilter: 'blur(3px) saturate(150%)',
+                            WebkitBackdropFilter: 'blur(3px) saturate(150%)',
+                            border: '1px solid rgba(255, 255, 255, 0.35)',
+                            borderRadius: '16px',
+                            boxShadow:
+                                '0 8px 24px rgba(31, 38, 135, 0.10)',
+                        }}
+                    >
                         {statusOptions.map((status) => (
                             <Menu.Item
+                                className="bookshelf-glass-item"
                                 key={status}
                                 leftSection={
                                     <span
@@ -166,9 +183,9 @@ export function BooksTable({
 
     return (
         <Table
-            striped
+            // striped
             highlightOnHover
-            verticalSpacing="md"
+            verticalSpacing="sm"
         >
             <Table.Thead>
                 <Table.Tr>

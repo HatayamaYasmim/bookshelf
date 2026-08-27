@@ -101,3 +101,31 @@ box-shadow:
 .bookshelf-button-primary {
   color: var(--bookshelf-primary) !important;
 }
+
+.bookshelf-glass-item {
+  background: transparent !important;
+  border-radius: 10px !important;
+  transition: background 150ms ease;
+}
+
+.bookshelf-glass-item:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.bookshelf-filter-option {
+  background: transparent !important;
+  border-radius: 10px !important;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.bookshelf-filter-option:hover {
+  background: rgba(99, 102, 241, 0.08) !important;
+}
+
+.bookshelf-filter-option[data-combobox-selected] {
+  background: rgba(99, 102, 241, 0.12) !important;
+  color: var(--bookshelf-primary) !important;
+}

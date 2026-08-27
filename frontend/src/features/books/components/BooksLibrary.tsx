@@ -57,6 +57,31 @@ export function BooksLibrary({
     onStatusFilterChange,
     onAuthorFilterChange,
 }: BooksLibraryProps) {
+
+    const filterSelectStyles = {
+        input: {
+            background: 'var(--bookshelf-background)',
+            border: 'none',
+            borderRadius: '999px',
+
+            boxShadow:
+                'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
+        },
+
+        dropdown: {
+            background: 'rgba(255, 255, 255, 0.18)',
+
+            backdropFilter: 'blur(5px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(5px) saturate(150%)',
+
+            border: '1px solid rgba(255,255,255,0.35)',
+            borderRadius: '16px',
+
+            boxShadow:
+                '0 8px 24px rgba(31,38,135,0.10)',
+        },
+    };
+
     return (
         <Paper
             p="xl"
@@ -128,23 +153,20 @@ export function BooksLibrary({
                                     label: 'Unread',
                                 },
                             ]}
-
                             w={140}
-                            styles={{
-                                input: {
-                                    background: 'var(--bookshelf-background)',
-                                    border: 'none',
-                                    borderRadius: '999px',
-                                    boxShadow:
-                                        'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
-                                },
+                            classNames={{
+                                option: 'bookshelf-filter-option',
                             }}
+                            styles={filterSelectStyles}
                         />
 
                         <Select
                             placeholder="Author"
                             searchable
                             clearable
+                            classNames={{
+                                option: 'bookshelf-filter-option',
+                            }}
                             value={
                                 authorId !== null
                                     ? String(authorId)
@@ -161,15 +183,7 @@ export function BooksLibrary({
                                 }))
                             }
                             w={180}
-                            styles={{
-                                input: {
-                                    background: 'var(--bookshelf-background)',
-                                    border: 'none',
-                                    borderRadius: '999px',
-                                    boxShadow:
-                                        'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
-                                },
-                            }}
+                            styles={filterSelectStyles}
                         />
                     </Group>
                 </Group>

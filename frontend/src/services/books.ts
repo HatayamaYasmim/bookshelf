@@ -1,4 +1,4 @@
-import type { Book, BooksQueryParams, BooksResponse, ReadingStatus } from '../types/book';
+import type { Book, BooksQueryParams, BooksResponse, BooksStatsResponse, ReadingStatus } from '../types/book';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -88,4 +88,16 @@ export async function createBook(
   }
 
   return response.json();
+}
+
+export async function getBooksStats() : Promise<BooksStatsResponse> {
+  const response = await fetch(
+    `${apiUrl}/books/stats`, 
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to load book stats');
+  }
+
+  return response.json()
 }

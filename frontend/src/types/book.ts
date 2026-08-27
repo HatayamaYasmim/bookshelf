@@ -36,3 +36,10 @@ export interface BooksResponse {
     totalPages: number;
   };
 }
+
+export interface BooksStatsResponse {
+  total: number;
+  read: number;
+  reading: number;
+  unread: number;
+}

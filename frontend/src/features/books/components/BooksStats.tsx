@@ -13,51 +13,38 @@ import {
   LuBookOpenCheck,
 } from 'react-icons/lu';
 
-import type { Book } from '../../../types/book';
+import type { BooksStatsResponse } from '../../../types/book';
 
 interface BooksStatsProps {
-  books: Book[];
+  stats: BooksStatsResponse;
 }
 
 export function BooksStats({
-  books,
+  stats,
 }: BooksStatsProps) {
-  const totalBooks = books.length;
 
-  const readBooks = books.filter(
-    (book) => book.status === 'READ',
-  ).length;
-
-  const readingBooks = books.filter(
-    (book) => book.status === 'READING',
-  ).length;
-
-  const unreadBooks = books.filter(
-    (book) => book.status === 'UNREAD',
-  ).length;
-
-  const stats = [
+  const statsItems = [
     {
       label: 'TOTAL BOOKS',
-      value: totalBooks,
+      value: stats.total,
       color: 'indigo',
       icon: LuBookOpen,
     },
     {
       label: 'READ',
-      value: readBooks,
+      value: stats.read,
       color: 'green',
       icon: LuCircleCheck,
     },
     {
       label: 'READING',
-      value: readingBooks,
+      value: stats.reading,
       color: 'blue',
       icon: LuBookOpenCheck,
     },
     {
       label: 'UNREAD',
-      value: unreadBooks,
+      value: stats.unread,
       color: 'gray',
       icon: LuBookmark,
     },
@@ -72,7 +59,7 @@ export function BooksStats({
       }}
       spacing="xl"
     >
-      {stats.map((stat) => {
+      {statsItems.map((stat) => {
         const Icon = stat.icon;
 
         return (

@@ -15,8 +15,8 @@ export class BookService {
             status,
             authorId,
         } = query;
-        
-        const skip = (page - 1 ) * limit;
+
+        const skip = (page - 1) * limit;
 
         const where = {
             ...(search && {
@@ -37,7 +37,7 @@ export class BookService {
 
         const [books, total] = await Promise.all([
             this.prisma.book.findMany({
-                where, 
+                where,
                 include: {
                     author: true
                 },
@@ -55,10 +55,10 @@ export class BookService {
         return {
             data: books,
             meta: {
-                page, 
+                page,
                 limit,
                 total,
-                totalPages: Math.ceil(total/limit)
+                totalPages: Math.ceil(total / limit)
             }
         }
     }
@@ -107,5 +107,38 @@ export class BookService {
                 author: true,
             },
         });
+    }
+
+    async getStats() {
+        const [
+            total,
+            read,
+            reading,
+            unread,
+        ] = await Promise.all([
+            this.prisma.book.count(),
+            this.prisma.book.count({
+                where: {
+                    status: 'READ'
+                }
+            }),
+            this.prisma.book.count({
+                where: {
+                    status: 'READING'
+                }
+            }),
+            this.prisma.book.count({
+                where: {
+                    status: 'UNREAD'
+                }
+            })
+
+        ]);
+        return {
+            total,
+            read,
+            reading,
+            unread
+        }
     }
 }

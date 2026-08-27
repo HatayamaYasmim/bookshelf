@@ -7,7 +7,10 @@ import { FindBooksQueryDto } from './dto/find-books-query.dto';
 @Controller('books')
 export class BookController {
     constructor(private readonly bookService: BookService) { }
-
+    @Get('stats')
+    getStats() {
+        return this.bookService.getStats()
+    }
     @Get()
     findAll(@Query() query: FindBooksQueryDto,) {
         return this.bookService.findAll(query);
@@ -25,4 +28,6 @@ export class BookController {
     ) {
         return this.bookService.updateStatus(id, data.status);
     }
+
+
 }

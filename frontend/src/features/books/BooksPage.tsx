@@ -16,6 +16,7 @@ import {
 import {
     createBook,
     getBooks,
+    getBooksStats,
     updateBookStatus,
 } from '../../services/books';
 import { createAuthor, getAuthors } from '../../services/authors';
@@ -79,6 +80,14 @@ export function BooksPage() {
     } = useQuery({
         queryKey: ['authors'],
         queryFn: getAuthors,
+    });
+
+    const {
+        data: booksStats,
+        isLoading: isBooksStatsLoading,
+    } = useQuery({
+        queryKey: ['books', 'stats'],
+        queryFn: getBooksStats,
     });
 
     // =========================
@@ -211,7 +220,9 @@ export function BooksPage() {
             <Container size="xl" py="xl">
                 <Stack gap="xl">
 
-                    <BooksStats books={books} />
+                    {booksStats && (
+                        <BooksStats stats={booksStats} />
+                    )}
 
                     <BooksLibrary
                         books={books}

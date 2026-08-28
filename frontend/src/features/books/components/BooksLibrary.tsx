@@ -1,4 +1,5 @@
 import {
+    Button,
     Group,
     Pagination,
     Paper,
@@ -9,13 +10,15 @@ import {
     Title,
 } from '@mantine/core';
 
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoCloseOutline, IoSearchOutline } from 'react-icons/io5';
 import { LuBookOpen } from 'react-icons/lu';
 
 import type { Book, ReadingStatus } from '../../../types/book';
 import type { Author } from '../../../types/author';
 
 import { BooksTable } from './BooksTable';
+import { GiMagicBroom } from 'react-icons/gi';
+import { BooksEmptyState } from './BooksEmptyState';
 
 interface BooksLibraryProps {
     books: Book[];
@@ -39,6 +42,8 @@ interface BooksLibraryProps {
     totalBooks: number;
     limit: number;
     onPageChange: (page: number) => void;
+    hasActiveFilters: boolean;
+    onClearFilters: () => void;
 }
 
 export function BooksLibrary({
@@ -51,6 +56,8 @@ export function BooksLibrary({
     totalPages,
     totalBooks,
     limit,
+    hasActiveFilters,
+    onClearFilters,
     onPageChange,
     onStatusChange,
     onSearchChange,
@@ -185,13 +192,38 @@ export function BooksLibrary({
                             w={180}
                             styles={filterSelectStyles}
                         />
+                        {hasActiveFilters && (
+                            <Button
+                                variant="transparent"
+                                size="sm"
+                                leftSection={<GiMagicBroom size={16} />}
+                                onClick={onClearFilters}
+                                styles={{
+                                    root: {
+                                        border: 'none',
+                                        borderRadius: '999px',
+                                        boxShadow:
+                                            'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
+                                    },
+                                }}
+                            >
+                                Clear filters
+                            </Button>
+                        )}
                     </Group>
                 </Group>
 
-                <BooksTable
-                    books={books}
-                    onStatusChange={onStatusChange}
-                />
+                {books.length === 0 ? (
+                    <BooksEmptyState
+                        hasActiveFilters={hasActiveFilters}
+                        onClearFilters={onClearFilters}
+                    />
+                ) : (
+                    <BooksTable
+                        books={books}
+                        onStatusChange={onStatusChange}
+                    />
+                )}
                 <Group
                     justify="space-between"
                     align="center"

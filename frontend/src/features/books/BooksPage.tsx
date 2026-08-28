@@ -58,6 +58,15 @@ export function BooksPage() {
         },
     ] = useDisclosure(false);
 
+    const hasActiveFilters = search.trim() !== '' || status !== null || authorId !== null;
+
+    function handleClearFilters() {
+        setSearch('');
+        setStatus(null);
+        setAuthorId(null);
+        setPage(1);
+    }
+
     // =========================
     // Queries
     // =========================
@@ -238,6 +247,8 @@ export function BooksPage() {
                         totalPages={meta?.totalPages ?? 1}
                         totalBooks={meta?.total ?? 0}
                         onPageChange={setPage}
+                        hasActiveFilters={hasActiveFilters}
+                        onClearFilters={handleClearFilters}
                         onStatusChange={(id, status) => {
                             updateStatusMutation.mutate({
                                 id,

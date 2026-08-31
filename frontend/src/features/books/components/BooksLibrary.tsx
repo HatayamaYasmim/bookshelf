@@ -21,6 +21,7 @@ import { BooksTable } from './BooksTable';
 import { GiMagicBroom } from 'react-icons/gi';
 import { BooksEmptyState } from './BooksEmptyState';
 import { bookshelfPaginationClassNames, bookshelfSelectClassNames } from '../../../styles/mantine';
+import { BooksTableSkeleton } from './BooksTableSkeleton';
 
 interface BooksLibraryProps {
     books: Book[];
@@ -46,6 +47,8 @@ interface BooksLibraryProps {
     onPageChange: (page: number) => void;
     hasActiveFilters: boolean;
     onClearFilters: () => void;
+    isLoading: boolean;
+    isFetching: boolean;
 }
 
 export function BooksLibrary({
@@ -65,6 +68,8 @@ export function BooksLibrary({
     onSearchChange,
     onStatusFilterChange,
     onAuthorFilterChange,
+    isLoading,
+    isFetching,
 }: BooksLibraryProps) {
 
     return (
@@ -185,22 +190,25 @@ export function BooksLibrary({
                     </Group>
                 </Group>
 
-                {books.length === 0 ? (
+                {!isLoading && books.length === 0 ? (
                     <BooksEmptyState
                         hasActiveFilters={hasActiveFilters}
                         onClearFilters={onClearFilters}
                     />
                 ) : (
                     <ScrollArea
-                        h="clamp(280px, 42dvh, 520px)"
+                        className="bookshelf-table-scroll"
                         type="auto"
                         offsetScrollbars
-                        className="bookshelf-table-scroll"
                     >
-                        <BooksTable
-                            books={books}
-                            onStatusChange={onStatusChange}
-                        />
+                        {isLoading ? (
+                            <BooksTableSkeleton />
+                        ) : (
+                            <BooksTable
+                                books={books}
+                                onStatusChange={onStatusChange}
+                            />
+                        )}
                     </ScrollArea>
                 )}
                 <Group

@@ -1,13 +1,12 @@
 import {
     Center,
     Container,
-    Loader,
-    Paper,
     Stack,
     Text,
 } from '@mantine/core';
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks';
 import {
+    keepPreviousData,
     useMutation,
     useQuery,
     useQueryClient,
@@ -28,6 +27,7 @@ import { BooksStats } from './components/BooksStats';
 import { BooksLibrary } from './components/BooksLibrary';
 import { useState } from 'react';
 import type { ReadingStatus } from '../../types/book';
+import { BooksStatsSkeleton } from './components/BooksStatsSkeleton';
 
 export function BooksPage() {
     const queryClient = useQueryClient();
@@ -82,10 +82,12 @@ export function BooksPage() {
     const {
         data: booksResponse,
         isLoading: isBooksLoading,
+        isFetching: isBooksFetching,
         isError: isBooksError,
     } = useQuery({
         queryKey: ['books', booksQueryParams],
-        queryFn: () => getBooks(booksQueryParams)
+        queryFn: () => getBooks(booksQueryParams),
+        placeholderData: keepPreviousData,
     });
 
     const books = booksResponse?.data ?? [];
@@ -93,7 +95,6 @@ export function BooksPage() {
 
     const {
         data: authors = [],
-        isLoading: isAuthorsLoading,
     } = useQuery({
         queryKey: ['authors'],
         queryFn: getAuthors,
@@ -187,15 +188,7 @@ export function BooksPage() {
     // Estados da página
     // =========================
 
-    if (isBooksLoading) {
-        return (
-            <Center h="100vh">
-                <Loader />
-            </Center>
-        );
-    }
-
-    if (isBooksError) {
+    if (isBooksError && !booksResponse) {
         return (
             <Center h="100vh">
                 <Text c="red">
@@ -204,7 +197,6 @@ export function BooksPage() {
             </Center>
         );
     }
-
     function handleSearchChange(value: string) {
         setSearch(value);
         setPage(1);
@@ -237,9 +229,11 @@ export function BooksPage() {
             <Container size="xl" py="xl">
                 <Stack gap="xl">
 
-                    {booksStats && (
+                    {isBooksStatsLoading ? (
+                        <BooksStatsSkeleton />
+                    ) : booksStats ? (
                         <BooksStats stats={booksStats} />
-                    )}
+                    ) : null}
 
                     <BooksLibrary
                         books={books}
@@ -257,12 +251,15 @@ export function BooksPage() {
                         onPageChange={setPage}
                         hasActiveFilters={hasActiveFilters}
                         onClearFilters={handleClearFilters}
+                        isLoading={isBooksLoading}
+                        isFetching={isBooksFetching}
                         onStatusChange={(id, status) => {
                             updateStatusMutation.mutate({
                                 id,
                                 status,
                             });
                         }}
+
                     />
 
                 </Stack>

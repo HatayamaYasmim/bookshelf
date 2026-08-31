@@ -1,11 +1,9 @@
 import {
   Button,
   Group,
-  Modal,
   Select,
   Stack,
   TextInput,
-  Text,
 } from '@mantine/core';
 
 import { Controller, useForm } from 'react-hook-form';
@@ -16,6 +14,7 @@ import type { Author } from '../../../types/author';
 import type { ReadingStatus } from '../../../types/book';
 import { RiBookAiFill } from 'react-icons/ri';
 import { BookshelfModal } from './ui/BookshellfModal';
+import { bookshelfSelectClassNames } from '../../../styles/mantine';
 
 const createBookSchema = z.object({
   title: z
@@ -123,9 +122,7 @@ export function CreateBookModal({
             control={control}
             render={({ field }) => (
               <Select
-                classNames={{
-                  input: 'bookshelf-input',
-                }}
+                classNames={bookshelfSelectClassNames}
                 label="Author"
                 placeholder="Select an author"
                 withAsterisk
@@ -151,9 +148,7 @@ export function CreateBookModal({
                 label="Status"
                 withAsterisk
                 allowDeselect={false}
-                classNames={{
-                  input: 'bookshelf-input',
-                }}
+                classNames={bookshelfSelectClassNames}
                 data={[
                   {
                     value: 'UNREAD',

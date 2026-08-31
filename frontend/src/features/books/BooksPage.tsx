@@ -71,13 +71,21 @@ export function BooksPage() {
     // Queries
     // =========================
 
+    const booksQueryParams = {
+        page,
+        limit,
+        search: debouncedSearch || undefined,
+        status: status ?? undefined,
+        authorId: authorId ?? undefined,
+    };
+
     const {
         data: booksResponse,
         isLoading: isBooksLoading,
         isError: isBooksError,
     } = useQuery({
-        queryKey: ['books', 1, 10, debouncedSearch, status, authorId],
-        queryFn: () => getBooks({ page: page, limit: limit, search: debouncedSearch || undefined, status: status ?? undefined, authorId: authorId ?? undefined, })
+        queryKey: ['books', booksQueryParams],
+        queryFn: () => getBooks(booksQueryParams)
     });
 
     const books = booksResponse?.data ?? [];

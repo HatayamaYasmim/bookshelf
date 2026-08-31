@@ -48,11 +48,10 @@ body {
 .neo-inset {
   background: var(--bookshelf-background);
 
-box-shadow:
-  8px 8px 16px rgba(0, 0, 0, 0.1),
-  -8px -8px 16px rgba(255, 255, 255, 0.75);
+  box-shadow:
+    inset 4px 4px 8px rgba(0, 0, 0, 0.06),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.55);
 }
-
 /* Form controls */
 
 .bookshelf-input {
@@ -128,4 +127,102 @@ box-shadow:
 .bookshelf-filter-option[data-combobox-selected] {
   background: rgba(99, 102, 241, 0.12) !important;
   color: var(--bookshelf-primary) !important;
+}
+
+/* Select / Filter */
+
+.bookshelf-select-input {
+  background: var(--bookshelf-background) !important;
+
+  border: none !important;
+  border-radius: 999px !important;
+
+  box-shadow:
+    inset 4px 4px 8px rgba(0, 0, 0, 0.06),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.55) !important;
+}
+
+.bookshelf-select-dropdown {
+  background: rgba(255, 255, 255, 0.18) !important;
+
+  backdrop-filter: blur(5px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(5px) saturate(150%) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-radius: 16px !important;
+
+  box-shadow:
+    0 8px 24px rgba(31, 38, 135, 0.1) !important;
+
+  padding: 6px !important;
+}
+
+.bookshelf-select-option {
+  background: transparent !important;
+
+  border-radius: 10px !important;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.bookshelf-select-option:hover {
+  background: rgba(99, 102, 241, 0.08) !important;
+}
+
+.bookshelf-select-option[data-combobox-selected] {
+  background: rgba(99, 102, 241, 0.12) !important;
+  color: var(--bookshelf-primary) !important;
+}
+
+/* Pagination */
+.bookshelf-pagination-control {
+  background: var(--bookshelf-background) !important;
+  border: none !important;
+  border-radius: 999px !important;
+
+  color: var(--bookshelf-text) !important;
+
+  box-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.07),
+    -4px -4px 8px rgba(255, 255, 255, 0.6) !important;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.bookshelf-pagination-control:hover {
+  background: rgba(99, 102, 241, 0.08) !important;
+  color: var(--bookshelf-primary) !important;
+}
+
+.bookshelf-pagination-control[data-active] {
+  background: var(--bookshelf-background) !important;
+  color: var(--bookshelf-primary) !important;
+
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.08),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.55) !important;
+}
+
+.bookshelf-pagination-control:active {
+  transform: translateY(1px);
+
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.08),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.35) !important;
+}
+
+.bookshelf-table-scroll {
+    height: clamp(280px, 42dvh, 520px);
+}
+
+@media (max-width: 768px) {
+    .bookshelf-table-scroll {
+        height: 360px;
+    }
 }

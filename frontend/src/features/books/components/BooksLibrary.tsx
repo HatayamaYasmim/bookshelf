@@ -3,6 +3,7 @@ import {
     Group,
     Pagination,
     Paper,
+    ScrollArea,
     Select,
     Stack,
     Text,
@@ -10,7 +11,7 @@ import {
     Title,
 } from '@mantine/core';
 
-import { IoCloseOutline, IoSearchOutline } from 'react-icons/io5';
+import { IoSearchOutline } from 'react-icons/io5';
 import { LuBookOpen } from 'react-icons/lu';
 
 import type { Book, ReadingStatus } from '../../../types/book';
@@ -19,6 +20,7 @@ import type { Author } from '../../../types/author';
 import { BooksTable } from './BooksTable';
 import { GiMagicBroom } from 'react-icons/gi';
 import { BooksEmptyState } from './BooksEmptyState';
+import { bookshelfPaginationClassNames, bookshelfSelectClassNames } from '../../../styles/mantine';
 
 interface BooksLibraryProps {
     books: Book[];
@@ -64,30 +66,6 @@ export function BooksLibrary({
     onStatusFilterChange,
     onAuthorFilterChange,
 }: BooksLibraryProps) {
-
-    const filterSelectStyles = {
-        input: {
-            background: 'var(--bookshelf-background)',
-            border: 'none',
-            borderRadius: '999px',
-
-            boxShadow:
-                'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
-        },
-
-        dropdown: {
-            background: 'rgba(255, 255, 255, 0.18)',
-
-            backdropFilter: 'blur(5px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(5px) saturate(150%)',
-
-            border: '1px solid rgba(255,255,255,0.35)',
-            borderRadius: '16px',
-
-            boxShadow:
-                '0 8px 24px rgba(31,38,135,0.10)',
-        },
-    };
 
     return (
         <Paper
@@ -161,19 +139,13 @@ export function BooksLibrary({
                                 },
                             ]}
                             w={140}
-                            classNames={{
-                                option: 'bookshelf-filter-option',
-                            }}
-                            styles={filterSelectStyles}
+                            classNames={bookshelfSelectClassNames}
                         />
 
                         <Select
                             placeholder="Author"
                             searchable
                             clearable
-                            classNames={{
-                                option: 'bookshelf-filter-option',
-                            }}
                             value={
                                 authorId !== null
                                     ? String(authorId)
@@ -190,7 +162,7 @@ export function BooksLibrary({
                                 }))
                             }
                             w={180}
-                            styles={filterSelectStyles}
+                            classNames={bookshelfSelectClassNames}
                         />
                         {hasActiveFilters && (
                             <Button
@@ -219,10 +191,17 @@ export function BooksLibrary({
                         onClearFilters={onClearFilters}
                     />
                 ) : (
-                    <BooksTable
-                        books={books}
-                        onStatusChange={onStatusChange}
-                    />
+                    <ScrollArea
+                        h="clamp(280px, 42dvh, 520px)"
+                        type="auto"
+                        offsetScrollbars
+                        className="bookshelf-table-scroll"
+                    >
+                        <BooksTable
+                            books={books}
+                            onStatusChange={onStatusChange}
+                        />
+                    </ScrollArea>
                 )}
                 <Group
                     justify="space-between"
@@ -249,7 +228,9 @@ export function BooksLibrary({
                         value={page}
                         onChange={onPageChange}
                         total={totalPages}
+                        size='sm'
                         radius="xl"
+                        classNames={bookshelfPaginationClassNames}
                     />
                 </Group>
 

@@ -226,3 +226,33 @@ body {
         height: 360px;
     }
 }
+
+/* Action buttons */
+
+.bookshelf-grid-action {
+    background: var(--bookshelf-background) !important;
+    border: none !important;
+    border-radius: 999px !important;
+    box-shadow:
+        3px 3px 6px rgba(0, 0, 0, 0.06),
+        -3px -3px 6px rgba(255, 255, 255, 0.55) !important;
+    transition:
+        color 150ms ease,
+        box-shadow 150ms ease,
+        transform 150ms ease;
+}
+
+.bookshelf-grid-action:hover {
+    color: var(--bookshelf-primary) !important;
+}
+
+.bookshelf-grid-action:active {
+    transform: translateY(1px);
+    box-shadow:
+        inset 2px 2px 5px rgba(0, 0, 0, 0.07),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.55) !important;
+}
+
+.bookshelf-grid-action-danger:hover {
+    color: #e03131 !important;
+}

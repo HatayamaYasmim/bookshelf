@@ -49,6 +49,8 @@ interface BooksLibraryProps {
     onClearFilters: () => void;
     isLoading: boolean;
     isFetching: boolean;
+    onEdit: (book: Book) => void;
+    onDelete: (book: Book) => void;
 }
 
 export function BooksLibrary({
@@ -70,6 +72,8 @@ export function BooksLibrary({
     onAuthorFilterChange,
     isLoading,
     isFetching,
+    onEdit,
+    onDelete,
 }: BooksLibraryProps) {
 
     return (
@@ -207,6 +211,8 @@ export function BooksLibrary({
                             <BooksTable
                                 books={books}
                                 onStatusChange={onStatusChange}
+                                onEdit={onEdit}
+                                onDelete={onDelete}
                             />
                         )}
                     </ScrollArea>

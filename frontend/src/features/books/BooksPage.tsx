@@ -7,37 +7,40 @@ import {
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks';
 import {
     keepPreviousData,
-    useMutation,
     useQuery,
-    useQueryClient,
 } from '@tanstack/react-query';
 
 import {
-    createBook,
     getBooks,
     getBooksStats,
-    updateBookStatus,
 } from '../../services/books';
-import { createAuthor, getAuthors } from '../../services/authors';
-import { CreateBookModal } from './components/CreateBookModal';
-import { notifications } from '@mantine/notifications';
+import { BookFormModal } from './components/BookFormModal';
+
 import { CreateAuthorModal } from './components/CreateAuthorModal';
 import { BooksHeader } from './components/BooksHeader';
 import { BooksStats } from './components/BooksStats';
 import { BooksLibrary } from './components/BooksLibrary';
 import { useState } from 'react';
-import type { ReadingStatus } from '../../types/book';
+import type { Book, ReadingStatus } from '../../types/book';
 import { BooksStatsSkeleton } from './components/BooksStatsSkeleton';
+import { DeleteBookModal } from './components/DeleteBookModal';
+import { useBookMutations } from '../hooks/useBookMutations';
+import { useAuthorMutations } from '../hooks/useAuthorMutations';
+import { getAuthors } from '../../services/authors';
 
 export function BooksPage() {
-    const queryClient = useQueryClient();
-
     const [search, setSearch] = useState('')
     const [status, setStatus] =
         useState<ReadingStatus | null>(null);
     const [authorId, setAuthorId] =
         useState<number | null>(null);
     const [debouncedSearch] = useDebouncedValue(search, 400)
+
+    const [selectedBook, setSelectedBook] =
+        useState<Book | null>(null);
+
+    const [bookToDelete, setBookToDelete] =
+        useState<Book | null>(null);
 
     const [page, setPage] = useState(1);
     const limit = 10;
@@ -51,6 +54,22 @@ export function BooksPage() {
     ] = useDisclosure(false);
 
     const [
+        editModalOpened,
+        {
+            open: openEditModal,
+            close: closeEditModal,
+        },
+    ] = useDisclosure(false);
+
+    const [
+        deleteModalOpened,
+        {
+            open: openDeleteModal,
+            close: closeDeleteModal,
+        },
+    ] = useDisclosure(false);
+
+    const [
         createAuthorModalOpened,
         {
             open: openCreateAuthorModal,
@@ -59,13 +78,6 @@ export function BooksPage() {
     ] = useDisclosure(false);
 
     const hasActiveFilters = search.trim() !== '' || status !== null || authorId !== null;
-
-    function handleClearFilters() {
-        setSearch('');
-        setStatus(null);
-        setAuthorId(null);
-        setPage(1);
-    }
 
     // =========================
     // Queries
@@ -108,81 +120,16 @@ export function BooksPage() {
         queryFn: getBooksStats,
     });
 
-    // =========================
-    // Mutations
-    // =========================
+    const {
+        createBookMutation,
+        updateBookMutation,
+        deleteBookMutation,
+        updateStatusMutation,
+    } = useBookMutations();
 
-    const updateStatusMutation = useMutation({
-        mutationFn: updateBookStatus,
-
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['books'],
-            });
-
-            notifications.show({
-                title: 'Status changed',
-                message: `The book's status has been successfully changed.`,
-                color: 'green',
-            });
-        },
-
-        onError: () => {
-            notifications.show({
-                title: 'Error',
-                message: `It was not possible to change the book's status.`,
-                color: 'red',
-            });
-        },
-    });
-
-    const createBookMutation = useMutation({
-        mutationFn: createBook,
-
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['books'],
-            });
-
-            notifications.show({
-                title: 'Book registered',
-                message: 'The book has been added to your bookshelf.',
-                color: 'green',
-            });
-        },
-
-        onError: () => {
-            notifications.show({
-                title: 'Error',
-                message: 'It was not possible to register the book.',
-                color: 'red',
-            });
-        },
-    });
-
-    const createAuthorMutation = useMutation({
-        mutationFn: createAuthor,
-
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['authors'],
-            });
-
-            notifications.show({
-                title: 'Registered author',
-                message: 'The author has been successfully registered.',
-                color: 'green',
-            });
-        },
-
-        onError: () => {
-            notifications.show({
-                title: 'Error',
-                message: 'It was not possible to register the author.',
-                color: 'red',
-            });
-        },
-    });
+    const {
+        createAuthorMutation,
+    } = useAuthorMutations();
 
     // =========================
     // Estados da página
@@ -214,6 +161,23 @@ export function BooksPage() {
     ) {
         setAuthorId(value);
         setPage(1);
+    }
+
+    function handleClearFilters() {
+        setSearch('');
+        setStatus(null);
+        setAuthorId(null);
+        setPage(1);
+    }
+
+    function handleEditBook(book: Book) {
+        setSelectedBook(book);
+        openEditModal();
+    }
+
+    function handleDeleteBook(book: Book) {
+        setBookToDelete(book);
+        openDeleteModal();
     }
 
     // =========================
@@ -259,12 +223,14 @@ export function BooksPage() {
                                 status,
                             });
                         }}
+                        onEdit={handleEditBook}
+                        onDelete={handleDeleteBook}
 
                     />
 
                 </Stack>
 
-                <CreateBookModal
+                <BookFormModal
                     opened={createModalOpened}
                     onClose={closeCreateModal}
                     authors={authors}
@@ -281,6 +247,60 @@ export function BooksPage() {
                         createAuthorMutation.mutateAsync(data)
                     }
                     isSubmitting={createAuthorMutation.isPending}
+                />
+
+                <DeleteBookModal
+                    opened={deleteModalOpened}
+                    onClose={() => {
+                        closeDeleteModal()
+                        setBookToDelete(null)
+                    }}
+                    book={bookToDelete}
+                    isDeleting={
+                        deleteBookMutation.isPending
+                    }
+                    onConfirm={async () => {
+                        if (!bookToDelete) {
+                            return;
+                        }
+
+                        await deleteBookMutation.mutateAsync(
+                            bookToDelete.id,
+                        );
+                        closeDeleteModal();
+                        setBookToDelete(null);
+
+                        if (books.length === 1 && page > 1) {
+                            setPage((currentPage) =>
+                                currentPage - 1,
+                            );
+                        }
+                    }}
+                />
+
+                <BookFormModal
+                    opened={editModalOpened}
+                    onClose={() => {
+                        closeEditModal();
+                        setSelectedBook(null);
+                    }}
+                    authors={authors}
+                    book={selectedBook}
+                    isSubmitting={
+                        updateBookMutation.isPending
+                    }
+                    onSubmit={async (data) => {
+                        if (!selectedBook) {
+                            return;
+                        }
+
+                        await updateBookMutation.mutateAsync({
+                            id: selectedBook.id,
+                            data,
+                        });
+                        closeEditModal();
+                        setSelectedBook(null);
+                    }}
                 />
             </Container>
         </>

@@ -1,10 +1,12 @@
 import {
+    ActionIcon,
     Badge,
+    Group,
     Menu,
     Table,
 } from '@mantine/core';
 
-import { IconCheck, IconChevronDown } from '@tabler/icons-react';
+import { IconCheck, IconChevronDown, IconDotsVertical, IconEdit, IconTrash } from '@tabler/icons-react';
 
 import type {
     Book,
@@ -18,6 +20,9 @@ interface BooksTableProps {
         id: number,
         status: ReadingStatus,
     ) => void;
+
+    onEdit: (book: Book) => void;
+    onDelete: (book: Book) => void;
 }
 
 function getStatusColor(status: ReadingStatus) {
@@ -62,6 +67,8 @@ function getStatusDotColor(status: ReadingStatus) {
 export function BooksTable({
     books,
     onStatusChange,
+    onEdit,
+    onDelete
 }: BooksTableProps) {
     function handleStatusChange(
         book: Book,
@@ -178,12 +185,40 @@ export function BooksTable({
                     </Menu.Dropdown>
                 </Menu>
             </Table.Td>
+            <Table.Td ta="center">
+                <Group
+                    gap="xs"
+                    justify="center"
+                    wrap="nowrap"
+                >
+                    <ActionIcon
+                        variant="transparent"
+                        radius="xl"
+                        size="lg"
+                        className="bookshelf-grid-action"
+                        aria-label={`Edit ${book.title}`}
+                        onClick={() => onEdit(book)}
+                    >
+                        <IconEdit size={17} />
+                    </ActionIcon>
+
+                    <ActionIcon
+                        variant="transparent"
+                        radius="xl"
+                        size="lg"
+                        className="bookshelf-grid-action bookshelf-grid-action-danger"
+                        aria-label={`Delete ${book.title}`}
+                        onClick={() => onDelete(book)}
+                    >
+                        <IconTrash size={17} />
+                    </ActionIcon>
+                </Group>
+            </Table.Td>
         </Table.Tr>
     ));
 
     return (
         <Table
-            // striped
             highlightOnHover
             verticalSpacing="sm"
         >
@@ -192,6 +227,9 @@ export function BooksTable({
                     <Table.Th>Title</Table.Th>
                     <Table.Th>Author</Table.Th>
                     <Table.Th>Status</Table.Th>
+                    <Table.Th ta="center" w={80}>
+                        Actions
+                    </Table.Th>
                 </Table.Tr>
             </Table.Thead>
 

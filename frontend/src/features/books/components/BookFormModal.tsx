@@ -11,10 +11,11 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { CreateBookData } from '../../../services/books';
 import type { Author } from '../../../types/author';
-import type { ReadingStatus } from '../../../types/book';
+import type { Book, ReadingStatus } from '../../../types/book';
 import { RiBookAiFill } from 'react-icons/ri';
 import { BookshelfModal } from './ui/BookshellfModal';
 import { bookshelfSelectClassNames } from '../../../styles/mantine';
+import { useEffect } from 'react';
 
 const createBookSchema = z.object({
   title: z
@@ -42,6 +43,8 @@ interface CreateBookModalProps {
   onClose: () => void;
   authors: Author[];
 
+  book?: Book | null;
+
   onSubmit: (
     data: CreateBookData,
   ) => Promise<unknown>;
@@ -49,11 +52,12 @@ interface CreateBookModalProps {
   isSubmitting?: boolean;
 }
 
-export function CreateBookModal({
+export function BookFormModal({
   opened,
   onClose,
   authors,
   onSubmit,
+  book,
   isSubmitting = false,
 }: CreateBookModalProps) {
   const {
@@ -90,11 +94,35 @@ export function CreateBookModal({
     onClose();
   }
 
+  const isEditing = !!book;
+
+  useEffect(() => {
+    if (book) {
+      reset({
+        title: book.title,
+        authorId: String(book.authorId),
+        status: book.status,
+      });
+
+      return;
+    }
+
+    reset({
+      title: '',
+      authorId: '',
+      status: 'UNREAD',
+    });
+  }, [book, opened, reset]);
+
   return (
     <BookshelfModal
       opened={opened}
       onClose={handleClose}
-      title="Book"
+      title={
+        isEditing
+          ? 'Edit book'
+          : 'Add book'
+      }
       icon={
         <RiBookAiFill
           size={21}

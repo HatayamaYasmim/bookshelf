@@ -4,7 +4,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function getBooks(params: BooksQueryParams = {},): Promise<BooksResponse> {
   const query = new URLSearchParams();
-   if (params.page) {
+  if (params.page) {
     query.set('page', String(params.page));
   }
 
@@ -90,14 +90,45 @@ export async function createBook(
   return response.json();
 }
 
-export async function getBooksStats() : Promise<BooksStatsResponse> {
+export async function getBooksStats(): Promise<BooksStatsResponse> {
   const response = await fetch(
-    `${apiUrl}/books/stats`, 
+    `${apiUrl}/books/stats`,
   );
 
   if (!response.ok) {
     throw new Error('Failed to load book stats');
   }
 
+  return response.json()
+}
+
+export async function deleteBook(id: number): Promise<void> {
+  const response = await fetch(`${apiUrl}/books/${id}`, { method: 'DELETE' });
+  if (!response.ok) {
+    throw new Error('Failed to delete book')
+  }
+  return response.json();
+}
+
+export interface UpdateBookData {
+  title: string
+  authorId: number
+  status: ReadingStatus
+}
+
+interface UpdateBookParams {
+  id: number
+  data: UpdateBookData
+}
+
+export async function updateBook({
+  id, data
+}: UpdateBookParams): Promise<Book> {
+  const response = await fetch(
+    `${apiUrl}/books/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
+  )
+  if (!response.ok) {
+    throw new Error('Failed to update book')
+  }
   return response.json()
 }

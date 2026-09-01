@@ -221,6 +221,7 @@ export function BooksTable({
         <Table
             highlightOnHover
             verticalSpacing="sm"
+             miw={480}
         >
             <Table.Thead>
                 <Table.Tr>

@@ -1,5 +1,6 @@
 import {
     Button,
+    Grid,
     Group,
     Pagination,
     Paper,
@@ -84,115 +85,183 @@ export function BooksLibrary({
         >
             <Stack gap="xl">
 
-                <Group
-                    justify="space-between"
+                <Grid
+                    gap="md"
                     align="center"
-                    wrap="wrap"
                 >
-                    <Group gap="xs">
-                        <LuBookOpen
-                            size={28}
-                            color="var(--bookshelf-primary)"
-                        />
+                    {/* Título */}
+                    <Grid.Col
+                        span={{
+                            base: 12,
+                            md: 3,
+                        }}
+                    >
+                        <Group gap="xs">
+                            <LuBookOpen
+                                size={28}
+                                color="var(--bookshelf-primary)"
+                            />
 
-                        <Title
-                            order={2}
-                            c="var(--bookshelf-primary)"
-                            fw={700}
+                            <Title
+                                order={2}
+                                c="var(--bookshelf-primary)"
+                                fw={700}
+                            >
+                                Library
+                            </Title>
+                        </Group>
+                    </Grid.Col>
+
+                    {/* Filtros */}
+                    <Grid.Col
+                        span={{
+                            base: 12,
+                            md: 9,
+                        }}
+                    >
+                        <Grid
+                            gap="md"
+                            align="center"
                         >
-                            Library
-                        </Title>
-                    </Group>
-
-                    <Group gap="md">
-                        <TextInput
-                            placeholder="Search books..."
-                            leftSection={<IoSearchOutline size={18} />}
-                            value={search}
-                            onChange={(event) =>
-                                onSearchChange(event.currentTarget.value)
-                            }
-                            w={260}
-                            styles={{
-                                input: {
-                                    background: 'var(--bookshelf-background)',
-                                    border: 'none',
-                                    borderRadius: '999px',
-                                    boxShadow:
-                                        'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
-                                },
-                            }}
-                        />
-
-                        <Select
-                            placeholder="All status"
-                            clearable
-                            value={status}
-                            onChange={(value) =>
-                                onStatusFilterChange(
-                                    value as ReadingStatus | null,
-                                )
-                            }
-                            data={[
-                                {
-                                    value: 'READ',
-                                    label: 'Read',
-                                },
-                                {
-                                    value: 'READING',
-                                    label: 'Reading',
-                                },
-                                {
-                                    value: 'UNREAD',
-                                    label: 'Unread',
-                                },
-                            ]}
-                            w={140}
-                            classNames={bookshelfSelectClassNames}
-                        />
-
-                        <Select
-                            placeholder="Author"
-                            searchable
-                            clearable
-                            value={
-                                authorId !== null
-                                    ? String(authorId)
-                                    : null
-                            }
-                            onChange={(value) =>
-                                onAuthorFilterChange(
-                                    value ? Number(value) : null,
-                                )}
-                            data={
-                                authors.map((author) => ({
-                                    value: String(author.id),
-                                    label: author.name,
-                                }))
-                            }
-                            w={180}
-                            classNames={bookshelfSelectClassNames}
-                        />
-                        {hasActiveFilters && (
-                            <Button
-                                variant="transparent"
-                                size="sm"
-                                leftSection={<GiMagicBroom size={16} />}
-                                onClick={onClearFilters}
-                                styles={{
-                                    root: {
-                                        border: 'none',
-                                        borderRadius: '999px',
-                                        boxShadow:
-                                            'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
-                                    },
+                            <Grid.Col
+                                span={{
+                                    base: 12,
+                                    sm: 6,
+                                    md: hasActiveFilters ? 4 : 5,
                                 }}
                             >
-                                Clear filters
-                            </Button>
-                        )}
-                    </Group>
-                </Group>
+                                <TextInput
+                                    placeholder="Search books..."
+                                    leftSection={
+                                        <IoSearchOutline size={18} />
+                                    }
+                                    value={search}
+                                    onChange={(event) =>
+                                        onSearchChange(
+                                            event.currentTarget.value,
+                                        )
+                                    }
+                                    styles={{
+                                        input: {
+                                            background:
+                                                'var(--bookshelf-background)',
+                                            border: 'none',
+                                            borderRadius: '999px',
+                                            boxShadow:
+                                                'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
+                                        },
+                                    }}
+                                />
+                            </Grid.Col>
+
+                            <Grid.Col
+                                span={{
+                                    base: 12,
+                                    sm: 6,
+                                    md: hasActiveFilters ? 2 : 3,
+                                }}
+                            >
+                                <Select
+                                    placeholder="All status"
+                                    clearable
+                                    value={status}
+                                    onChange={(value) =>
+                                        onStatusFilterChange(
+                                            value as ReadingStatus | null,
+                                        )
+                                    }
+                                    data={[
+                                        {
+                                            value: 'READ',
+                                            label: 'Read',
+                                        },
+                                        {
+                                            value: 'READING',
+                                            label: 'Reading',
+                                        },
+                                        {
+                                            value: 'UNREAD',
+                                            label: 'Unread',
+                                        },
+                                    ]}
+                                    classNames={
+                                        bookshelfSelectClassNames
+                                    }
+                                />
+                            </Grid.Col>
+
+                            <Grid.Col
+                                span={{
+                                    base: 12,
+                                    sm: 6,
+                                    md: hasActiveFilters ? 3 : 4,
+                                }}
+                            >
+                                <Select
+                                    placeholder="Author"
+                                    searchable
+                                    clearable
+                                    value={
+                                        authorId !== null
+                                            ? String(authorId)
+                                            : null
+                                    }
+                                    onChange={(value) =>
+                                        onAuthorFilterChange(
+                                            value
+                                                ? Number(value)
+                                                : null,
+                                        )
+                                    }
+                                    data={authors.map(
+                                        (author) => ({
+                                            value: String(author.id),
+                                            label: author.name,
+                                        }),
+                                    )}
+                                    classNames={
+                                        bookshelfSelectClassNames
+                                    }
+                                />
+                            </Grid.Col>
+
+                            {hasActiveFilters && (
+                                <Grid.Col
+                                    span={{
+                                        base: 12,
+                                        sm: 6,
+                                        md: 3,
+                                    }}
+                                >
+                                    <Button
+                                        fullWidth
+                                        variant="transparent"
+                                        size="sm"
+                                        leftSection={
+                                            <GiMagicBroom
+                                                size={16}
+                                            />
+                                        }
+                                        onClick={
+                                            onClearFilters
+                                        }
+                                        styles={{
+                                            root: {
+                                                border: 'none',
+                                                borderRadius:
+                                                    '999px',
+                                                boxShadow:
+                                                    'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
+                                            },
+                                        }}
+                                    >
+                                        Clear filters
+                                    </Button>
+                                </Grid.Col>
+                            )}
+                        </Grid>
+                    </Grid.Col>
+                </Grid>
 
                 {!isLoading && books.length === 0 ? (
                     <BooksEmptyState

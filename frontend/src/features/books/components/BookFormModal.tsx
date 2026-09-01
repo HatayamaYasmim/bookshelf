@@ -13,7 +13,7 @@ import type { CreateBookData } from '../../../services/books';
 import type { Author } from '../../../types/author';
 import type { Book, ReadingStatus } from '../../../types/book';
 import { RiBookAiFill } from 'react-icons/ri';
-import { BookshelfModal } from './ui/BookshellfModal';
+import { BookshelfModal } from '../../../components/ui/BookshellfModal';
 import { bookshelfSelectClassNames } from '../../../styles/mantine';
 import { useEffect } from 'react';
 

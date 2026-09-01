@@ -4,7 +4,7 @@ import {
     useMutation,
     useQueryClient,
 } from '@tanstack/react-query';
-import { createAuthor } from '../../services/authors';
+import { createAuthor } from '../../../services/authors';
 
 
 export function useAuthorMutations() {

@@ -13,6 +13,8 @@ import '@fontsource/plus-jakarta-sans/600.css';
 
 import App from './App.tsx';
 import './index.css'
+import '@mantine/notifications/styles.css';
+import { BrowserRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 
@@ -33,8 +35,10 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={theme}>
-         <Notifications position="top-center" />
-        <App />
+        <Notifications position="top-center" />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </MantineProvider>
     </QueryClientProvider>
   </StrictMode>,

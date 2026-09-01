@@ -15,17 +15,15 @@ import {
     getBooksStats,
 } from '../../services/books';
 import { BookFormModal } from './components/BookFormModal';
-
 import { CreateAuthorModal } from './components/CreateAuthorModal';
-import { BooksHeader } from './components/BooksHeader';
 import { BooksStats } from './components/BooksStats';
 import { BooksLibrary } from './components/BooksLibrary';
 import { useState } from 'react';
 import type { Book, ReadingStatus } from '../../types/book';
 import { BooksStatsSkeleton } from './components/BooksStatsSkeleton';
 import { DeleteBookModal } from './components/DeleteBookModal';
-import { useBookMutations } from '../hooks/useBookMutations';
-import { useAuthorMutations } from '../hooks/useAuthorMutations';
+import { useBookMutations } from './hooks/useBookMutations';
+import { useAuthorMutations } from './hooks/useAuthorMutations';
 import { getAuthors } from '../../services/authors';
 
 export function BooksPage() {
@@ -94,7 +92,6 @@ export function BooksPage() {
     const {
         data: booksResponse,
         isLoading: isBooksLoading,
-        isFetching: isBooksFetching,
         isError: isBooksError,
     } = useQuery({
         queryKey: ['books', booksQueryParams],
@@ -180,16 +177,8 @@ export function BooksPage() {
         openDeleteModal();
     }
 
-    // =========================
-    // Render
-    // =========================
-
     return (
         <>
-            <BooksHeader
-                onAddBook={openCreateModal}
-                onAddAuthor={openCreateAuthorModal}
-            />
             <Container size="xl" py="xl">
                 <Stack gap="xl">
 
@@ -216,7 +205,6 @@ export function BooksPage() {
                         hasActiveFilters={hasActiveFilters}
                         onClearFilters={handleClearFilters}
                         isLoading={isBooksLoading}
-                        isFetching={isBooksFetching}
                         onStatusChange={(id, status) => {
                             updateStatusMutation.mutate({
                                 id,
@@ -225,7 +213,8 @@ export function BooksPage() {
                         }}
                         onEdit={handleEditBook}
                         onDelete={handleDeleteBook}
-
+                        onAddAuthor={openCreateAuthorModal}
+                        onAddBook={openCreateModal}
                     />
 
                 </Stack>

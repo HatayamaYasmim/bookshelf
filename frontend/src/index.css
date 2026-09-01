@@ -256,3 +256,27 @@ body {
 .bookshelf-grid-action-danger:hover {
     color: #e03131 !important;
 }
+
+.bookshelf-app-header {
+    background: var(--bookshelf-background);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.bookshelf-nav-link {
+    color: var(--bookshelf-text-muted);
+    font-weight: 600;
+    text-decoration: none;
+
+    transition:
+        color 150ms ease;
+}
+
+.bookshelf-nav-link:hover {
+    color: var(--bookshelf-primary);
+}
+
+.bookshelf-nav-link-active {
+    color: var(--bookshelf-primary);
+}

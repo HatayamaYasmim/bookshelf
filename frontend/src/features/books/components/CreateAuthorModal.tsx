@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { CreateAuthorData } from '../../../services/authors';
 import { GiMagicPalm } from 'react-icons/gi';
-import { BookshelfModal } from './ui/BookshellfModal';
+import { BookshelfModal } from '../../../components/ui/BookshellfModal';
 
 const createAuthorSchema = z.object({
     name: z

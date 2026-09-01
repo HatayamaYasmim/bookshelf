@@ -10,7 +10,7 @@ import {
     deleteBook,
     updateBook,
     updateBookStatus,
-} from '../../services/books';
+} from '../../../services/books';
 
 export function useBookMutations() {
     const queryClient = useQueryClient();

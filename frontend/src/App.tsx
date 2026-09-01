@@ -1,7 +1,13 @@
-import { BooksPage } from './features/books/BooksPage';
+import { AppHeader } from './components/layout/AppHeader';
+import { AppRoutes } from './routes/AppRoutes';
 
 function App() {
-  return <BooksPage />;
+  return (
+    <>
+      <AppHeader />
+      <AppRoutes />
+    </>
+  )
 }
 
 export default App;

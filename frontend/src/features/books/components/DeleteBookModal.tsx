@@ -8,7 +8,7 @@ import {
 import { IconTrash } from '@tabler/icons-react';
 
 import type { Book } from '../../../types/book';
-import { BookshelfModal } from './ui/BookshellfModal';
+import { BookshelfModal } from '../../../components/ui/BookshellfModal';
 
 interface DeleteBookModalProps {
     opened: boolean;

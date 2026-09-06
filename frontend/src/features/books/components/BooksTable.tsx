@@ -4,9 +4,10 @@ import {
     Group,
     Menu,
     Table,
+    Text
 } from '@mantine/core';
 
-import { IconCheck, IconChevronDown, IconDotsVertical, IconEdit, IconTrash } from '@tabler/icons-react';
+import { IconCheck, IconChevronDown, IconEdit, IconTrash } from '@tabler/icons-react';
 
 import type {
     Book,
@@ -95,6 +96,34 @@ export function BooksTable({
 
             <Table.Td>
                 {book.author.name}
+            </Table.Td>
+
+            <Table.Td>
+                {book.genres.length > 0 ? (
+                    <Group gap={6} wrap="wrap">
+                        {book.genres.map((genre) => (
+                            <Badge
+                                key={genre.id}
+                                variant="outline"
+                                radius="xl"
+                                styles={{
+                                    root: {
+                                        border: 'none',
+                                        textTransform: 'none',
+                                        boxShadow:
+                                            'inset 3px 3px 6px rgba(0,0,0,0.05), inset -3px -3px 6px rgba(255,255,255,0.5)',
+                                    },
+                                }}
+                            >
+                                {genre.name}
+                            </Badge>
+                        ))}
+                    </Group>
+                ) : (
+                    <Text size="sm" c="dimmed">
+                        —
+                    </Text>
+                )}
             </Table.Td>
 
             <Table.Td>
@@ -221,12 +250,13 @@ export function BooksTable({
         <Table
             highlightOnHover
             verticalSpacing="sm"
-             miw={480}
+            miw={480}
         >
             <Table.Thead>
                 <Table.Tr>
                     <Table.Th>Title</Table.Th>
                     <Table.Th>Author</Table.Th>
+                    <Table.Th>Genres</Table.Th>
                     <Table.Th>Status</Table.Th>
                     <Table.Th ta="center" w={80}>
                         Actions

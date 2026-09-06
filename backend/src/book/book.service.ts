@@ -40,7 +40,8 @@ export class BookService {
             this.prisma.book.findMany({
                 where,
                 include: {
-                    author: true
+                    author: true,
+                    genres: true
                 },
                 orderBy: {
                     title: 'asc'
@@ -77,6 +78,25 @@ export class BookService {
             );
         }
 
+        if (data.genreIds?.length) {
+            const genres = await this.prisma.genre.findMany({
+                where: {
+                    id: {
+                        in: data.genreIds,
+                    },
+                },
+                select: {
+                    id: true,
+                },
+            });
+
+            if (genres.length !== data.genreIds.length) {
+                throw new NotFoundException(
+                    'One or more genres were not found',
+                );
+            }
+        }
+
         return this.prisma.book.create({
             data: {
                 title: data.title,
@@ -92,9 +112,18 @@ export class BookService {
                         id: data.authorId,
                     },
                 },
+                ...(data.genreIds?.length && {
+                    genres: {
+                        connect: data.genreIds.map((id) => ({
+                            id,
+                        })),
+                    },
+                }),
             },
+
             include: {
                 author: true,
+                genres: true,
             },
         });
     }
@@ -138,6 +167,7 @@ export class BookService {
             },
             include: {
                 author: true,
+                genres: true
             },
         });
     }
@@ -200,6 +230,30 @@ export class BookService {
             throw new NotFoundException('Author not found');
         }
 
+        if (data.genreIds?.length) {
+            const genres =
+                await this.prisma.genre.findMany({
+                    where: {
+                        id: {
+                            in: data.genreIds,
+                        },
+                    },
+                    select: {
+                        id: true,
+                    },
+                });
+
+            if (
+                genres.length !==
+                data.genreIds.length
+            ) {
+                throw new NotFoundException(
+                    'One or more genres were not found',
+                );
+            }
+        }
+
+
         let readAt = currentBook.readAt;
 
         if (
@@ -225,9 +279,17 @@ export class BookService {
                 authorId: data.authorId,
                 status: data.status,
                 readAt,
+                ...(data.genreIds && {
+                    genres: {
+                        set: data.genreIds.map((id) => ({
+                            id,
+                        })),
+                    },
+                }),
             },
             include: {
-                author: true
+                author: true,
+                genres: true
             }
         })
     }

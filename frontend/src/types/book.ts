@@ -1,4 +1,5 @@
 import type { Author } from './author';
+import type { Genre } from './genre';
 
 export type ReadingStatus =
   | 'UNREAD'
@@ -16,6 +17,8 @@ export interface Book {
 
   createdAt: string;
   updatedAt: string;
+
+  genres: Genre[];
 }
 
 export interface BooksQueryParams {

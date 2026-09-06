@@ -83,6 +83,10 @@ export class BookService {
                 ...(data.status && {
                     status: data.status,
                 }),
+                readAt:
+                    data.status === 'READ'
+                        ? new Date()
+                        : null,
                 author: {
                     connect: {
                         id: data.authorId,
@@ -99,10 +103,38 @@ export class BookService {
         id: number,
         status: 'UNREAD' | 'READING' | 'READ',
     ) {
+        const currentBook =
+            await this.prisma.book.findUnique({
+                where: { id },
+            });
+
+        if (!currentBook) {
+            throw new NotFoundException(
+                'Book not found',
+            );
+        }
+
+        let readAt = currentBook.readAt;
+
+        if (
+            currentBook.status !== 'READ' &&
+            status === 'READ'
+        ) {
+            readAt = new Date();
+        }
+
+        if (
+            currentBook.status === 'READ' &&
+            status !== 'READ'
+        ) {
+            readAt = null;
+        }
+
         return this.prisma.book.update({
             where: { id },
             data: {
                 status,
+                readAt
             },
             include: {
                 author: true,
@@ -147,6 +179,17 @@ export class BookService {
         id: number,
         data: UpdateBookDto,
     ) {
+        const currentBook =
+            await this.prisma.book.findUnique({
+                where: { id },
+            });
+
+        if (!currentBook) {
+            throw new NotFoundException(
+                'Book not found',
+            );
+        }
+
         const author = await this.prisma.author.findUnique({
             where: {
                 id: data.authorId
@@ -157,6 +200,22 @@ export class BookService {
             throw new NotFoundException('Author not found');
         }
 
+        let readAt = currentBook.readAt;
+
+        if (
+            currentBook.status !== 'READ' &&
+            data.status === 'READ'
+        ) {
+            readAt = new Date();
+        }
+
+        if (
+            currentBook.status === 'READ' &&
+            data.status !== 'READ'
+        ) {
+            readAt = null;
+        }
+
         return this.prisma.book.update({
             where: {
                 id,
@@ -165,6 +224,7 @@ export class BookService {
                 title: data.title,
                 authorId: data.authorId,
                 status: data.status,
+                readAt,
             },
             include: {
                 author: true
@@ -172,10 +232,10 @@ export class BookService {
         })
     }
 
-    async remove(id: number){
-        const book = await this.prisma.book.findUnique({where: {id}})
+    async remove(id: number) {
+        const book = await this.prisma.book.findUnique({ where: { id } })
 
-        if(!book) { 
+        if (!book) {
             throw new NotFoundException('Book not found')
         }
 

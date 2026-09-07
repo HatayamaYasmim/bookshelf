@@ -48,7 +48,7 @@ export function ReadingActivityCard({
     <Paper
       p="xl"
       radius="xl"
-      className="bookshelf-dashboard-card"
+       className="bookshelf-dashboard-card bookshelf-dashboard-main-card"
       mih={320}
     >
       <Stack gap="xl">

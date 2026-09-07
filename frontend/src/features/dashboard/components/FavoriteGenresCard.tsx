@@ -20,24 +20,24 @@ interface FavoriteGenresCardProps {
 
 const genreColors = [
     {
-        ring: 'indigo.5',
-        dot: 'var(--mantine-color-indigo-5)',
+        color: '#6366f1',
+        dot: '#6366f1',
     },
     {
-        ring: 'violet.6',
-        dot: 'var(--mantine-color-violet-6)',
+        color: '#818cf8',
+        dot: '#818cf8',
     },
     {
-        ring: 'blue.4',
-        dot: 'var(--mantine-color-blue-4)',
+        color: '#a78bfa',
+        dot: '#a78bfa',
     },
     {
-        ring: 'grape.4',
-        dot: 'var(--mantine-color-grape-4)',
+        color: '#c084fc',
+        dot: '#c084fc',
     },
     {
-        ring: 'gray.4',
-        dot: 'var(--mantine-color-gray-4)',
+        color: '#93c5fd',
+        dot: '#93c5fd',
     },
 ];
 
@@ -49,25 +49,94 @@ export function FavoriteGenresCard({
         0,
     );
 
-    const sections = genres.map(
-        (genre, index) => ({
-            value:
-                total > 0
-                    ? (genre.count / total) * 100
-                    : 0,
+    const firstColor = genreColors[0].color;
 
-            color:
-                genreColors[
-                    index % genreColors.length
-                ].ring,
-        }),
-    );
+    const lastColor =
+        genreColors[
+            (genres.length - 1) % genreColors.length
+        ].color;
+
+    const seamColor = `color-mix(
+    in srgb,
+    ${lastColor} 50%,
+    ${firstColor} 50%
+)`;
+
+    const seamSize = 3;
+
+    let accumulatedPercentage = 0;
+
+    const gradientSections: string[] = [
+        // Continua a mistura depois do ponto 0%
+        `${seamColor} 0%`,
+        `${firstColor} ${seamSize}%`,
+    ];
+
+    genres.forEach((genre, index) => {
+        const percentage =
+            total > 0
+                ? (genre.count / total) * 100
+                : 0;
+
+        const start = accumulatedPercentage;
+        const end = start + percentage;
+
+        const currentColor =
+            genreColors[
+                index % genreColors.length
+            ].color;
+
+        const nextColor =
+            genreColors[
+                (index + 1) % genreColors.length
+            ].color;
+
+        const transitionSize = Math.min(
+            3,
+            percentage / 4,
+        );
+
+        const transitionStart =
+            end - transitionSize;
+
+        if (index === 0) {
+            gradientSections.push(
+                `${currentColor} ${Math.max(start, seamSize)}%`,
+            );
+        } else {
+            gradientSections.push(
+                `${currentColor} ${start}%`,
+            );
+        }
+
+        // Na última cor, prepara a transição para atravessar o topo
+        if (index === genres.length - 1) {
+            gradientSections.push(
+                `${currentColor} ${Math.min(
+                    transitionStart,
+                    100 - seamSize,
+                )}%`,
+                `${seamColor} 100%`,
+            );
+        } else {
+            gradientSections.push(
+                `${currentColor} ${transitionStart}%`,
+                `${nextColor} ${end}%`,
+            );
+        }
+
+        accumulatedPercentage = end;
+    });
+
+    const genreGradient = `conic-gradient(
+    ${gradientSections.join(', ')}
+)`;
 
     return (
         <Paper
             p="xl"
             radius="xl"
-            className="bookshelf-dashboard-card"
+            className="bookshelf-dashboard-card bookshelf-dashboard-main-card"
             mih={360}
         >
             <Stack gap="xl">
@@ -115,32 +184,11 @@ export function FavoriteGenresCard({
                         gap={48}
                         mih={240}
                     >
-                        <RingProgress
-                            size={185}
-                            thickness={13}
-                            roundCaps
-                            sections={sections}
-                            label={
-                                <Stack
-                                    gap={0}
-                                    align="center"
-                                >
-                                    <Text
-                                        fw={700}
-                                        size="xl"
-                                        c="var(--bookshelf-primary)"
-                                    >
-                                        {genres.length}
-                                    </Text>
-
-                                    <Text
-                                        size="xs"
-                                        c="dimmed"
-                                    >
-                                        top genres
-                                    </Text>
-                                </Stack>
-                            }
+                        <div
+                            className="bookshelf-genre-ring"
+                            style={{
+                                background: genreGradient,
+                            }}
                         />
 
                         <Stack gap="md">

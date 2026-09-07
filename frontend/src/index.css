@@ -314,3 +314,56 @@ body {
     6px 6px 14px rgba(0, 0, 0, 0.05),
     -6px -6px 14px rgba(255, 255, 255, 0.5);
 }
+
+.bookshelf-dashboard-card {
+  height: 100%;
+  background: var(--bookshelf-background);
+  border: none;
+
+  box-shadow:
+    8px 8px 18px rgba(0, 0, 0, 0.06),
+    -8px -8px 18px rgba(255, 255, 255, 0.55);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.bookshelf-dashboard-main-card {
+  min-height: 360px;
+}
+.bookshelf-genre-ring {
+  width: 185px;
+  height: 185px;
+  border-radius: 50%;
+  position: relative;
+  isolation: isolate;
+
+  box-shadow:
+    0 0 16px rgba(99, 102, 241, 0.14),
+    6px 6px 14px rgba(0, 0, 0, 0.05),
+    -6px -6px 14px rgba(255, 255, 255, 0.5);
+}
+
+.bookshelf-genre-ring::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(12px) saturate(1.2);
+  opacity: 0.35;
+  z-index: -1;
+}
+
+.bookshelf-genre-ring::after {
+  content: '';
+  position: absolute;
+  inset: 15px;
+  border-radius: 50%;
+  background: var(--bookshelf-background);
+
+  box-shadow:
+    inset 4px 4px 8px rgba(0, 0, 0, 0.04),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+}

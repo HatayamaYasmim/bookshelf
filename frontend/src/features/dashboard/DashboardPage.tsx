@@ -36,10 +36,11 @@ export function DashboardPage() {
             <Stack gap="xl">
                 <Stack gap={4}>
                     <Title
-                        order={1}
-                        c="var(--bookshelf-text)"
+                        order={2}
+                        c="var(--bookshelf-primary)"
+                        fw={700}
                     >
-                        Reading Dashboard
+                        Dashboard
                     </Title>
 
                     <Text c="dimmed">

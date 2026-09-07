@@ -280,3 +280,37 @@ body {
 .bookshelf-nav-link-active {
     color: var(--bookshelf-primary);
 }
+
+/* Dashboard */
+
+.bookshelf-dashboard-card {
+  min-height: 150px;
+  background: var(--bookshelf-background);
+  border: none;
+  box-shadow:
+    8px 8px 18px rgba(0, 0, 0, 0.06),
+    -8px -8px 18px rgba(255, 255, 255, 0.55);
+}
+
+.bookshelf-current-reading-cover {
+  width: 110px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--bookshelf-background);
+
+  box-shadow:
+    8px 8px 18px rgba(0, 0, 0, 0.06),
+    -8px -8px 18px rgba(255, 255, 255, 0.55);
+}
+
+.bookshelf-dashboard-period {
+  padding: 8px 14px;
+  border-radius: 999px;
+  box-shadow:
+    6px 6px 14px rgba(0, 0, 0, 0.05),
+    -6px -6px 14px rgba(255, 255, 255, 0.5);
+}

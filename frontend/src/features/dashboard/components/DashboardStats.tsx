@@ -10,7 +10,6 @@ import {
 import type {
   ReadingDashboardResponse,
 } from '../../../types/dashboard';
-import { GiBlackBook, GiBurningBook, GiChecklist, GiRead } from 'react-icons/gi';
 import { RiBookAiLine } from 'react-icons/ri';
 import { PiBooksLight, PiBooksThin, PiShootingStarThin } from "react-icons/pi";
 import { IoBookOutline } from 'react-icons/io5';
@@ -35,14 +34,14 @@ export function DashboardStats({
       value: dashboard.readThisYear,
       description: 'books completed',
       color: '#6366f1',
-      icon: <IoBookOutline  size={40} />
+      icon: <IoBookOutline size={40} />
     },
     {
       label: 'TOTAL BOOKS',
       value: dashboard.totalBooks,
       description: `${dashboard.read} read`,
       color: '#818cf8',
-      icon: <PiBooksLight   size={40} />,
+      icon: <PiBooksLight size={40} />,
     },
   ];
 
@@ -53,7 +52,8 @@ export function DashboardStats({
           key={stat.label}
           span={{
             base: 12,
-            sm: 4,
+            sm: 6,
+            lg: 4,
           }}
         ><Paper
           p="xl"

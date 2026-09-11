@@ -49,12 +49,15 @@ export function FavoriteGenresCard({
         0,
     );
 
+    const hasGenres = genres.length > 0;
+
     const firstColor = genreColors[0].color;
 
-    const lastColor =
-        genreColors[
+    const lastColor = hasGenres
+        ? genreColors[
             (genres.length - 1) % genreColors.length
-        ].color;
+        ].color
+        : firstColor;
 
     const seamColor = `color-mix(
     in srgb,
@@ -71,6 +74,7 @@ export function FavoriteGenresCard({
         `${seamColor} 0%`,
         `${firstColor} ${seamSize}%`,
     ];
+
 
     genres.forEach((genre, index) => {
         const percentage =
@@ -151,7 +155,7 @@ export function FavoriteGenresCard({
                     </Title>
                 </Group>
 
-                {genres.length === 0 ? (
+                {!hasGenres ? (
                     <Center mih={240}>
                         <Stack
                             gap="xs"

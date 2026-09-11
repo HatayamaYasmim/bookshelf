@@ -31,6 +31,7 @@ export function DashboardPage() {
         );
     }
 
+
     return (
         <Container size="xl" py="xl">
             <Stack gap="xl">

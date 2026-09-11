@@ -15,17 +15,23 @@ import {
 export function useBookMutations() {
     const queryClient = useQueryClient();
 
-    function invalidateBooks() {
-        return queryClient.invalidateQueries({
-            queryKey: ['books'],
-        });
+    function invalidateBookData() {
+        return Promise.all([
+
+            queryClient.invalidateQueries({
+                queryKey: ['books'],
+            }),
+            queryClient.invalidateQueries({
+                queryKey: ['dashboard', 'reading'],
+            }),
+        ])
     }
 
     const updateStatusMutation = useMutation({
         mutationFn: updateBookStatus,
 
-        onSuccess: () => {
-            invalidateBooks();
+        onSuccess: async () => {
+            await invalidateBookData();
 
             notifications.show({
                 title: 'Status changed',
@@ -48,8 +54,8 @@ export function useBookMutations() {
     const createBookMutation = useMutation({
         mutationFn: createBook,
 
-        onSuccess: () => {
-            invalidateBooks();
+        onSuccess: async () => {
+            await invalidateBookData();
 
             notifications.show({
                 title: 'Book registered',
@@ -72,8 +78,8 @@ export function useBookMutations() {
     const deleteBookMutation = useMutation({
         mutationFn: deleteBook,
 
-        onSuccess: () => {
-            invalidateBooks();
+        onSuccess: async () => {
+            await invalidateBookData();
 
             notifications.show({
                 title: 'Book deleted',
@@ -96,8 +102,8 @@ export function useBookMutations() {
     const updateBookMutation = useMutation({
         mutationFn: updateBook,
 
-        onSuccess: () => {
-            invalidateBooks();
+        onSuccess: async () => {
+            await invalidateBookData();
 
             notifications.show({
                 title: 'Book updated',

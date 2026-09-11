@@ -44,11 +44,15 @@ export function ReadingActivityCard({
     books: item.count,
   }));
 
+  const hasActivity = activity.some(
+  (item) => item.count > 0,
+);
+
   return (
     <Paper
       p="xl"
       radius="xl"
-       className="bookshelf-dashboard-card bookshelf-dashboard-main-card"
+      className="bookshelf-dashboard-card bookshelf-dashboard-main-card"
       mih={320}
     >
       <Stack gap="xl">
@@ -76,7 +80,7 @@ export function ReadingActivityCard({
           </Text>
         </Group>
 
-        {activity.length === 0 ? (
+        {!hasActivity ? (
           <Stack
             align="center"
             justify="center"

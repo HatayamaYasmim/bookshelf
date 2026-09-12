@@ -282,14 +282,17 @@ body {
 }
 
 /* Dashboard */
-
 .bookshelf-dashboard-card {
   min-height: 150px;
+  height: 100%;
   background: var(--bookshelf-background);
   border: none;
-  box-shadow:
-    8px 8px 18px rgba(0, 0, 0, 0.06),
+  box-shadow: 8px 8px 18px rgba(0, 0, 0, 0.06),
     -8px -8px 18px rgba(255, 255, 255, 0.55);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .bookshelf-current-reading-cover {
@@ -313,20 +316,6 @@ body {
   box-shadow:
     6px 6px 14px rgba(0, 0, 0, 0.05),
     -6px -6px 14px rgba(255, 255, 255, 0.5);
-}
-
-.bookshelf-dashboard-card {
-  height: 100%;
-  background: var(--bookshelf-background);
-  border: none;
-
-  box-shadow:
-    8px 8px 18px rgba(0, 0, 0, 0.06),
-    -8px -8px 18px rgba(255, 255, 255, 0.55);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 .bookshelf-dashboard-main-card {
@@ -366,4 +355,54 @@ body {
   box-shadow:
     inset 4px 4px 8px rgba(0, 0, 0, 0.04),
     inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+}
+
+/* auth */
+
+.bookshelf-auth-shader {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bookshelf-auth-page {
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+.bookshelf-auth-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  padding: 24px;
+}
+
+.bookshelf-login-card {
+  background: rgba(232, 234, 240, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 10px 10px 24px rgba(0, 0, 0, 0.08), -10px -10px 24px rgba(255, 255, 255, 0.55);
+}
+
+.bookshelf-login-logo {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--bookshelf-primary);
+  background: rgba(240, 242, 248, 0.75);
+  box-shadow: 6px 6px 14px rgba(57, 62, 110, 0.12), -6px -6px 14px rgba(255, 255, 255, 0.55);
+}
+
+.bookshelf-password-inner-input {
+  background: transparent !important;
+  border: none !important;
 }

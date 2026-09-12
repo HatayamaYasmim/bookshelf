@@ -6,6 +6,7 @@ import {
 
 import { BooksPage } from '../features/books/BooksPage';
 import { DashboardPage } from '../features/dashboard/DashboardPage';
+import { LoginPage } from '../features/auth/LoginPage';
 
 export function AppRoutes() {
     return (
@@ -39,6 +40,10 @@ export function AppRoutes() {
                     />
                 }
             />
+               <Route
+                    path="/login"
+                    element={<LoginPage />}
+                  />
         </Routes>
     );
 }

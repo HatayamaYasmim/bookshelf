@@ -139,11 +139,6 @@ const {
   queryFn: getGenres,
 });
 
-console.log('GENRES:', genres);
-console.log('GENRES LOADING:', isGenresLoading);
-console.log('GENRES ERROR:', isGenresError);
-console.log('GENRES ERROR DETAIL:', genresError);
-
     // =========================
     // Estados da página
     // =========================

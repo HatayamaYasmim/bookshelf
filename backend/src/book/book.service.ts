@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FindBooksQueryDto } from './dto/find-books-query.dto';
 import { UpdateBookDto } from './dto/update-book-dto';
+import { stat } from 'node:fs';
 
 @Injectable()
 export class BookService {
@@ -97,16 +98,18 @@ export class BookService {
             }
         }
 
+        const isRead = data.status === 'READ';
+        const completedAt = new Date();
+
         return this.prisma.book.create({
             data: {
                 title: data.title,
                 ...(data.status && {
                     status: data.status,
                 }),
-                readAt:
-                    data.status === 'READ'
-                        ? new Date()
-                        : null,
+                readAt: isRead
+                    ? completedAt
+                    : null,
                 author: {
                     connect: {
                         id: data.authorId,
@@ -117,6 +120,13 @@ export class BookService {
                         connect: data.genreIds.map((id) => ({
                             id,
                         })),
+                    },
+                }),
+                ...(isRead && {
+                    readingHistory: {
+                        create: {
+                            completedAt,
+                        },
                     },
                 }),
             },
@@ -143,31 +153,30 @@ export class BookService {
             );
         }
 
-        let readAt = currentBook.readAt;
+        const hasBeenCompleted = status === 'READ';
 
-        if (
-            currentBook.status !== 'READ' &&
-            status === 'READ'
-        ) {
-            readAt = new Date();
-        }
-
-        if (
-            currentBook.status === 'READ' &&
-            status !== 'READ'
-        ) {
-            readAt = null;
-        }
+        const completedAt = new Date();
 
         return this.prisma.book.update({
             where: { id },
+
             data: {
                 status,
-                readAt
+
+                ...(hasBeenCompleted && {
+                    readAt: completedAt,
+
+                    readingHistory: {
+                        create: {
+                            completedAt,
+                        },
+                    },
+                }),
             },
+
             include: {
                 author: true,
-                genres: true
+                genres: true,
             },
         });
     }
@@ -253,22 +262,8 @@ export class BookService {
             }
         }
 
-
-        let readAt = currentBook.readAt;
-
-        if (
-            currentBook.status !== 'READ' &&
-            data.status === 'READ'
-        ) {
-            readAt = new Date();
-        }
-
-        if (
-            currentBook.status === 'READ' &&
-            data.status !== 'READ'
-        ) {
-            readAt = null;
-        }
+        const hasBeenCompleted = currentBook.status !== 'READ' && data.status === 'READ';
+        const completedAt = new Date();
 
         return this.prisma.book.update({
             where: {
@@ -278,12 +273,20 @@ export class BookService {
                 title: data.title,
                 authorId: data.authorId,
                 status: data.status,
-                readAt,
                 ...(data.genreIds && {
                     genres: {
                         set: data.genreIds.map((id) => ({
                             id,
                         })),
+                    },
+                }),
+                ...(hasBeenCompleted && {
+                    readAt: completedAt,
+
+                    readingHistory: {
+                        create: {
+                            completedAt,
+                        },
                     },
                 }),
             },

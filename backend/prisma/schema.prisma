@@ -29,6 +29,7 @@ model Book {
   author   Author @relation(fields: [authorId], references: [id])
 
   genres Genre[]
+  readingHistory ReadingHistory[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -48,4 +49,16 @@ enum ReadingStatus {
   UNREAD
   READING
   READ
+}
+
+model ReadingHistory {
+  id          Int      @id @default(autoincrement())
+  completedAt DateTime @default(now())
+
+  bookId Int
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([bookId, completedAt])
 }

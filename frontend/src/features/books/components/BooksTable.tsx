@@ -75,10 +75,6 @@ export function BooksTable({
         book: Book,
         status: ReadingStatus,
     ) {
-        if (book.status === status) {
-            return;
-        }
-
         onStatusChange(book.id, status);
     }
 

@@ -98,7 +98,9 @@ export class DashboardService {
             // Genres from currently completed books
             this.prisma.book.findMany({
                 where: {
-                    status: 'READ',
+                    readingHistory: {
+                        some: {},
+                    },
                 },
                 select: {
                     genres: {

@@ -15,6 +15,7 @@ import App from './App.tsx';
 import './index.css'
 import '@mantine/notifications/styles.css';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './features/auth/context/AuthContext.tsx';
 
 const queryClient = new QueryClient();
 
@@ -37,7 +38,9 @@ createRoot(document.getElementById('root')!).render(
       <MantineProvider theme={theme}>
         <Notifications position="top-center" />
         <BrowserRouter>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </BrowserRouter>
       </MantineProvider>
     </QueryClientProvider>

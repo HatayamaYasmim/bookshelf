@@ -19,8 +19,19 @@ import {
     loginSchema,
     type LoginFormData,
 } from './schemas/loginSchema';
+import { useAuth } from './hooks/useAuth';
 
 export function LoginPage() {
+        const {
+        user,
+        isAuthenticated,
+    } = useAuth();
+
+    console.log({
+        user,
+        isAuthenticated,
+    });
+    
     const {
         control,
         handleSubmit,
@@ -151,8 +162,7 @@ export function LoginPage() {
                             Don't have an account?{' '}
                             <Anchor
                                 component="button"
-                                fw={600}
-                            >
+                                fw={600}>
                                 Create account
                             </Anchor>
                         </Text>

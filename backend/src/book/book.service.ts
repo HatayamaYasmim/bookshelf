@@ -40,7 +40,8 @@ export class BookService {
             this.prisma.book.findMany({
                 where,
                 include: {
-                    author: true
+                    author: true,
+                    genres: true
                 },
                 orderBy: {
                     title: 'asc'
@@ -77,6 +78,28 @@ export class BookService {
             );
         }
 
+        if (data.genreIds?.length) {
+            const genres = await this.prisma.genre.findMany({
+                where: {
+                    id: {
+                        in: data.genreIds,
+                    },
+                },
+                select: {
+                    id: true,
+                },
+            });
+
+            if (genres.length !== data.genreIds.length) {
+                throw new NotFoundException(
+                    'One or more genres were not found',
+                );
+            }
+        }
+
+        const isRead = data.status === 'READ';
+        const completedAt = new Date();
+
         return this.prisma.book.create({
             data: {
                 title: data.title,
@@ -88,9 +111,25 @@ export class BookService {
                         id: data.authorId,
                     },
                 },
+                ...(data.genreIds?.length && {
+                    genres: {
+                        connect: data.genreIds.map((id) => ({
+                            id,
+                        })),
+                    },
+                }),
+                ...(isRead && {
+                    readingHistory: {
+                        create: {
+                            completedAt,
+                        },
+                    },
+                }),
             },
+
             include: {
                 author: true,
+                genres: true,
             },
         });
     }
@@ -99,13 +138,39 @@ export class BookService {
         id: number,
         status: 'UNREAD' | 'READING' | 'READ',
     ) {
+        const currentBook =
+            await this.prisma.book.findUnique({
+                where: { id },
+            });
+
+        if (!currentBook) {
+            throw new NotFoundException(
+                'Book not found',
+            );
+        }
+
+        const hasBeenCompleted = status === 'READ';
+
+        const completedAt = new Date();
+
         return this.prisma.book.update({
             where: { id },
+
             data: {
                 status,
+
+                ...(hasBeenCompleted && {
+                    readingHistory: {
+                        create: {
+                            completedAt,
+                        },
+                    },
+                }),
             },
+
             include: {
                 author: true,
+                genres: true,
             },
         });
     }
@@ -147,6 +212,17 @@ export class BookService {
         id: number,
         data: UpdateBookDto,
     ) {
+        const currentBook =
+            await this.prisma.book.findUnique({
+                where: { id },
+            });
+
+        if (!currentBook) {
+            throw new NotFoundException(
+                'Book not found',
+            );
+        }
+
         const author = await this.prisma.author.findUnique({
             where: {
                 id: data.authorId
@@ -157,6 +233,32 @@ export class BookService {
             throw new NotFoundException('Author not found');
         }
 
+        if (data.genreIds?.length) {
+            const genres =
+                await this.prisma.genre.findMany({
+                    where: {
+                        id: {
+                            in: data.genreIds,
+                        },
+                    },
+                    select: {
+                        id: true,
+                    },
+                });
+
+            if (
+                genres.length !==
+                data.genreIds.length
+            ) {
+                throw new NotFoundException(
+                    'One or more genres were not found',
+                );
+            }
+        }
+
+        const hasBeenCompleted = currentBook.status !== 'READ' && data.status === 'READ';
+        const completedAt = new Date();
+
         return this.prisma.book.update({
             where: {
                 id,
@@ -165,17 +267,32 @@ export class BookService {
                 title: data.title,
                 authorId: data.authorId,
                 status: data.status,
+                ...(data.genreIds && {
+                    genres: {
+                        set: data.genreIds.map((id) => ({
+                            id,
+                        })),
+                    },
+                }),
+                ...(hasBeenCompleted && {
+                    readingHistory: {
+                        create: {
+                            completedAt,
+                        },
+                    },
+                }),
             },
             include: {
-                author: true
+                author: true,
+                genres: true
             }
         })
     }
 
-    async remove(id: number){
-        const book = await this.prisma.book.findUnique({where: {id}})
+    async remove(id: number) {
+        const book = await this.prisma.book.findUnique({ where: { id } })
 
-        if(!book) { 
+        if (!book) {
             throw new NotFoundException('Book not found')
         }
 

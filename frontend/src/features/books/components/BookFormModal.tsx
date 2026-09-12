@@ -1,6 +1,7 @@
 import {
   Button,
   Group,
+  MultiSelect,
   Select,
   Stack,
   TextInput,
@@ -11,11 +12,12 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { CreateBookData } from '../../../services/books';
 import type { Author } from '../../../types/author';
-import type { Book, ReadingStatus } from '../../../types/book';
+import type { Book } from '../../../types/book';
 import { RiBookAiFill } from 'react-icons/ri';
 import { BookshelfModal } from '../../../components/ui/BookshellfModal';
 import { bookshelfSelectClassNames } from '../../../styles/mantine';
 import { useEffect } from 'react';
+import type { Genre } from '../../../types/genre';
 
 const createBookSchema = z.object({
   title: z
@@ -32,16 +34,18 @@ const createBookSchema = z.object({
     'READING',
     'READ',
   ]),
+  genreIds: z.array(z.string()),
 });
 
 type CreateBookFormData = z.infer<
   typeof createBookSchema
 >;
 
-interface CreateBookModalProps {
+interface BookFormModalProps {
   opened: boolean;
   onClose: () => void;
   authors: Author[];
+  genres: Genre[];
 
   book?: Book | null;
 
@@ -56,10 +60,11 @@ export function BookFormModal({
   opened,
   onClose,
   authors,
+  genres,
   onSubmit,
   book,
   isSubmitting = false,
-}: CreateBookModalProps) {
+}: BookFormModalProps) {
   const {
     control,
     register,
@@ -73,6 +78,7 @@ export function BookFormModal({
       title: '',
       authorId: '',
       status: 'UNREAD',
+      genreIds: [],
     },
   });
 
@@ -82,7 +88,8 @@ export function BookFormModal({
     await onSubmit({
       title: data.title,
       authorId: Number(data.authorId),
-      status: data.status as ReadingStatus,
+      status: data.status,
+      genreIds: data.genreIds.map(Number),
     });
 
     reset();
@@ -96,12 +103,20 @@ export function BookFormModal({
 
   const isEditing = !!book;
 
+  const genreOptions = genres.map((genre) => ({
+    value: String(genre.id),
+    label: genre.name,
+  }));
+
   useEffect(() => {
     if (book) {
       reset({
         title: book.title,
         authorId: String(book.authorId),
         status: book.status,
+        genreIds: book.genres.map((genre) =>
+          String(genre.id),
+        ),
       });
 
       return;
@@ -111,6 +126,7 @@ export function BookFormModal({
       title: '',
       authorId: '',
       status: 'UNREAD',
+      genreIds: [],
     });
   }, [book, opened, reset]);
 
@@ -196,6 +212,23 @@ export function BookFormModal({
                   field.onChange(value)
                 }
                 error={errors.status?.message}
+              />
+            )}
+          />
+
+          <Controller
+            name="genreIds"
+            control={control}
+            render={({ field }) => (
+              <MultiSelect
+                label="Genres"
+                placeholder="Select genres"
+                data={genreOptions}
+                value={field.value}
+                onChange={field.onChange}
+                searchable
+                clearable
+                classNames={bookshelfSelectClassNames}
               />
             )}
           />

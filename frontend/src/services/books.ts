@@ -68,6 +68,7 @@ export interface CreateBookData {
   title: string;
   authorId: number;
   status: ReadingStatus;
+  genreIds: number[]
 }
 
 export async function createBook(
@@ -114,6 +115,7 @@ export interface UpdateBookData {
   title: string
   authorId: number
   status: ReadingStatus
+  genreIds: number[];
 }
 
 interface UpdateBookParams {

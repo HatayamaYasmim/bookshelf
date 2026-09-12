@@ -25,6 +25,7 @@ import { DeleteBookModal } from './components/DeleteBookModal';
 import { useBookMutations } from './hooks/useBookMutations';
 import { useAuthorMutations } from './hooks/useAuthorMutations';
 import { getAuthors } from '../../services/authors';
+import { getGenres } from '../../services/genres';
 
 export function BooksPage() {
     const [search, setSearch] = useState('')
@@ -128,6 +129,21 @@ export function BooksPage() {
         createAuthorMutation,
     } = useAuthorMutations();
 
+const {
+  data: genres = [],
+  isLoading: isGenresLoading,
+  isError: isGenresError,
+  error: genresError,
+} = useQuery({
+  queryKey: ['genres'],
+  queryFn: getGenres,
+});
+
+console.log('GENRES:', genres);
+console.log('GENRES LOADING:', isGenresLoading);
+console.log('GENRES ERROR:', isGenresError);
+console.log('GENRES ERROR DETAIL:', genresError);
+
     // =========================
     // Estados da página
     // =========================
@@ -223,6 +239,7 @@ export function BooksPage() {
                     opened={createModalOpened}
                     onClose={closeCreateModal}
                     authors={authors}
+                    genres={genres}
                     onSubmit={(data) =>
                         createBookMutation.mutateAsync(data)
                     }
@@ -274,6 +291,7 @@ export function BooksPage() {
                         setSelectedBook(null);
                     }}
                     authors={authors}
+                    genres={genres}
                     book={selectedBook}
                     isSubmitting={
                         updateBookMutation.isPending

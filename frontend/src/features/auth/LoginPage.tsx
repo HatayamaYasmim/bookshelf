@@ -10,12 +10,37 @@ import {
     Title,
 } from '@mantine/core';
 
-import { IconBooks } from '@tabler/icons-react';
-
-import { ShaderBackground } from './components/ShaderBackground';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
 import { GiSpellBook } from 'react-icons/gi';
 
+import { ShaderBackground } from './components/ShaderBackground';
+import {
+    loginSchema,
+    type LoginFormData,
+} from './schemas/loginSchema';
+
 export function LoginPage() {
+    const {
+        control,
+        handleSubmit,
+        formState: {
+            errors,
+            isSubmitting,
+        },
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    });
+
+    function onSubmit(data: LoginFormData) {
+        console.log('Login data:', data);
+    }
+
     return (
         <div className="bookshelf-auth-page">
             <ShaderBackground />
@@ -29,7 +54,10 @@ export function LoginPage() {
                     maw={430}
                 >
                     <Stack gap="lg">
-                        <Stack align="center" gap="xs">
+                        <Stack
+                            align="center"
+                            gap="xs"
+                        >
                             <div className="bookshelf-login-logo">
                                 <GiSpellBook
                                     size={28}
@@ -54,38 +82,66 @@ export function LoginPage() {
                             </Text>
                         </Stack>
 
-                        <Stack gap="md">
-                            <TextInput
-                                label="Email"
-                                placeholder="you@example.com"
-                                size="md"
-                                radius="xl"
-                                classNames={{
-                                    input: 'bookshelf-input',
-                                }}
-                            />
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                        >
+                            <Stack gap="md">
+                                <Controller
+                                    name="email"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <TextInput
+                                            {...field}
+                                            label="Email"
+                                            placeholder="you@example.com"
+                                            size="md"
+                                            radius="xl"
+                                            error={
+                                                errors.email
+                                                    ?.message
+                                            }
+                                            classNames={{
+                                                input: 'bookshelf-input',
+                                            }}
+                                        />
+                                    )}
+                                />
 
-                            <PasswordInput
-                                label="Password"
-                                placeholder="Enter your password"
-                                size="md"
-                                radius="xl"
-                                classNames={{
-                                    input: 'bookshelf-input',
-                                    innerInput:
-                                        'bookshelf-password-inner-input',
-                                }}
-                            />
+                                <Controller
+                                    name="password"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <PasswordInput
+                                            {...field}
+                                            label="Password"
+                                            placeholder="Enter your password"
+                                            size="md"
+                                            radius="xl"
+                                            error={
+                                                errors.password
+                                                    ?.message
+                                            }
+                                            classNames={{
+                                                input: 'bookshelf-input',
+                                                innerInput:
+                                                    'bookshelf-password-inner-input',
+                                            }}
+                                        />
+                                    )}
+                                />
 
-                            <Button
-                                size="md"
-                                radius="xl"
-                                fullWidth
-                                className="bookshelf-button bookshelf-button-primary"
-                            >
-                                Sign in
-                            </Button>
-                        </Stack>
+                                <Button
+                                    type="submit"
+                                    size="md"
+                                    radius="xl"
+                                    fullWidth
+                                    loading={isSubmitting}
+                                    className="bookshelf-button bookshelf-button-primary"
+                                >
+                                    Sign in
+                                </Button>
+                            </Stack>
+                        </form>
 
                         <Text
                             size="sm"

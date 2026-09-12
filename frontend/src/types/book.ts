@@ -10,7 +10,6 @@ export interface Book {
   id: number;
   title: string;
   status: ReadingStatus;
-  readAt: string | null;
 
   authorId: number;
   author: Author;

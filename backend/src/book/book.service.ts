@@ -106,9 +106,6 @@ export class BookService {
                 ...(data.status && {
                     status: data.status,
                 }),
-                readAt: isRead
-                    ? completedAt
-                    : null,
                 author: {
                     connect: {
                         id: data.authorId,
@@ -163,8 +160,6 @@ export class BookService {
                 status,
 
                 ...(hasBeenCompleted && {
-                    readAt: completedAt,
-
                     readingHistory: {
                         create: {
                             completedAt,
@@ -280,8 +275,6 @@ export class BookService {
                     },
                 }),
                 ...(hasBeenCompleted && {
-                    readAt: completedAt,
-
                     readingHistory: {
                         create: {
                             completedAt,

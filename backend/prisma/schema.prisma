@@ -23,7 +23,6 @@ model Book {
   id     Int           @id @default(autoincrement())
   title  String
   status ReadingStatus @default(UNREAD)
-  readAt DateTime?
 
   authorId Int
   author   Author @relation(fields: [authorId], references: [id])

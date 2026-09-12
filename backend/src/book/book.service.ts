@@ -3,7 +3,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FindBooksQueryDto } from './dto/find-books-query.dto';
 import { UpdateBookDto } from './dto/update-book-dto';
-import { stat } from 'node:fs';
 
 @Injectable()
 export class BookService {

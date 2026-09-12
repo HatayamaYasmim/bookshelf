@@ -41,7 +41,7 @@ export class DashboardService {
             unread,
             readThisMonth,
             readThisYear,
-            completedBooksLastSixMonths,
+            readingHistoryLastSixMonths,
             readBooksWithGenres,
             currentlyReading
         ] = await Promise.all([
@@ -65,38 +65,37 @@ export class DashboardService {
                 },
             }),
 
-            this.prisma.book.count({
+            // Reading completions during the current month
+            this.prisma.readingHistory.count({
                 where: {
-                    status: 'READ',
-                    readAt: {
+                    completedAt: {
                         gte: startOfMonth,
                     },
                 },
             }),
 
-            this.prisma.book.count({
+            // Reading completions during the current year
+            this.prisma.readingHistory.count({
                 where: {
-                    status: 'READ',
-                    readAt: {
+                    completedAt: {
                         gte: startOfYear,
                     },
                 },
             }),
 
-            // Books completed during the last six months
-            this.prisma.book.findMany({
+            // Reading completions during the last six months
+            this.prisma.readingHistory.findMany({
                 where: {
-                    status: 'READ',
-                    readAt: {
+                    completedAt: {
                         gte: startOfSixMonths,
                     },
                 },
                 select: {
-                    readAt: true,
+                    completedAt: true,
                 },
             }),
 
-            // Genres from completed books used to calculate favorites
+            // Genres from currently completed books
             this.prisma.book.findMany({
                 where: {
                     status: 'READ',
@@ -174,7 +173,9 @@ export class DashboardService {
 
         for (const book of readBooksWithGenres) {
             for (const genre of book.genres) {
-                const current = genreCounts.get(genre.id);
+                const current = genreCounts.get(
+                    genre.id,
+                );
 
                 if (current) {
                     current.count++;
@@ -189,15 +190,16 @@ export class DashboardService {
             }
         }
 
-        for (const book of completedBooksLastSixMonths) {
-            if (!book.readAt) {
-                continue;
-            }
-
-            const year = book.readAt.getUTCFullYear();
+        // Group reading completions by month
+        for (
+            const history of
+            readingHistoryLastSixMonths
+        ) {
+            const year =
+                history.completedAt.getUTCFullYear();
 
             const month = String(
-                book.readAt.getUTCMonth() + 1,
+                history.completedAt.getUTCMonth() + 1,
             ).padStart(2, '0');
 
             const key = `${year}-${month}`;
@@ -219,7 +221,9 @@ export class DashboardService {
                     return b.count - a.count;
                 }
 
-                return a.name.localeCompare(b.name);
+                return a.name.localeCompare(
+                    b.name,
+                );
             })
             .slice(0, 5);
 
@@ -232,8 +236,7 @@ export class DashboardService {
             readThisYear,
             monthlyActivity,
             favoriteGenres,
-            currentlyReading
+            currentlyReading,
         };
     }
-
 }

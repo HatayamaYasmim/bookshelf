@@ -5,6 +5,7 @@ interface AuthContextValue {
     user: AuthUser | null;
     isAuthenticated: boolean;
     signIn: (data: LoginRequest) => Promise<void>;
+    signOut: () => void;
 }
 
 export const AuthContext =
@@ -30,12 +31,17 @@ export function AuthProvider({
         setUser(response.user);
     }
 
+    function signOut() {
+    setUser(null);
+}
+
     return (
         <AuthContext.Provider
             value={{
                 user,
                 isAuthenticated: user !== null,
                 signIn,
+                signOut
             }}
         >
             {children}

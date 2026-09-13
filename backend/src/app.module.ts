@@ -7,6 +7,7 @@ import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
 import { GenreModule } from './genre/genre.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     BookModule,
     GenreModule,
     DashboardModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

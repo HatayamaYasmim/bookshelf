@@ -78,7 +78,8 @@ export function AppHeader() {
                             </Text>
 
                             <Button
-                                variant="subtle"
+                                variant='none'
+                                className='bookshelf-nav-link bookshelf-nav-link-active'
                                 onClick={handleLogout}
                             >
                                 Logout

@@ -3,7 +3,7 @@ import type { Author } from '../types/author';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function getAuthors(): Promise<Author[]> {
-  const response = await fetch(`${apiUrl}/authors`);
+  const response = await fetch(`${apiUrl}/authors`, { credentials: 'include'});
 
   if (!response.ok) {
     throw new Error('Failed to load authors');
@@ -21,7 +21,7 @@ export async function createAuthor(
 ): Promise<Author> {
   const response = await fetch(`${apiUrl}/authors`, {
     method: 'POST',
-
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },

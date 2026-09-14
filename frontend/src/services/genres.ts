@@ -4,10 +4,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function getGenres(): Promise<Genre[]> {
   const url = `${apiUrl}/genre`;
-
-  console.log('GET GENRES URL:', url);
-
-  const response = await fetch(url);
+  const response = await fetch(url, {credentials: 'include'});
 
   if (!response.ok) {
     const body = await response.text();

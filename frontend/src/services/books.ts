@@ -24,7 +24,9 @@ export async function getBooks(params: BooksQueryParams = {},): Promise<BooksRes
     query.set('authorId', String(params.authorId));
   }
 
-  const response = await fetch(`${apiUrl}/books?${query.toString()}`);
+  const response = await fetch(`${apiUrl}/books?${query.toString()}`, {
+    credentials: 'include',
+  });
 
   if (!response.ok) {
     throw new Error('Failed to load books');
@@ -46,7 +48,7 @@ export async function updateBookStatus({
     `${apiUrl}/books/${id}/status`,
     {
       method: 'PATCH',
-
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -76,7 +78,7 @@ export async function createBook(
 ): Promise<Book> {
   const response = await fetch(`${apiUrl}/books`, {
     method: 'POST',
-
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -93,7 +95,9 @@ export async function createBook(
 
 export async function getBooksStats(): Promise<BooksStatsResponse> {
   const response = await fetch(
-    `${apiUrl}/books/stats`,
+    `${apiUrl}/books/stats`, {
+    credentials: 'include',
+  }
   );
 
   if (!response.ok) {
@@ -104,7 +108,7 @@ export async function getBooksStats(): Promise<BooksStatsResponse> {
 }
 
 export async function deleteBook(id: number): Promise<void> {
-  const response = await fetch(`${apiUrl}/books/${id}`, { method: 'DELETE' });
+  const response = await fetch(`${apiUrl}/books/${id}`, { credentials: 'include', method: 'DELETE' });
   if (!response.ok) {
     throw new Error('Failed to delete book')
   }
@@ -127,7 +131,7 @@ export async function updateBook({
   id, data
 }: UpdateBookParams): Promise<Book> {
   const response = await fetch(
-    `${apiUrl}/books/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
+    `${apiUrl}/books/${id}`, { method: 'PATCH', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
   )
   if (!response.ok) {
     throw new Error('Failed to update book')

@@ -3,15 +3,16 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import * as argon2 from 'argon2';
 import { LoginDto } from './dto/login.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService) { }
 
     async register(data: RegisterDto) {
-        const existingUser = await this.prisma.user.findUnique({ where:{ email: data.email}})
+        const existingUser = await this.prisma.user.findUnique({ where: { email: data.email } })
 
-        if(existingUser){ 
+        if (existingUser) {
             throw new ConflictException('Email already registered')
         }
 
@@ -31,22 +32,42 @@ export class AuthService {
     }
 
     async login(data: LoginDto) {
-        const user = await this.prisma.user.findUnique({ where: { email: data.email}})
+        const user = await this.prisma.user.findUnique({ where: { email: data.email } })
 
-        if(!user) {
+        if (!user) {
             throw new UnauthorizedException('Invalid email or password')
         }
 
         const passwordMatches = await argon2.verify(user.passwordHash, data.password)
 
-        if(!passwordMatches){
-            throw new  UnauthorizedException('Invalid email or password')
+        if (!passwordMatches) {
+            throw new UnauthorizedException('Invalid email or password')
         }
 
+        const accessToken = await this.jwtService.signAsync({
+            sub: user.id,
+        });
+
         return {
-            id: user.id,
-            name: user.name,
-            email: user.email
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            },
+            accessToken,
         }
+    }
+
+    async getCurrentUser(userId: number) {
+        return this.prisma.user.findUnique({
+            where: { id: userId},
+            select: {
+                id: true,
+                name: true,
+                email: true, 
+                createdAt: true,
+                updatedAt: true
+            }
+        })
     }
 }

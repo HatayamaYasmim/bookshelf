@@ -1,4 +1,5 @@
 import {
+    Button,
     Container,
     Group,
     Text,
@@ -6,11 +7,27 @@ import {
 
 import {
     NavLink,
+    useNavigate,
 } from 'react-router-dom';
 
 import { GiSpellBook } from 'react-icons/gi';
+import { useAuth } from '../../features/auth/hooks/useAuth';
 
 export function AppHeader() {
+    const { user, signOut } = useAuth();
+    const navigate = useNavigate();
+    async function handleLogout() {
+        try {
+            await signOut();
+
+            navigate('/login', {
+                replace: true,
+            });
+        } catch (error) {
+            console.error('Failed to logout:', error);
+        }
+    }
+
     return (
         <header className="bookshelf-app-header">
             <Container size="xl">
@@ -55,6 +72,18 @@ export function AppHeader() {
                         >
                             Dashboard
                         </NavLink>
+                        <Group>
+                            <Text size="sm">
+                                {user?.name}
+                            </Text>
+
+                            <Button
+                                variant="subtle"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </Button>
+                        </Group>
                     </Group>
                 </Group>
             </Container>

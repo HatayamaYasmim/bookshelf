@@ -13,7 +13,6 @@ export interface AuthUser {
 export interface LoginResponse {
     user: AuthUser;
 }
-
 export async function login(
     data: LoginRequest,
 ): Promise<LoginResponse> {
@@ -21,13 +20,10 @@ export async function login(
         `${apiUrl}/auth/login`,
         {
             method: 'POST',
-
             headers: {
                 'Content-Type': 'application/json',
             },
-
             credentials: 'include',
-
             body: JSON.stringify(data),
         },
     );
@@ -39,4 +35,34 @@ export async function login(
     }
 
     return response.json();
+}
+
+export async function getMe(): Promise<AuthUser> {
+    const response = await fetch(
+        `${apiUrl}/auth/me`,
+        {
+            method: 'GET',
+            credentials: 'include',
+        },
+    );
+
+    if (!response.ok) {
+        throw new Error('Not authenticated');
+    }
+
+    return response.json();
+}
+
+export async function logout(): Promise<void> {
+    const response = await fetch(
+        `${apiUrl}/auth/logout`,
+        {
+            method: 'POST',
+            credentials: 'include',
+        },
+    );
+
+    if (!response.ok) {
+        throw new Error('Failed to logout');
+    }
 }

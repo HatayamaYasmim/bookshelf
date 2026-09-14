@@ -20,9 +20,10 @@ import {
     type LoginFormData,
 } from './schemas/loginSchema';
 import { useAuth } from './hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginPage() {
-        const {
+    const {
         user,
         isAuthenticated,
     } = useAuth();
@@ -31,7 +32,10 @@ export function LoginPage() {
         user,
         isAuthenticated,
     });
-    
+
+    const { signIn } = useAuth();
+    const navigate = useNavigate();
+
     const {
         control,
         handleSubmit,
@@ -48,8 +52,13 @@ export function LoginPage() {
         },
     });
 
-    function onSubmit(data: LoginFormData) {
-        console.log('Login data:', data);
+    async function onSubmit(data: LoginFormData) {
+        try {
+            await signIn(data);
+            navigate('/library');
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (

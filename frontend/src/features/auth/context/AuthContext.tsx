@@ -1,11 +1,12 @@
-import { createContext, type ReactNode, useState } from "react";
-import { login, type AuthUser, type LoginRequest } from "../../../services/auth";
+import { createContext, type ReactNode, useEffect, useState } from "react";
+import { getMe, login, logout, type AuthUser, type LoginRequest } from "../../../services/auth";
 
 interface AuthContextValue {
     user: AuthUser | null;
     isAuthenticated: boolean;
+    isInitializing: boolean;
     signIn: (data: LoginRequest) => Promise<void>;
-    signOut: () => void;
+    signOut: () => Promise<void>;
 }
 
 export const AuthContext =
@@ -20,26 +21,40 @@ interface AuthProviderProps {
 export function AuthProvider({
     children,
 }: AuthProviderProps) {
-    const [user, setUser] =
-        useState<AuthUser | null>(null);
+    const [user, setUser] = useState<AuthUser | null>(null);
+    const [isInitializing, setIsInitializing] = useState(true);
 
-    async function signIn(
-        data: LoginRequest,
-    ) {
+    useEffect(() => {
+        async function restoreSession() {
+            try {
+                const currentUser = await getMe();
+                setUser(currentUser);
+            } catch {
+                setUser(null);
+            } finally {
+                setIsInitializing(false);
+            }
+        }
+
+        restoreSession();
+    }, []);
+
+    async function signIn(data: LoginRequest) {
         const response = await login(data);
-
         setUser(response.user);
     }
 
-    function signOut() {
-    setUser(null);
-}
+    async function signOut() {
+        await logout();
+        setUser(null);
+    }
 
     return (
         <AuthContext.Provider
             value={{
                 user,
                 isAuthenticated: user !== null,
+                isInitializing,
                 signIn,
                 signOut
             }}

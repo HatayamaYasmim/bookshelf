@@ -30,6 +30,9 @@ model Book {
   genres Genre[]
   readingHistory ReadingHistory[]
 
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -67,7 +70,8 @@ model User {
   name         String
   email        String   @unique
   passwordHash String
-
+  books Book[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+

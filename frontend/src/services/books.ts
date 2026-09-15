@@ -2,6 +2,11 @@ import type { Book, BooksQueryParams, BooksResponse, BooksStatsResponse, Reading
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
+interface UpdateBookStatusParams {
+  id: number;
+  status: ReadingStatus;
+}
+
 export async function getBooks(params: BooksQueryParams = {},): Promise<BooksResponse> {
   const query = new URLSearchParams();
   if (params.page) {
@@ -33,11 +38,6 @@ export async function getBooks(params: BooksQueryParams = {},): Promise<BooksRes
   }
 
   return response.json();
-}
-
-interface UpdateBookStatusParams {
-  id: number;
-  status: ReadingStatus;
 }
 
 export async function updateBookStatus({

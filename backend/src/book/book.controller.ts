@@ -1,50 +1,62 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookStatusDto } from './dto/update-book-status.dto';
 import { FindBooksQueryDto } from './dto/find-books-query.dto';
 import { UpdateBookDto } from './dto/update-book-dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import type { Request } from 'express';
+
+interface AuthenticatedRequest extends Request {
+    user: {
+        userId: number;
+    };
+}
 
 @UseGuards(JwtAuthGuard)
 @Controller('books')
 export class BookController {
     constructor(private readonly bookService: BookService) { }
     @Get('stats')
-    getStats() {
-        return this.bookService.getStats()
+    getStats(@Req() request: AuthenticatedRequest ) {
+        return this.bookService.getStats(
+        request.user.userId,
+        )
     }
     @Get()
-    findAll(@Query() query: FindBooksQueryDto,) {
-        return this.bookService.findAll(query);
+    findAll(@Req() request: AuthenticatedRequest, @Query() query: FindBooksQueryDto) {
+        return this.bookService.findAll(request.user.userId, query);
     }
 
     @Post()
-    create(@Body() data: CreateBookDto) {
-        return this.bookService.create(data)
+    create(@Req() request: AuthenticatedRequest, @Body() data: CreateBookDto) {
+        return this.bookService.create(request.user.userId, data)
     }
 
     @Patch(':id/status')
     updateStatus(
+        @Req() request: AuthenticatedRequest, 
         @Param('id', ParseIntPipe) id: number,
         @Body() data: UpdateBookStatusDto,
     ) {
-        return this.bookService.updateStatus(id, data.status);
+        return this.bookService.updateStatus(request.user.userId, id, data.status);
     }
 
     @Patch(':id')
     update(
+        @Req() request: AuthenticatedRequest, 
         @Param('id', ParseIntPipe) id: number,
         @Body() data: UpdateBookDto
     ) {
-        return this.bookService.update(id, data)
+        return this.bookService.update(request.user.userId, id, data)
     }
 
     @Delete(':id')
     remove(
+        @Req() request: AuthenticatedRequest, 
         @Param('id', ParseIntPipe) id: number,
     ) {
-        return this.bookService.remove(id)
+        return this.bookService.remove(request.user.userId, id)
     }
 
     

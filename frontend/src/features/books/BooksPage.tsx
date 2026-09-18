@@ -131,9 +131,6 @@ export function BooksPage() {
 
 const {
   data: genres = [],
-  isLoading: isGenresLoading,
-  isError: isGenresError,
-  error: genresError,
 } = useQuery({
   queryKey: ['genres'],
   queryFn: getGenres,

@@ -7,9 +7,7 @@ import {
 } from '@mantine/core';
 
 import {
-  LuBookOpen,
   LuBookmark,
-  LuCircleCheck,
   LuBookOpenCheck,
 } from 'react-icons/lu';
 

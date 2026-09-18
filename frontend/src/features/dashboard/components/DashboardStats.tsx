@@ -11,7 +11,7 @@ import type {
   ReadingDashboardResponse,
 } from '../../../types/dashboard';
 import { RiBookAiLine } from 'react-icons/ri';
-import { PiBooksLight, PiBooksThin, PiShootingStarThin } from "react-icons/pi";
+import { PiBooksLight } from "react-icons/pi";
 import { IoBookOutline } from 'react-icons/io5';
 
 interface DashboardStatsProps {

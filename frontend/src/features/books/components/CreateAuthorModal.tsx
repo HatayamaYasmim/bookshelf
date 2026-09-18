@@ -1,10 +1,8 @@
 import {
     Button,
     Group,
-    Modal,
     Stack,
     TextInput,
-    Text,
 } from '@mantine/core';
 
 import { useForm } from 'react-hook-form';

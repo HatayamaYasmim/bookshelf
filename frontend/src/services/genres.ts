@@ -7,8 +7,7 @@ export async function getGenres(): Promise<Genre[]> {
   const response = await fetch(url, {credentials: 'include'});
 
   if (!response.ok) {
-    const body = await response.text();
-
+    await response.text();
     throw new Error(
       `Failed to fetch genres: ${response.status}`,
     );

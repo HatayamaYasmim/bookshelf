@@ -2,7 +2,6 @@ import {
     Center,
     Group,
     Paper,
-    RingProgress,
     Stack,
     Text,
     Title,

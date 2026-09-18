@@ -1,5 +1,6 @@
 import { createContext, type ReactNode, useEffect, useState } from "react";
 import { getMe, login, logout, type AuthUser, type LoginRequest } from "../../../services/auth";
+import { AUTH_UNAUTHORIZED_EVENT } from "../../../services/api";
 
 interface AuthContextValue {
     user: AuthUser | null;
@@ -37,6 +38,24 @@ export function AuthProvider({
         }
 
         restoreSession();
+    }, []);
+
+    useEffect(() => {
+        function handleUnauthorized() {
+            setUser(null);
+        }
+
+        window.addEventListener(
+            AUTH_UNAUTHORIZED_EVENT,
+            handleUnauthorized,
+        );
+
+        return () => {
+            window.removeEventListener(
+                AUTH_UNAUTHORIZED_EVENT,
+                handleUnauthorized,
+            );
+        };
     }, []);
 
     async function signIn(data: LoginRequest) {

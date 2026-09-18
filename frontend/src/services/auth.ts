@@ -1,4 +1,4 @@
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiFetch } from "./api";
 
 export interface LoginRequest {
     email: string;
@@ -32,15 +32,15 @@ export interface RegisterResponse {
 export async function login(
     data: LoginRequest,
 ): Promise<LoginResponse> {
-    const response = await fetch(
-        `${apiUrl}/auth/login`,
+    const response = await apiFetch(
+        `/auth/login`,
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            credentials: 'include',
             body: JSON.stringify(data),
+            skipUnauthorizedHandler: true,
         },
     );
 
@@ -54,11 +54,11 @@ export async function login(
 }
 
 export async function getMe(): Promise<AuthUser> {
-    const response = await fetch(
-        `${apiUrl}/auth/me`,
+    const response = await apiFetch(
+        `/auth/me`,
         {
             method: 'GET',
-            credentials: 'include',
+            skipUnauthorizedHandler: true,
         },
     );
 
@@ -70,11 +70,10 @@ export async function getMe(): Promise<AuthUser> {
 }
 
 export async function logout(): Promise<void> {
-    const response = await fetch(
-        `${apiUrl}/auth/logout`,
+    const response = await apiFetch(
+        `/auth/logout`,
         {
             method: 'POST',
-            credentials: 'include',
         },
     );
 
@@ -86,14 +85,13 @@ export async function logout(): Promise<void> {
 export async function register(
     data: RegisterRequest,
 ): Promise<RegisterResponse> {
-    const response = await fetch(
-        `${apiUrl}/auth/register`,
+    const response = await apiFetch(
+        `/auth/register`,
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            credentials: 'include',
             body: JSON.stringify(data),
         },
     );

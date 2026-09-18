@@ -1,0 +1,24 @@
+import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { AccountService } from './account.service';
+import type { AuthenticatedRequest } from 'src/auth/types/authenticated-request';
+import { UpdatePreferencesDto } from './dto/update-preferences.dto';
+
+@UseGuards(JwtAuthGuard)
+@Controller('account')
+export class AccountController {
+    constructor( private readonly accountService: AccountService) {}
+    
+    @Get('preferences')
+    getPreferences(@Req() request: AuthenticatedRequest) {
+        return this.accountService.getPreferences(
+            request.user.userId,
+        );
+    }
+
+    @Patch('preferences')
+    updatePreferences(@Req() request: AuthenticatedRequest, @Body() data: UpdatePreferencesDto) {
+        return this.accountService.updatePreferences(request.user.userId, data)
+    }
+
+}

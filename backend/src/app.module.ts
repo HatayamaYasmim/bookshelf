@@ -8,6 +8,7 @@ import { BookModule } from './book/book.module';
 import { GenreModule } from './genre/genre.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
+import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthModule } from './auth/auth.module';
     GenreModule,
     DashboardModule,
     AuthModule,
+    AccountModule,
   ],
   controllers: [AppController],
   providers: [AppService],

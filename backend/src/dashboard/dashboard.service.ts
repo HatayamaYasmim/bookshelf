@@ -7,7 +7,7 @@ export class DashboardService {
         private readonly prisma: PrismaService,
     ) { }
 
-    async getReadingDashboard() {
+    async getReadingDashboard(userId: number) {
         const now = new Date();
 
         const startOfMonth = new Date(
@@ -45,22 +45,25 @@ export class DashboardService {
             readBooksWithGenres,
             currentlyReading
         ] = await Promise.all([
-            this.prisma.book.count(),
+            this.prisma.book.count({where: {userId}}),
 
             this.prisma.book.count({
                 where: {
+                    userId,
                     status: 'READ',
                 },
             }),
 
             this.prisma.book.count({
                 where: {
+                    userId,
                     status: 'READING',
                 },
             }),
 
             this.prisma.book.count({
                 where: {
+                    userId,
                     status: 'UNREAD',
                 },
             }),
@@ -68,6 +71,7 @@ export class DashboardService {
             // Reading completions during the current month
             this.prisma.readingHistory.count({
                 where: {
+                    book: {userId},
                     completedAt: {
                         gte: startOfMonth,
                     },
@@ -77,6 +81,7 @@ export class DashboardService {
             // Reading completions during the current year
             this.prisma.readingHistory.count({
                 where: {
+                    book: {userId},
                     completedAt: {
                         gte: startOfYear,
                     },
@@ -86,6 +91,7 @@ export class DashboardService {
             // Reading completions during the last six months
             this.prisma.readingHistory.findMany({
                 where: {
+                    book: {userId},
                     completedAt: {
                         gte: startOfSixMonths,
                     },
@@ -98,6 +104,7 @@ export class DashboardService {
             // Genres from currently completed books
             this.prisma.book.findMany({
                 where: {
+                    userId,
                     readingHistory: {
                         some: {},
                     },
@@ -115,6 +122,7 @@ export class DashboardService {
             // Books that are currently being read
             this.prisma.book.findMany({
                 where: {
+                    userId,
                     status: 'READING',
                 },
                 select: {

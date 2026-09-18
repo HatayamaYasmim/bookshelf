@@ -5,13 +5,7 @@ import { UpdateBookStatusDto } from './dto/update-book-status.dto';
 import { FindBooksQueryDto } from './dto/find-books-query.dto';
 import { UpdateBookDto } from './dto/update-book-dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import type { Request } from 'express';
-
-interface AuthenticatedRequest extends Request {
-    user: {
-        userId: number;
-    };
-}
+import type { AuthenticatedRequest } from 'src/auth/types/authenticated-request';
 
 @UseGuards(JwtAuthGuard)
 @Controller('books')

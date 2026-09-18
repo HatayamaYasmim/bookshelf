@@ -10,6 +10,7 @@ import { LoginPage } from '../features/auth/LoginPage';
 import { ProtectedRoute } from '../features/auth/components/ProtectedRoute';
 import { BooksPage } from '../features/books/BooksPage';
 import { DashboardPage } from '../features/dashboard/DashboardPage';
+import { RegisterPage } from '../features/auth/RegisterPage';
 
 function MainLayout() {
     return (
@@ -27,6 +28,10 @@ export function AppRoutes() {
             <Route
                 path="/login"
                 element={<LoginPage />}
+            />
+            <Route
+                path="/register"
+                element={<RegisterPage />}
             />
 
             {/* Protected routes */}

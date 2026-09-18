@@ -171,7 +171,8 @@ export function LoginPage() {
                             Don't have an account?{' '}
                             <Anchor
                                 component="button"
-                                fw={600}>
+                                fw={600}
+                                onClick={() => navigate('/register')}>
                                 Create account
                             </Anchor>
                         </Text>

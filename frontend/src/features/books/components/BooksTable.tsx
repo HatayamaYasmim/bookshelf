@@ -102,12 +102,11 @@ export function BooksTable({
                                 key={genre.id}
                                 variant="outline"
                                 radius="xl"
+                                className="bookshelf-badge"
                                 styles={{
                                     root: {
                                         border: 'none',
                                         textTransform: 'none',
-                                        boxShadow:
-                                            'inset 3px 3px 6px rgba(0,0,0,0.05), inset -3px -3px 6px rgba(255,255,255,0.5)',
                                     },
                                 }}
                             >
@@ -134,6 +133,7 @@ export function BooksTable({
                             variant="transparent"
                             size="md"
                             radius="xl"
+                            className="bookshelf-badge"
                             leftSection={
                                 <span
                                     style={{
@@ -153,12 +153,8 @@ export function BooksTable({
                                 root: {
                                     cursor: 'pointer',
                                     textTransform: 'none',
-                                    background: 'var(--bookshelf-background)',
-                                    border: 'none',
-                                    borderRadius: '999px',
-                                    color: getStatusDotColor(book.status),
-                                    boxShadow:
-                                        'inset 3px 3px 6px rgba(0,0,0,0.05), inset -3px -3px 6px rgba(255,255,255,0.5)',
+                                    color:
+                                        getStatusDotColor(book.status),
                                 },
                             }}
                         >
@@ -167,15 +163,7 @@ export function BooksTable({
                     </Menu.Target>
 
                     <Menu.Dropdown
-                        style={{
-                            background: 'rgba(255, 255, 255, 0.18)',
-                            backdropFilter: 'blur(3px) saturate(150%)',
-                            WebkitBackdropFilter: 'blur(3px) saturate(150%)',
-                            border: '1px solid rgba(255, 255, 255, 0.35)',
-                            borderRadius: '16px',
-                            boxShadow:
-                                '0 8px 24px rgba(31, 38, 135, 0.10)',
-                        }}
+                        className="bookshelf-menu-dropdown"
                     >
                         {statusOptions.map((status) => (
                             <Menu.Item

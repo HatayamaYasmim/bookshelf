@@ -11,8 +11,9 @@ import {
   LuBookOpenCheck,
 } from 'react-icons/lu';
 
-import type { BooksStatsResponse } from '../../../types/book';
 import { GiBookCover, GiBookshelf } from 'react-icons/gi';
+
+import type { BooksStatsResponse } from '../../../types/book';
 
 interface BooksStatsProps {
   stats: BooksStatsResponse;
@@ -21,30 +22,29 @@ interface BooksStatsProps {
 export function BooksStats({
   stats,
 }: BooksStatsProps) {
-
   const statsItems = [
     {
       label: 'TOTAL BOOKS',
       value: stats.total,
-      color: 'indigo',
+      accentColor: 'var(--bookshelf-primary)',
       icon: GiBookshelf,
     },
     {
       label: 'READ',
       value: stats.read,
-      color: 'green',
+      accentColor: 'var(--mantine-color-green-9)',
       icon: LuBookOpenCheck,
     },
     {
       label: 'READING',
       value: stats.reading,
-      color: 'blue',
+      accentColor: 'var(--mantine-color-blue-9)',
       icon: GiBookCover,
     },
     {
       label: 'UNREAD',
       value: stats.unread,
-      color: 'gray',
+      accentColor: 'var(--bookshelf-text-muted)',
       icon: LuBookmark,
     },
   ];
@@ -68,7 +68,6 @@ export function BooksStats({
             radius="xl"
             className="neo-raised"
             style={{
-              background: '#e8eaf0',
               minHeight: 135,
             }}
           >
@@ -89,8 +88,10 @@ export function BooksStats({
                   mt="xs"
                   size="2.5rem"
                   fw={700}
-                  c={stat.color}
                   lh={1}
+                  style={{
+                    color: stat.accentColor,
+                  }}
                 >
                   {stat.value}
                 </Text>
@@ -100,10 +101,9 @@ export function BooksStats({
                 size={52}
                 radius="xl"
                 variant="transparent"
-                color={stat.color}
+                className="bookshelf-stat-icon"
                 style={{
-                  boxShadow:
-                    '4px 4px 8px rgba(0,0,0,0.07), -4px -4px 8px rgba(255,255,255,0.65)',
+                   color: stat.accentColor,
                 }}
               >
                 <Icon size={26} />

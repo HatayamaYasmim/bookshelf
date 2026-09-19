@@ -10,6 +10,19 @@ export class UpdatePreferencesDto {
     theme?: 'SYSTEM' | 'LIGHT' | 'DARK';
 
     @IsOptional()
-    @IsString()
+     @IsIn([
+        'indigo',
+        'blue',
+        'cyan',
+        'teal',
+        'green',
+        'lime',
+        'yellow',
+        'orange',
+        'red',
+        'pink',
+        'grape',
+        'violet',
+    ])
     primaryColor?: string;
 }

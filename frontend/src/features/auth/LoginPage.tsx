@@ -13,6 +13,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { GiSpellBook } from 'react-icons/gi';
+import { useNavigate } from 'react-router-dom';
 
 import { ShaderBackground } from './components/ShaderBackground';
 import {
@@ -20,19 +21,8 @@ import {
     type LoginFormData,
 } from './schemas/loginSchema';
 import { useAuth } from './hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 
 export function LoginPage() {
-    const {
-        user,
-        isAuthenticated,
-    } = useAuth();
-
-    console.log({
-        user,
-        isAuthenticated,
-    });
-
     const { signIn } = useAuth();
     const navigate = useNavigate();
 
@@ -94,8 +84,8 @@ export function LoginPage() {
 
                             <Text
                                 size="sm"
-                                c="dimmed"
                                 ta="center"
+                                className="bookshelf-auth-muted"
                             >
                                 Welcome back. Sign in to continue
                                 to your bookshelf.
@@ -121,7 +111,10 @@ export function LoginPage() {
                                                     ?.message
                                             }
                                             classNames={{
-                                                input: 'bookshelf-input',
+                                                label:
+                                                    'bookshelf-auth-label',
+                                                input:
+                                                    'bookshelf-input bookshelf-auth-input',
                                             }}
                                         />
                                     )}
@@ -137,14 +130,15 @@ export function LoginPage() {
                                             placeholder="Enter your password"
                                             size="md"
                                             radius="xl"
-                                            error={
-                                                errors.password
-                                                    ?.message
-                                            }
+                                            error={errors.password?.message}
                                             classNames={{
-                                                input: 'bookshelf-input',
+                                                label: 'bookshelf-auth-label',
+                                                input:
+                                                    'bookshelf-input bookshelf-auth-input',
                                                 innerInput:
                                                     'bookshelf-password-inner-input',
+                                                visibilityToggle:
+                                                    'bookshelf-password-toggle',
                                             }}
                                         />
                                     )}
@@ -156,7 +150,7 @@ export function LoginPage() {
                                     radius="xl"
                                     fullWidth
                                     loading={isSubmitting}
-                                    className="bookshelf-button bookshelf-button-primary"
+                                    className="bookshelf-login-button"
                                 >
                                     Sign in
                                 </Button>
@@ -166,13 +160,18 @@ export function LoginPage() {
                         <Text
                             size="sm"
                             ta="center"
-                            c="dimmed"
+                            className="bookshelf-auth-muted"
                         >
                             Don't have an account?{' '}
+
                             <Anchor
                                 component="button"
                                 fw={600}
-                                onClick={() => navigate('/register')}>
+                                className="bookshelf-auth-link"
+                                onClick={() =>
+                                    navigate('/register')
+                                }
+                            >
                                 Create account
                             </Anchor>
                         </Text>

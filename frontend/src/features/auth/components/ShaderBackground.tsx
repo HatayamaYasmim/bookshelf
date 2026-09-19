@@ -1,288 +1,482 @@
-import { useRef, useEffect } from "react";
+import {
+    useEffect,
+    useRef,
+} from 'react';
+
+import {
+    useComputedColorScheme,
+} from '@mantine/core';
 
 export function ShaderBackground() {
     const canvasRef =
         useRef<HTMLCanvasElement>(null);
 
+    const colorScheme =
+        useComputedColorScheme('light');
+
+    const isDark =
+        colorScheme === 'dark';
+
     useEffect(() => {
-        const canvasRefCurrent = canvasRef.current;
+        const canvasRefCurrent =
+            canvasRef.current;
 
         if (!canvasRefCurrent) {
             return;
         }
 
-        const canvas: HTMLCanvasElement = canvasRefCurrent;
+        const canvas: HTMLCanvasElement =
+            canvasRefCurrent;
+
         const glContext = (
             canvas.getContext('webgl') ??
-            canvas.getContext('experimental-webgl')
+            canvas.getContext(
+                'experimental-webgl',
+            )
         ) as WebGLRenderingContext | null;
 
         if (!glContext) {
             return;
         }
 
-        const gl: WebGLRenderingContext = glContext;
+        const gl: WebGLRenderingContext =
+            glContext;
 
         const vertexShaderSource = `
-      attribute vec2 a_position;
-      varying vec2 v_texCoord;
+            attribute vec2 a_position;
 
-      void main() {
-        v_texCoord = a_position * 0.5 + 0.5;
-        gl_Position = vec4(a_position, 0.0, 1.0);
-      }
-    `;
+            varying vec2 v_texCoord;
+
+            void main() {
+                v_texCoord =
+                    a_position * 0.5 + 0.5;
+
+                gl_Position =
+                    vec4(
+                        a_position,
+                        0.0,
+                        1.0
+                    );
+            }
+        `;
 
         const fragmentShaderSource = `
-      precision highp float;
+            precision highp float;
 
-      uniform float u_time;
-      uniform vec2 u_resolution;
-      uniform vec2 u_mouse;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            uniform vec2 u_mouse;
+            uniform float u_darkMode;
 
-      varying vec2 v_texCoord;
+            varying vec2 v_texCoord;
 
-      vec3 mod289(vec3 x) {
-        return x - floor(x * (1.0 / 289.0)) * 289.0;
-      }
+            vec3 mod289(vec3 x) {
+                return x -
+                    floor(
+                        x * (1.0 / 289.0)
+                    ) * 289.0;
+            }
 
-      vec2 mod289(vec2 x) {
-        return x - floor(x * (1.0 / 289.0)) * 289.0;
-      }
+            vec2 mod289(vec2 x) {
+                return x -
+                    floor(
+                        x * (1.0 / 289.0)
+                    ) * 289.0;
+            }
 
-      vec3 permute(vec3 x) {
-        return mod289(((x * 34.0) + 1.0) * x);
-      }
+            vec3 permute(vec3 x) {
+                return mod289(
+                    (
+                        (x * 34.0) + 1.0
+                    ) * x
+                );
+            }
 
-      float snoise(vec2 v) {
-        const vec4 C = vec4(
-          0.211324865405187,
-          0.366025403784439,
-          -0.577350269189626,
-          0.024390243902439
-        );
+            float snoise(vec2 v) {
+                const vec4 C = vec4(
+                    0.211324865405187,
+                    0.366025403784439,
+                    -0.577350269189626,
+                    0.024390243902439
+                );
 
-        vec2 i = floor(
-          v + dot(v, C.yy)
-        );
+                vec2 i = floor(
+                    v + dot(v, C.yy)
+                );
 
-        vec2 x0 =
-          v - i + dot(i, C.xx);
+                vec2 x0 =
+                    v - i + dot(i, C.xx);
 
-        vec2 i1 =
-          x0.x > x0.y
-            ? vec2(1.0, 0.0)
-            : vec2(0.0, 1.0);
+                vec2 i1 =
+                    x0.x > x0.y
+                        ? vec2(1.0, 0.0)
+                        : vec2(0.0, 1.0);
 
-        vec4 x12 =
-          x0.xyxy + C.xxzz;
+                vec4 x12 =
+                    x0.xyxy + C.xxzz;
 
-        x12.xy -= i1;
+                x12.xy -= i1;
 
-        i = mod289(i);
+                i = mod289(i);
 
-        vec3 p = permute(
-          permute(
-            i.y +
-            vec3(0.0, i1.y, 1.0)
-          ) +
-          i.x +
-          vec3(0.0, i1.x, 1.0)
-        );
+                vec3 p = permute(
+                    permute(
+                        i.y +
+                        vec3(
+                            0.0,
+                            i1.y,
+                            1.0
+                        )
+                    ) +
+                    i.x +
+                    vec3(
+                        0.0,
+                        i1.x,
+                        1.0
+                    )
+                );
 
-        vec3 m = max(
-          0.5 -
-          vec3(
-            dot(x0, x0),
-            dot(x12.xy, x12.xy),
-            dot(x12.zw, x12.zw)
-          ),
-          0.0
-        );
+                vec3 m = max(
+                    0.5 -
+                    vec3(
+                        dot(x0, x0),
+                        dot(
+                            x12.xy,
+                            x12.xy
+                        ),
+                        dot(
+                            x12.zw,
+                            x12.zw
+                        )
+                    ),
+                    0.0
+                );
 
-        m = m * m;
-        m = m * m;
+                m = m * m;
+                m = m * m;
 
-        vec3 x =
-          2.0 * fract(p * C.www) - 1.0;
+                vec3 x =
+                    2.0 *
+                    fract(p * C.www) -
+                    1.0;
 
-        vec3 h =
-          abs(x) - 0.5;
+                vec3 h =
+                    abs(x) - 0.5;
 
-        vec3 ox =
-          floor(x + 0.5);
+                vec3 ox =
+                    floor(x + 0.5);
 
-        vec3 a0 =
-          x - ox;
+                vec3 a0 =
+                    x - ox;
 
-        m *=
-          1.79284291400159 -
-          0.85373472095314 *
-          (a0 * a0 + h * h);
+                m *=
+                    1.79284291400159 -
+                    0.85373472095314 *
+                    (
+                        a0 * a0 +
+                        h * h
+                    );
 
-        vec3 g;
+                vec3 g;
 
-        g.x =
-          a0.x * x0.x +
-          h.x * x0.y;
+                g.x =
+                    a0.x * x0.x +
+                    h.x * x0.y;
 
-        g.yz =
-          a0.yz * x12.xz +
-          h.yz * x12.yw;
+                g.yz =
+                    a0.yz * x12.xz +
+                    h.yz * x12.yw;
 
-        return 130.0 * dot(m, g);
-      }
+                return 130.0 *
+                    dot(m, g);
+            }
 
-      void main() {
-        vec2 st =
-          gl_FragCoord.xy /
-          u_resolution.xy;
+            void main() {
+                vec2 st =
+                    gl_FragCoord.xy /
+                    u_resolution.xy;
 
-        st.x *=
-          u_resolution.x /
-          u_resolution.y;
+                st.x *=
+                    u_resolution.x /
+                    u_resolution.y;
 
-        float t =
-          u_time * 0.18;
+                float t =
+                    u_time * 0.18;
 
-        vec2 q = vec2(0.0);
+                vec2 q =
+                    vec2(0.0);
 
-        q.x = snoise(
-          st * 1.5 +
-          vec2(
-            t * 0.2,
-            t * 0.15
-          )
-        );
+                q.x = snoise(
+                    st * 1.5 +
+                    vec2(
+                        t * 0.2,
+                        t * 0.15
+                    )
+                );
 
-        q.y = snoise(
-          st * 1.5 +
-          vec2(
-            t * 0.1,
-            -t * 0.25
-          )
-        );
+                q.y = snoise(
+                    st * 1.5 +
+                    vec2(
+                        t * 0.1,
+                        -t * 0.25
+                    )
+                );
 
-        vec2 r = vec2(0.0);
+                vec2 r =
+                    vec2(0.0);
 
-        r.x = snoise(
-          st * 2.5 +
-          1.2 * q +
-          vec2(1.7, 9.2) +
-          0.15 * t
-        );
+                r.x = snoise(
+                    st * 2.5 +
+                    1.2 * q +
+                    vec2(
+                        1.7,
+                        9.2
+                    ) +
+                    0.15 * t
+                );
 
-        r.y = snoise(
-          st * 2.5 +
-          1.2 * q +
-          vec2(8.3, 2.8) +
-          0.126 * t
-        );
+                r.y = snoise(
+                    st * 2.5 +
+                    1.2 * q +
+                    vec2(
+                        8.3,
+                        2.8
+                    ) +
+                    0.126 * t
+                );
 
-        float f =
-          snoise(st * 1.8 + r);
+                float f =
+                    snoise(
+                        st * 1.8 + r
+                    );
 
-        vec3 c1 =
-          vec3(0.92, 0.94, 0.98);
+                /*
+                 * LIGHT THEME
+                 */
 
-        vec3 c2 =
-          vec3(0.55, 0.58, 0.92);
+                vec3 lightC1 =
+                    vec3(
+                        0.92,
+                        0.94,
+                        0.98
+                    );
 
-        vec3 c3 =
-          vec3(0.78, 0.75, 0.95);
+                vec3 lightC2 =
+                    vec3(
+                        0.55,
+                        0.58,
+                        0.92
+                    );
 
-        vec3 c4 =
-          vec3(0.96, 0.97, 1.0);
+                vec3 lightC3 =
+                    vec3(
+                        0.78,
+                        0.75,
+                        0.95
+                    );
 
-        vec3 color = mix(
-          c1,
-          c2,
-          clamp(
-            f * 0.8 + 0.2,
-            0.0,
-            1.0
-          )
-        );
+                vec3 lightC4 =
+                    vec3(
+                        0.96,
+                        0.97,
+                        1.0
+                    );
 
-        color = mix(
-          color,
-          c3,
-          clamp(
-            length(q),
-            0.0,
-            1.0
-          ) * 0.5
-        );
+                /*
+                 * DARK THEME
+                 */
 
-        color = mix(
-          color,
-          c4,
-          clamp(
-            length(r.x),
-            0.0,
-            1.0
-          ) * 0.35
-        );
+                vec3 darkC1 =
+                    vec3(
+                        0.055,
+                        0.060,
+                        0.085
+                    );
 
-        vec2 uv =
-          gl_FragCoord.xy /
-          u_resolution.xy;
+                vec3 darkC2 =
+                    vec3(
+                        0.18,
+                        0.20,
+                        0.48
+                    );
 
-        float vig =
-          uv.x *
-          uv.y *
-          (1.0 - uv.x) *
-          (1.0 - uv.y);
+                vec3 darkC3 =
+                    vec3(
+                        0.12,
+                        0.10,
+                        0.26
+                    );
 
-        vig = clamp(
-          pow(
-            16.0 * vig,
-            0.15
-          ),
-          0.0,
-          1.0
-        );
+                vec3 darkC4 =
+                    vec3(
+                        0.095,
+                        0.10,
+                        0.15
+                    );
 
-        color = mix(
-          vec3(
-            0.88,
-            0.90,
-            0.96
-          ),
-          color,
-          vig
-        );
 
-        gl_FragColor =
-          vec4(color, 1.0);
-      }
-    `;
+                vec3 c1 = mix(
+                    lightC1,
+                    darkC1,
+                    u_darkMode
+                );
+
+                vec3 c2 = mix(
+                    lightC2,
+                    darkC2,
+                    u_darkMode
+                );
+
+                vec3 c3 = mix(
+                    lightC3,
+                    darkC3,
+                    u_darkMode
+                );
+
+                vec3 c4 = mix(
+                    lightC4,
+                    darkC4,
+                    u_darkMode
+                );
+
+                vec3 color = mix(
+                    c1,
+                    c2,
+                    clamp(
+                        f * 0.8 + 0.2,
+                        0.0,
+                        1.0
+                    )
+                );
+
+                color = mix(
+                    color,
+                    c3,
+                    clamp(
+                        length(q),
+                        0.0,
+                        1.0
+                    ) * 0.5
+                );
+
+                color = mix(
+                    color,
+                    c4,
+                    clamp(
+                        abs(r.x),
+                        0.0,
+                        1.0
+                    ) * 0.35
+                );
+
+                /*
+                 * Vignette
+                 */
+
+                vec2 uv =
+                    gl_FragCoord.xy /
+                    u_resolution.xy;
+
+                float vig =
+                    uv.x *
+                    uv.y *
+                    (1.0 - uv.x) *
+                    (1.0 - uv.y);
+
+                vig = clamp(
+                    pow(
+                        16.0 * vig,
+                        0.15
+                    ),
+                    0.0,
+                    1.0
+                );
+
+                vec3 lightEdge =
+                    vec3(
+                        0.88,
+                        0.90,
+                        0.96
+                    );
+
+                vec3 darkEdge =
+                    vec3(
+                        0.035,
+                        0.040,
+                        0.060
+                    );
+
+                vec3 edgeColor =
+                    mix(
+                        lightEdge,
+                        darkEdge,
+                        u_darkMode
+                    );
+
+                color = mix(
+                    edgeColor,
+                    color,
+                    vig
+                );
+
+                gl_FragColor =
+                    vec4(
+                        color,
+                        1.0
+                    );
+            }
+        `;
 
         function createShader(
             type: number,
             source: string,
         ) {
-            const shader = gl.createShader(type);
+            const shader =
+                gl.createShader(type);
 
             if (!shader) {
                 return null;
             }
 
-            gl.shaderSource(shader, source);
+            gl.shaderSource(
+                shader,
+                source,
+            );
+
             gl.compileShader(shader);
+
+            if (
+                !gl.getShaderParameter(
+                    shader,
+                    gl.COMPILE_STATUS,
+                )
+            ) {
+                console.error(
+                    'Shader compilation error:',
+                    gl.getShaderInfoLog(
+                        shader,
+                    ),
+                );
+
+                gl.deleteShader(shader);
+
+                return null;
+            }
 
             return shader;
         }
 
-        const vertexShader = createShader(
-            gl.VERTEX_SHADER,
-            vertexShaderSource,
-        );
+        const vertexShader =
+            createShader(
+                gl.VERTEX_SHADER,
+                vertexShaderSource,
+            );
 
-        const fragmentShader = createShader(
-            gl.FRAGMENT_SHADER,
-            fragmentShaderSource,
-        );
+        const fragmentShader =
+            createShader(
+                gl.FRAGMENT_SHADER,
+                fragmentShaderSource,
+            );
 
         if (
             !vertexShader ||
@@ -309,10 +503,35 @@ export function ShaderBackground() {
         );
 
         gl.linkProgram(program);
+
+        if (
+            !gl.getProgramParameter(
+                program,
+                gl.LINK_STATUS,
+            )
+        ) {
+            console.error(
+                'Shader program link error:',
+                gl.getProgramInfoLog(
+                    program,
+                ),
+            );
+
+            gl.deleteProgram(program);
+            gl.deleteShader(vertexShader);
+            gl.deleteShader(fragmentShader);
+
+            return;
+        }
+
         gl.useProgram(program);
 
         const buffer =
             gl.createBuffer();
+
+        if (!buffer) {
+            return;
+        }
 
         gl.bindBuffer(
             gl.ARRAY_BUFFER,
@@ -367,6 +586,12 @@ export function ShaderBackground() {
                 'u_mouse',
             );
 
+        const darkModeLocation =
+            gl.getUniformLocation(
+                program,
+                'u_darkMode',
+            );
+
         const mouse = {
             x: canvas.width / 2,
             y: canvas.height / 2,
@@ -385,16 +610,30 @@ export function ShaderBackground() {
             );
 
             canvas.width =
-                width * dpr;
+                Math.max(
+                    1,
+                    Math.floor(
+                        width * dpr,
+                    ),
+                );
 
             canvas.height =
-                height * dpr;
+                Math.max(
+                    1,
+                    Math.floor(
+                        height * dpr,
+                    ),
+                );
         }
 
         const resizeObserver =
-            new ResizeObserver(resize);
+            new ResizeObserver(
+                resize,
+            );
 
-        resizeObserver.observe(canvas);
+        resizeObserver.observe(
+            canvas,
+        );
 
         resize();
 
@@ -405,16 +644,25 @@ export function ShaderBackground() {
                 canvas.getBoundingClientRect();
 
             const x =
-                (event.clientX - rect.left) /
+                (
+                    event.clientX -
+                    rect.left
+                ) /
                 rect.width;
 
             const y =
                 1 -
-                (event.clientY - rect.top) /
+                (
+                    event.clientY -
+                    rect.top
+                ) /
                 rect.height;
 
-            mouse.x = x * canvas.width;
-            mouse.y = y * canvas.height;
+            mouse.x =
+                x * canvas.width;
+
+            mouse.y =
+                y * canvas.height;
         }
 
         window.addEventListener(
@@ -424,7 +672,9 @@ export function ShaderBackground() {
 
         let animationFrame = 0;
 
-        function render(time: number) {
+        function render(
+            time: number,
+        ) {
             gl.viewport(
                 0,
                 0,
@@ -449,6 +699,11 @@ export function ShaderBackground() {
                 mouse.y,
             );
 
+            gl.uniform1f(
+                darkModeLocation,
+                isDark ? 1 : 0,
+            );
+
             gl.drawArrays(
                 gl.TRIANGLE_STRIP,
                 0,
@@ -456,30 +711,36 @@ export function ShaderBackground() {
             );
 
             animationFrame =
-                requestAnimationFrame(render);
+                requestAnimationFrame(
+                    render,
+                );
         }
 
         animationFrame =
-            requestAnimationFrame(render);
+            requestAnimationFrame(
+                render,
+            );
 
         return () => {
             cancelAnimationFrame(
                 animationFrame,
             );
-
             resizeObserver.disconnect();
-
             window.removeEventListener(
                 'mousemove',
                 handleMouseMove,
             );
-
-            gl.deleteProgram(program);
-            gl.deleteShader(vertexShader);
-            gl.deleteShader(fragmentShader);
             gl.deleteBuffer(buffer);
+            gl.deleteProgram(program);
+            gl.deleteShader(
+                vertexShader,
+            );
+
+            gl.deleteShader(
+                fragmentShader,
+            );
         };
-    }, []);
+    }, [isDark]);
 
     return (
         <canvas

@@ -1,0 +1,91 @@
+/* Pagination */
+
+.bookshelf-pagination-control {
+  background: var(--bookshelf-surface) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  color: var(--bookshelf-text) !important;
+  box-shadow: var(--bookshelf-shadow-small) !important;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.bookshelf-pagination-control:hover {
+  background: var(--bookshelf-primary-soft) !important;
+  color: var(--bookshelf-primary) !important;
+}
+
+.bookshelf-pagination-control[data-active] {
+  background: var(--bookshelf-surface) !important;
+  color: var(--bookshelf-primary) !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-pagination-control:active {
+  transform: translateY(1px);
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}
+
+/* Books table */
+
+.bookshelf-table-scroll {
+  max-height: clamp(280px, 42dvh, 520px);
+}
+
+@media (max-width: 768px) {
+    .bookshelf-table-scroll {
+        max-height: 360px;
+    }
+}
+
+.bookshelf-menu-dropdown {
+  background: var(--bookshelf-glass) !important;
+  backdrop-filter: blur(5px) saturate(150%);
+  -webkit-backdrop-filter: blur(5px) saturate(150%);
+  border: 1px solid var(--bookshelf-glass-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--bookshelf-dropdown-shadow) !important;
+}
+
+/* Books stats */
+
+.bookshelf-stat-icon {
+  background: var(--bookshelf-surface) !important;
+  box-shadow: var(--bookshelf-shadow-small) !important;
+}
+
+/* Library actions */
+
+
+.bookshelf-add-author-button {
+  color: var(--bookshelf-primary) !important;
+  background: var(--bookshelf-surface) !important;
+  border: 1px solid var(--bookshelf-glass-border) !important;
+  box-shadow: var(--bookshelf-shadow-small) !important;
+}
+
+.bookshelf-add-author-button:hover {
+  background: var(--bookshelf-primary-soft) !important;
+}
+
+.bookshelf-add-author-button:active {
+  transform: translateY(1px);
+  box-shadow:
+    var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-clear-filters {
+  color: var(--bookshelf-text-muted) !important;
+  background: var(--bookshelf-surface) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-clear-filters:hover {
+  color: var(--bookshelf-primary) !important;
+  background: var(--bookshelf-primary-soft) !important;
+}

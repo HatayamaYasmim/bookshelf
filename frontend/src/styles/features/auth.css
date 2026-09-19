@@ -1,0 +1,150 @@
+
+.bookshelf-auth-shader {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bookshelf-auth-page {
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background: var(--bookshelf-background);
+  color: var(--bookshelf-text);
+}
+
+.bookshelf-auth-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  padding: 24px;
+}
+
+.bookshelf-login-card {
+  background: var(--bookshelf-auth-card); 
+  border: 1px solid var(--bookshelf-auth-card-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--bookshelf-auth-shadow);
+}
+
+.bookshelf-login-logo {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--bookshelf-primary);
+  background:  var(--bookshelf-auth-logo);
+  box-shadow:  var(--bookshelf-shadow-small);
+}
+
+.bookshelf-auth-label {
+  color: var(--bookshelf-text) !important;
+  font-weight: 600 !important;
+}
+
+.bookshelf-auth-input {
+  background:  var(--bookshelf-surface) !important;
+  color:  var(--bookshelf-text) !important;
+  border: none !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-password-inner-input {
+  background: transparent !important;
+  color: var(--bookshelf-text) !important;
+  border: none !important;
+  -webkit-text-fill-color:    var(--bookshelf-text);
+}
+
+.bookshelf-password-toggle {
+  color: var(--bookshelf-text-muted) !important;
+  background: transparent !important;
+}
+
+.bookshelf-password-toggle:hover {
+  color: var(--bookshelf-primary) !important;
+  background: var(--bookshelf-primary-soft) !important;
+}
+
+.bookshelf-login-button {
+  min-height: 44px;
+  background: var(--bookshelf-surface) !important;
+  color:  var(--bookshelf-primary) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  box-shadow: var(--bookshelf-shadow-raised) !important;
+  transition:
+    background 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.bookshelf-login-button:hover {
+  background: var(--bookshelf-primary-soft) !important;
+  transform: translateY(-1px);
+}
+
+.bookshelf-login-button:active {
+  transform: translateY(1px);
+
+  box-shadow:
+    var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-auth-input::placeholder,
+.bookshelf-password-inner-input::placeholder {
+  color: var(--bookshelf-text-muted) !important;
+  opacity: 0.75;
+}
+
+.bookshelf-auth-muted {
+  color: var(--bookshelf-text-muted) !important;
+}
+
+.bookshelf-auth-link {
+  color: var(--bookshelf-primary) !important;
+  transition:
+    color 150ms ease,
+    opacity 150ms ease;
+}
+
+.bookshelf-auth-link:hover {
+  opacity: 0.8;
+}
+
+.bookshelf-auth-input:-webkit-autofill,
+.bookshelf-auth-input:-webkit-autofill:hover,
+.bookshelf-auth-input:-webkit-autofill:focus,
+.bookshelf-auth-input:-webkit-autofill:active,
+.bookshelf-password-inner-input:-webkit-autofill,
+.bookshelf-password-inner-input:-webkit-autofill:hover,
+.bookshelf-password-inner-input:-webkit-autofill:focus,
+.bookshelf-password-inner-input:-webkit-autofill:active {
+  -webkit-text-fill-color:
+    var(--bookshelf-text) !important;
+
+  caret-color:
+    var(--bookshelf-text);
+
+  -webkit-box-shadow:
+    0 0 0 1000px
+      var(--bookshelf-surface)
+      inset !important;
+
+  transition:
+    background-color 9999s ease-out;
+}
+
+.bookshelf-auth-input:focus {
+  box-shadow:
+    var(--bookshelf-shadow-inset),
+    0 0 0 1px
+      var(--bookshelf-primary-soft-strong) !important;
+}

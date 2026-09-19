@@ -1,0 +1,35 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bookshelf-background);
+  color:  var(--bookshelf-text);
+  font-family: var(--bookshelf-font-family);
+}
+
+/* Neomorphism */
+
+.neo-raised {
+  background: var(--bookshelf-surface);
+  box-shadow: var(--bookshelf-shadow-raised);
+}
+
+.neo-inset {
+  background: var(--bookshelf-surface);
+  box-shadow: var(--bookshelf-shadow-inset);
+}
+
+.bookshelf-text-muted {
+  color: var(--bookshelf-text-muted) !important;
+}

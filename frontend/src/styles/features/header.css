@@ -1,0 +1,20 @@
+.bookshelf-app-header {
+  background: var(--bookshelf-background);
+  box-shadow: var(--bookshelf-header-shadow);
+}
+
+.bookshelf-nav-link {
+    color: var(--bookshelf-text-muted);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        color 150ms ease;
+}
+
+.bookshelf-nav-link:hover {
+    color: var(--bookshelf-primary);
+}
+
+.bookshelf-nav-link-active {
+    color: var(--bookshelf-primary);
+}

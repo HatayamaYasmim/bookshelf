@@ -1,0 +1,55 @@
+.bookshelf-button {
+  min-height: 42px;
+
+  padding-inline: 24px;
+
+  background: var(--bookshelf-surface) !important;
+  color: var(--bookshelf-text) !important;
+
+  border: none !important;
+  border-radius: 999px !important;
+
+  box-shadow:
+    var(--bookshelf-shadow-raised);
+}
+
+.bookshelf-button:hover {
+  background: var(--bookshelf-surface) !important;
+}
+
+.bookshelf-button:active {
+  box-shadow:
+    var(--bookshelf-shadow-inset);
+}
+
+.bookshelf-button-primary {
+  color: var(--bookshelf-primary) !important;
+}
+
+/* Icon action buttons */
+
+.bookshelf-grid-action {
+  background: var(--bookshelf-surface) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  color: var(--bookshelf-text-muted) !important;
+  box-shadow: var(--bookshelf-shadow-small) !important;
+  transition:
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.bookshelf-grid-action:hover {
+  color: var(--bookshelf-primary) !important;
+}
+
+.bookshelf-grid-action:active {
+  transform: translateY(1px);
+  box-shadow:  var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-grid-action-danger:hover {
+  color:
+    var(--bookshelf-danger) !important;
+}

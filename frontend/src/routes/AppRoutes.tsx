@@ -11,6 +11,7 @@ import { ProtectedRoute } from '../features/auth/components/ProtectedRoute';
 import { BooksPage } from '../features/books/BooksPage';
 import { DashboardPage } from '../features/dashboard/DashboardPage';
 import { RegisterPage } from '../features/auth/RegisterPage';
+import { AccountPage } from '../features/account/AccountPage';
 
 function MainLayout() {
     return (
@@ -56,7 +57,12 @@ export function AppRoutes() {
                         path="/dashboard"
                         element={<DashboardPage />}
                     />
+                    <Route
+                        path="/account"
+                        element={<AccountPage />}
+                    />
                 </Route>
+
             </Route>
 
             <Route

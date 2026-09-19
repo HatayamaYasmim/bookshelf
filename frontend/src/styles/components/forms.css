@@ -1,0 +1,49 @@
+/* Inputs */
+
+.bookshelf-input {
+  min-height: 46px;
+  background: var(--bookshelf-surface) !important;
+  color: var(--bookshelf-text) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}
+
+/* Select */
+
+.bookshelf-select-input {
+  background: var(--bookshelf-surface) !important;
+  color: var(--bookshelf-text) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-select-dropdown {
+  background: var(--bookshelf-glass) !important;
+  backdrop-filter: blur(5px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(5px) saturate(150%) !important;
+  border: 1px solid var(--bookshelf-glass-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--bookshelf-dropdown-shadow) !important;
+  padding: 6px !important;
+}
+
+.bookshelf-select-option:hover {
+  background: var(--bookshelf-primary-soft) !important;
+}
+
+.bookshelf-select-option[data-combobox-selected] {
+  background: var(--bookshelf-primary-soft-strong) !important;
+  color: var(--bookshelf-primary) !important;
+}
+
+/* Filter options */
+
+.bookshelf-filter-option:hover {
+  background: var(--bookshelf-primary-soft) !important;
+}
+.bookshelf-filter-option[data-combobox-selected] {
+  background: var(--bookshelf-primary-soft-strong) !important;
+  color: var(--bookshelf-primary) !important;
+}

@@ -1,0 +1,82 @@
+.bookshelf-dashboard-card {
+  min-height: 150px;
+  height: 100%;
+  background: var(--bookshelf-surface);
+  border: none;
+  box-shadow: var(--bookshelf-shadow-raised);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.bookshelf-chart-tooltip {
+  width: max-content;
+  min-width: 120px;
+  background: var(--bookshelf-surface) !important;
+  color:var(--bookshelf-text) !important;
+  border: 1px solid var(--bookshelf-glass-border);
+  box-shadow: var(--bookshelf-shadow-small);
+}
+
+.bookshelf-dashboard-stat-icon {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--bookshelf-surface);
+  box-shadow: var(--bookshelf-shadow-small);
+}
+.bookshelf-current-reading-cover {
+  width: 110px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bookshelf-surface);
+  box-shadow: var(--bookshelf-shadow-raised);
+}
+
+.bookshelf-dashboard-period {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--bookshelf-surface);
+  box-shadow:var(--bookshelf-shadow-small);
+}
+
+.bookshelf-dashboard-main-card {
+  min-height: 360px;
+}
+
+.bookshelf-genre-ring {
+  width: 185px;
+  height: 185px;
+  border-radius: 50%;
+  position: relative;
+  isolation: isolate;
+  box-shadow:
+    0 0 16px
+      var(--bookshelf-primary-soft-strong),
+    var(--bookshelf-shadow-raised);
+}
+
+.bookshelf-genre-ring::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(12px) saturate(1.2);
+  opacity: 0.35;
+  z-index: -1;
+}
+
+.bookshelf-genre-ring::after {
+  content: '';
+  position: absolute;
+  inset: 15px;
+  border-radius: 50%;
+  background: var(--bookshelf-surface);
+  box-shadow: var(--bookshelf-shadow-inset);
+}

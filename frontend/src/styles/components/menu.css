@@ -1,0 +1,9 @@
+.bookshelf-glass-item {
+  background: transparent !important;
+  border-radius: 10px !important;
+  transition: background 150ms ease;
+}
+
+.bookshelf-glass-item:hover {
+  background: var(--bookshelf-glass-hover) !important;
+}

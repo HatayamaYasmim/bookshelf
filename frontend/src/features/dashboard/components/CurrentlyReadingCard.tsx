@@ -66,8 +66,8 @@ export function CurrentlyReadingCard({
 
             <Text
               size="sm"
-              c="dimmed"
               ta="center"
+              className="bookshelf-text-muted"
             >
               Books marked as Reading will appear here.
             </Text>
@@ -103,8 +103,8 @@ export function CurrentlyReadingCard({
 
               <Text
                 size="sm"
-                c="dimmed"
                 ta="center"
+                className="bookshelf-text-muted"
               >
                 {currentBook.author.name}
               </Text>
@@ -119,14 +119,13 @@ export function CurrentlyReadingCard({
                   (genre) => (
                     <Badge
                       key={genre.id}
-                      variant="light"
+                      variant="transparent"
                       radius="xl"
+                      className="bookshelf-badge"
                       styles={{
                         root: {
                           border: 'none',
                           textTransform: 'none',
-                          boxShadow:
-                            'inset 3px 3px 6px rgba(0,0,0,0.05), inset -3px -3px 6px rgba(255,255,255,0.5)',
                         },
                       }}
                     >
@@ -140,13 +139,13 @@ export function CurrentlyReadingCard({
             <Badge
               variant="transparent"
               radius="xl"
+              className="bookshelf-badge"
               styles={{
                 root: {
-                  color: '#1971c2',
+                  color:
+                    'var(--mantine-color-blue-9)',
                   border: 'none',
                   textTransform: 'none',
-                  boxShadow:
-                    'inset 3px 3px 6px rgba(0,0,0,0.05), inset -3px -3px 6px rgba(255,255,255,0.5)',
                 },
               }}
             >

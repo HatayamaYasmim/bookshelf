@@ -73,9 +73,16 @@ export function AppHeader() {
                             Dashboard
                         </NavLink>
                         <Group>
-                            <Text size="sm">
+                            <NavLink
+                                to="/account"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'bookshelf-nav-link bookshelf-nav-link-active'
+                                        : 'bookshelf-nav-link'
+                                }
+                            >
                                 {user?.name}
-                            </Text>
+                            </NavLink>
 
                             <Button
                                 variant='none'

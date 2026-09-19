@@ -146,18 +146,15 @@ export function AppearanceSettings() {
                 <Group gap="sm">
                     {themeOptions.map(
                         (option) => {
-                            const isSelected =
-                                theme ===
-                                option.value;
-
+                            const isSelected = theme ===  option.value;
                             return (
-                                <Button
+                                <Button                      
                                     key={
                                         option.value
                                     }
                                     type="button"
                                     variant="transparent"
-                                    className={`bookshelf-appearance-option ${
+                                    className={` bookshelf-button bookshelf-appearance-option ${
                                         isSelected
                                             ? 'bookshelf-appearance-option-active'
                                             : ''

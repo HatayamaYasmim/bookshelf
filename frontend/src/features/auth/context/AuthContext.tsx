@@ -8,6 +8,7 @@ interface AuthContextValue {
     isInitializing: boolean;
     signIn: (data: LoginRequest) => Promise<void>;
     signOut: () => Promise<void>;
+    refreshUser: () => Promise<void>;
 }
 
 export const AuthContext =
@@ -24,6 +25,11 @@ export function AuthProvider({
 }: AuthProviderProps) {
     const [user, setUser] = useState<AuthUser | null>(null);
     const [isInitializing, setIsInitializing] = useState(true);
+    
+    async function refreshUser() {
+    const currentUser = await getMe();
+    setUser(currentUser);
+}
 
     useEffect(() => {
         async function restoreSession() {
@@ -75,7 +81,8 @@ export function AuthProvider({
                 isAuthenticated: user !== null,
                 isInitializing,
                 signIn,
-                signOut
+                signOut,
+                refreshUser
             }}
         >
             {children}

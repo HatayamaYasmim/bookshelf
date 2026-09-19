@@ -12,6 +12,7 @@ import { BooksPage } from '../features/books/BooksPage';
 import { DashboardPage } from '../features/dashboard/DashboardPage';
 import { RegisterPage } from '../features/auth/RegisterPage';
 import { AccountPage } from '../features/account/AccountPage';
+import { VerifyEmailPage } from '../features/auth/VerifyEmailPage';
 
 function MainLayout() {
     return (
@@ -33,6 +34,11 @@ export function AppRoutes() {
             <Route
                 path="/register"
                 element={<RegisterPage />}
+            />
+
+            <Route
+                path="/verify-email"
+                element={<VerifyEmailPage />}
             />
 
             {/* Protected routes */}

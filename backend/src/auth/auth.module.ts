@@ -5,9 +5,12 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { EmailVerificationService } from './services/email-verification/email-verification.service';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
-  imports: [PrismaModule,
+  imports: [PrismaModule, 
+  MailModule,
   JwtModule.registerAsync({
             inject: [ConfigService],
             useFactory: (
@@ -31,7 +34,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
             },
         }),
     ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, EmailVerificationService],
   controllers: [AuthController]
 })
 export class AuthModule {}

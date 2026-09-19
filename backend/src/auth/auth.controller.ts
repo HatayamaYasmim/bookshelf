@@ -4,12 +4,10 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import type { Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { VerifyEmailDto } from './dto/verify-email.dto';
+import type { AuthenticatedRequest } from './types/authenticated-request';
+import { ResendVerificationDto } from './dto/resend-verification.dto';
 
-interface AuthenticatedRequest extends Request {
-    user: {
-        userId: number;
-    };
-}
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
@@ -55,6 +53,22 @@ export class AuthController {
         return {
             message: 'Logged out successfully',
         };
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @Post('verify-email')
+    verifyEmail(
+        @Body() data: VerifyEmailDto,
+    ) {
+        return this.authService.verifyEmail(
+            data.token,
+        );
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @Post('resend-verification')
+    resendVerification(@Body() data: ResendVerificationDto) {
+        return this.authService.resendVerificationEmail( data.email);
     }
 
 

@@ -9,6 +9,7 @@ import { GenreModule } from './genre/genre.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
 import { AccountModule } from './account/account.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AccountModule } from './account/account.module';
     DashboardModule,
     AuthModule,
     AccountModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

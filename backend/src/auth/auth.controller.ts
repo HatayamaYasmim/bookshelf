@@ -23,7 +23,7 @@ import { ResendVerificationDto } from './dto/resend-verification.dto';
 export class AuthController {
     constructor(
         private readonly authService: AuthService,
-    ) {}
+    ) { }
 
     @Post('register')
     register(@Body() data: RegisterDto) {
@@ -51,6 +51,7 @@ export class AuthController {
                 sameSite: isProduction
                     ? 'none'
                     : 'lax',
+                partitioned: isProduction,
                 maxAge: 15 * 60 * 1000,
                 path: '/',
             },
@@ -86,6 +87,7 @@ export class AuthController {
                 sameSite: isProduction
                     ? 'none'
                     : 'lax',
+                partitioned: isProduction,
                 path: '/',
             },
         );

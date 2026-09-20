@@ -1,4 +1,15 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Post,
+    Req,
+    Res,
+    UseGuards,
+} from '@nestjs/common';
+
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -10,48 +21,78 @@ import { ResendVerificationDto } from './dto/resend-verification.dto';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+        private readonly authService: AuthService,
+    ) {}
 
     @Post('register')
     register(@Body() data: RegisterDto) {
-        return this.authService.register(data)
+        return this.authService.register(data);
     }
 
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    async login(@Body() data: LoginDto, @Res({ passthrough: true }) response: Response) {
-        const result = await this.authService.login(data)
+    async login(
+        @Body() data: LoginDto,
+        @Res({ passthrough: true }) response: Response,
+    ) {
+        const result =
+            await this.authService.login(data);
 
-        response.cookie('access_token', result.accessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 15 * 60 * 1000,
-            path: '/'
-        }
-        )
+        const isProduction =
+            process.env.NODE_ENV === 'production';
+
+        response.cookie(
+            'access_token',
+            result.accessToken,
+            {
+                httpOnly: true,
+                secure: isProduction,
+                sameSite: isProduction
+                    ? 'none'
+                    : 'lax',
+                maxAge: 15 * 60 * 1000,
+                path: '/',
+            },
+        );
+
         return {
             user: result.user,
-        }
+        };
     }
 
     @Get('me')
     @UseGuards(JwtAuthGuard)
-    getMe(@Req() request: AuthenticatedRequest) {
-        return this.authService.getCurrentUser(request.user.userId)
+    getMe(
+        @Req() request: AuthenticatedRequest,
+    ) {
+        return this.authService.getCurrentUser(
+            request.user.userId,
+        );
     }
 
     @Post('logout')
-    logout(@Res({ passthrough: true }) response: Response) {
-        response.clearCookie('access_token', {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            path: '/',
-        })
+    logout(
+        @Res({ passthrough: true }) response: Response,
+    ) {
+        const isProduction =
+            process.env.NODE_ENV === 'production';
+
+        response.clearCookie(
+            'access_token',
+            {
+                httpOnly: true,
+                secure: isProduction,
+                sameSite: isProduction
+                    ? 'none'
+                    : 'lax',
+                path: '/',
+            },
+        );
 
         return {
-            message: 'Logged out successfully',
+            message:
+                'Logged out successfully',
         };
     }
 
@@ -67,9 +108,12 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('resend-verification')
-    resendVerification(@Body() data: ResendVerificationDto) {
-        return this.authService.resendVerificationEmail( data.email);
+    resendVerification(
+        @Body() data: ResendVerificationDto,
+    ) {
+        return this.authService
+            .resendVerificationEmail(
+                data.email,
+            );
     }
-
-
 }

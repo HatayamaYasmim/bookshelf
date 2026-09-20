@@ -26,6 +26,20 @@ export interface UpdateUserPreferences {
     primaryColor?: PrimaryColor;
 }
 
+export interface UpdateProfileData {
+    name?: string;
+    email?: string;
+}
+
+export interface UpdateProfileResponse {
+    id: number;
+    name: string;
+    email: string;
+    emailVerifiedAt: string | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export async function getUserPreferences(): Promise<UserPreferences> {
     const response = await apiFetch(
         '/account/preferences',
@@ -58,6 +72,34 @@ export async function updateUserPreferences(
     if (!response.ok) {
         throw new Error(
             'Failed to update user preferences',
+        );
+    }
+
+    return response.json();
+}
+
+export async function updateProfile(
+    data: UpdateProfileData,
+): Promise<UpdateProfileResponse> {
+    const response = await apiFetch(
+        '/account/profile',
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type':
+                    'application/json',
+            },
+            body: JSON.stringify(data),
+        },
+    );
+
+    if (!response.ok) {
+        const error = await response
+            .json()
+            .catch(() => null);
+        throw new Error(
+            error?.message ??
+                'Unable to update profile',
         );
     }
 

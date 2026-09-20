@@ -181,8 +181,7 @@ export function AppearanceProvider({
     async function savePreferences(
         data: UpdateUserPreferences,
     ) {
-        const updated =
-            await updateUserPreferences(
+        const updated =  await updateUserPreferences(
                 data,
             );
 
@@ -199,9 +198,7 @@ export function AppearanceProvider({
         >
             <MantineProvider
                 theme={theme}
-                forceColorScheme={
-                    colorScheme
-                }
+                forceColorScheme={ colorScheme }
             >
                 {children}
             </MantineProvider>
@@ -210,8 +207,7 @@ export function AppearanceProvider({
 }
 
 export function useAppearance() {
-    const context =
-        useContext(AppearanceContext);
+    const context = useContext(AppearanceContext);
 
     if (!context) {
         throw new Error(

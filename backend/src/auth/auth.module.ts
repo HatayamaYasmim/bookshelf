@@ -9,9 +9,9 @@ import { EmailVerificationService } from './services/email-verification/email-ve
 import { MailModule } from 'src/mail/mail.module';
 
 @Module({
-  imports: [PrismaModule, 
-  MailModule,
-  JwtModule.registerAsync({
+    imports: [PrismaModule,
+        MailModule,
+        JwtModule.registerAsync({
             inject: [ConfigService],
             useFactory: (
                 configService: ConfigService,
@@ -34,7 +34,10 @@ import { MailModule } from 'src/mail/mail.module';
             },
         }),
     ],
-  providers: [AuthService, JwtStrategy, EmailVerificationService],
-  controllers: [AuthController]
+    providers: [AuthService, JwtStrategy, EmailVerificationService],
+    controllers: [AuthController],
+    exports: [
+        EmailVerificationService,
+    ],
 })
-export class AuthModule {}
+export class AuthModule { }

@@ -3,6 +3,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AccountService } from './account.service';
 import type { AuthenticatedRequest } from 'src/auth/types/authenticated-request';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
+import { UpdateProfileDto } from './dto/update.profile.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('account')
@@ -19,6 +20,11 @@ export class AccountController {
     @Patch('preferences')
     updatePreferences(@Req() request: AuthenticatedRequest, @Body() data: UpdatePreferencesDto) {
         return this.accountService.updatePreferences(request.user.userId, data)
+    }
+
+    @Patch('profile')
+    updateProfile(@Req() request: AuthenticatedRequest, @Body() data: UpdateProfileDto) {
+        return this.accountService.updateProfile(request.user.userId, data)
     }
 
 }

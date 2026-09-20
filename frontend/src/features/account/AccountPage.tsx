@@ -7,6 +7,7 @@ import {
     Title,
 } from '@mantine/core';
 import { AppearanceSettings } from './components/ApperanceSettings';
+import { ProfileSettings } from './components/ProfileSettings';
 
 export function AccountPage() {
     return (
@@ -39,8 +40,7 @@ export function AccountPage() {
                         <Paper
                             p="xl"
                             radius="xl"
-                            className="neo-raised"
-                        >
+                            className="neo-raised bookshelf-account-card">
                             <Stack gap="sm">
                                 <Title
                                     order={3}
@@ -53,7 +53,7 @@ export function AccountPage() {
                                     size="sm"
                                     className="bookshelf-text-muted"
                                 >
-                                    Manage your name and email.
+                                 <ProfileSettings/>
                                 </Text>
                             </Stack>
                         </Paper>
@@ -77,7 +77,7 @@ export function AccountPage() {
                         <Paper
                             p="xl"
                             radius="xl"
-                            className="neo-raised"
+                            className="neo-raised bookshelf-account-card"
                         >
                             <Stack gap="sm">
                                 <Title

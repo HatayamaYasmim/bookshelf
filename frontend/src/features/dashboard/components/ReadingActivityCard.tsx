@@ -4,6 +4,7 @@ import {
   Stack,
   Text,
   Title,
+  useMantineTheme,
 } from '@mantine/core';
 
 import {
@@ -23,7 +24,8 @@ interface ReadingActivityCardProps {
 }
 
 function formatMonth(month: string) {
-  const [year, monthNumber] = month.split('-');
+  const [year, monthNumber] =
+    month.split('-');
 
   const date = new Date(
     Number(year),
@@ -31,22 +33,31 @@ function formatMonth(month: string) {
     1,
   );
 
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-  });
+  return date.toLocaleDateString(
+    'en-US',
+    {
+      month: 'short',
+    },
+  );
 }
+
+
 
 export function ReadingActivityCard({
   activity,
 }: ReadingActivityCardProps) {
-  const chartData = activity.map((item) => ({
-    month: formatMonth(item.month),
-    books: item.count,
-  }));
+  const theme = useMantineTheme();
+
+  const chartData = activity.map(
+    (item) => ({
+      month: formatMonth(item.month),
+      books: item.count,
+    }),
+  );
 
   const hasActivity = activity.some(
-  (item) => item.count > 0,
-);
+    (item) => item.count > 0,
+  );
 
   return (
     <Paper
@@ -73,8 +84,7 @@ export function ReadingActivityCard({
 
           <Text
             size="sm"
-            c="dimmed"
-            className="bookshelf-dashboard-period"
+            className="bookshelf-dashboard-period bookshelf-text-muted"
           >
             Last 6 months
           </Text>
@@ -92,10 +102,11 @@ export function ReadingActivityCard({
 
             <Text
               size="sm"
-              c="dimmed"
               ta="center"
+              className="bookshelf-text-muted"
             >
-              Completed books will appear here.
+              Completed books will
+              appear here.
             </Text>
           </Stack>
         ) : (
@@ -107,7 +118,7 @@ export function ReadingActivityCard({
               {
                 name: 'books',
                 label: 'Books read',
-                color: 'indigo.5',
+                color: theme.primaryColor,
               },
             ]}
             tickLine="none"
@@ -116,10 +127,77 @@ export function ReadingActivityCard({
             withYAxis
             yAxisProps={{
               allowDecimals: false,
+              tick: {
+                fill:
+                  'var(--bookshelf-text-muted)',
+              },
+            }}
+            xAxisProps={{
+              tick: {
+                fill:
+                  'var(--bookshelf-text-muted)',
+              },
+            }}
+            tooltipProps={{
+              cursor: false,
+              content: ({
+                label,
+                payload,
+              }) => (
+                <ReadingTooltip
+                  label={label}
+                  payload={payload}
+                />
+              ),
             }}
           />
         )}
       </Stack>
+    </Paper>
+  );
+}
+
+interface ReadingTooltipProps {
+  label: React.ReactNode;
+  payload:
+  | readonly Record<string, any>[]
+  | undefined;
+}
+
+function ReadingTooltip({
+  label,
+  payload,
+}: ReadingTooltipProps) {
+  if (!payload?.length) {
+    return null;
+  }
+
+  const item = payload[0];
+
+  return (
+    <Paper
+      px="md"
+      py="sm"
+      radius="md"
+      className="bookshelf-chart-tooltip"
+    >
+      <Text
+        fw={600}
+        size="sm"
+        mb={4}
+      >
+        {label}
+      </Text>
+
+      <Text
+        size="sm"
+        style={{
+          color:
+            'var(--bookshelf-primary)',
+        }}
+      >
+        Books read: {item.value}
+      </Text>
     </Paper>
   );
 }

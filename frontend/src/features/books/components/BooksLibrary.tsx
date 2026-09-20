@@ -118,34 +118,25 @@ export function BooksLibrary({
                             }
                             onClick={onAddAuthor}
                             radius="lg"
-                            styles={{
-                                root: {
-                                    color:
-                                        'var(--bookshelf-primary)',
-                                    background:
-                                        'var(--bookshelf-background)',
-                                    boxShadow:
-                                        '6px 6px 12px rgba(0, 0, 0, 0.08), -6px -6px 12px rgba(255, 255, 255, 0.6)',
-                                },
-                            }}
+                            className="
+                            bookshelf-button
+                            bookshelf-button-primary
+                            bookshelf-add-author-button"
                         >
                             Add author
                         </Button>
 
                         <Button
+                            variant="subtle"
                             leftSection={
                                 <RiBookAiFill size={18} />
                             }
                             onClick={onAddBook}
                             radius="lg"
-                            styles={{
-                                root: {
-                                    background:
-                                        'var(--bookshelf-primary)',
-                                    boxShadow:
-                                        '5px 5px 12px rgba(99, 102, 241, 0.28)',
-                                },
-                            }}
+                            className="
+                            bookshelf-button
+                            bookshelf-button-primary
+                            bookshelf-add-author-button"
                         >
                             Add book
                         </Button>
@@ -175,15 +166,9 @@ export function BooksLibrary({
                                     event.currentTarget.value,
                                 )
                             }
-                            styles={{
-                                input: {
-                                    background:
-                                        'var(--bookshelf-background)',
-                                    border: 'none',
-                                    borderRadius: '999px',
-                                    boxShadow:
-                                        'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
-                                },
+                            classNames={{
+                                input:
+                                    'bookshelf-input bookshelf-search-input',
                             }}
                         />
                     </Grid.Col>
@@ -275,14 +260,7 @@ export function BooksLibrary({
                                     <GiMagicBroom size={16} />
                                 }
                                 onClick={onClearFilters}
-                                styles={{
-                                    root: {
-                                        border: 'none',
-                                        borderRadius: '999px',
-                                        boxShadow:
-                                            'inset 4px 4px 8px rgba(0,0,0,0.06), inset -4px -4px 8px rgba(255,255,255,0.5)',
-                                    },
-                                }}
+                                className="bookshelf-clear-filters"
                             >
                                 Clear filters
                             </Button>

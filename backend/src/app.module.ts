@@ -7,6 +7,9 @@ import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
 import { GenreModule } from './genre/genre.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AuthModule } from './auth/auth.module';
+import { AccountModule } from './account/account.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -18,6 +21,9 @@ import { DashboardModule } from './dashboard/dashboard.module';
     BookModule,
     GenreModule,
     DashboardModule,
+    AuthModule,
+    AccountModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,0 +1,77 @@
+
+.bookshelf-appearance-option {
+  min-width: 100px;
+
+  color:
+    var(--bookshelf-text) !important;
+
+  background:
+    var(--bookshelf-surface) !important;
+
+  border:
+    1px solid
+    var(--bookshelf-glass-border) !important;
+
+  box-shadow:
+    var(--bookshelf-shadow-small) !important;
+}
+
+
+.bookshelf-appearance-option:hover {
+  background:
+    var(--bookshelf-primary-soft) !important;
+}
+
+.bookshelf-appearance-option-active {
+  color: var(--bookshelf-primary) !important;
+  background: var(--bookshelf-primary-soft) !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}
+
+.bookshelf-color-option {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow:  var(--bookshelf-shadow-small);
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.bookshelf-color-option:hover {
+  transform: translateY(-2px);
+}
+
+.bookshelf-color-option-active {
+  border-color: var(--bookshelf-text);
+  box-shadow: 0 0 0 3px var(--bookshelf-primary-soft-strong),  var(--bookshelf-shadow-small);
+}
+
+.bookshelf-account-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bookshelf-profile-settings {
+  flex: 1;
+  width: 100%;
+}
+
+
+.bookshelf-profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bookshelf-profile-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}

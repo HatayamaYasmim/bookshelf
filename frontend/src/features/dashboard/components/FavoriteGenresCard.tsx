@@ -2,7 +2,6 @@ import {
     Center,
     Group,
     Paper,
-    RingProgress,
     Stack,
     Text,
     Title,
@@ -20,24 +19,24 @@ interface FavoriteGenresCardProps {
 
 const genreColors = [
     {
-        color: '#6366f1',
-        dot: '#6366f1',
+        color: 'var(--bookshelf-primary)',
+        dot: 'var(--bookshelf-primary)',
     },
     {
-        color: '#818cf8',
-        dot: '#818cf8',
+        color: 'color-mix(in srgb, var(--bookshelf-primary) 82%, white)',
+        dot: 'color-mix(in srgb, var(--bookshelf-primary) 82%, white)',
     },
     {
-        color: '#a78bfa',
-        dot: '#a78bfa',
+        color: 'color-mix(in srgb, var(--bookshelf-primary) 68%, white)',
+        dot: 'color-mix(in srgb, var(--bookshelf-primary) 68%, white)',
     },
     {
-        color: '#c084fc',
-        dot: '#c084fc',
+        color: 'color-mix(in srgb, var(--bookshelf-primary) 54%, white)',
+        dot: 'color-mix(in srgb, var(--bookshelf-primary) 54%, white)',
     },
     {
-        color: '#93c5fd',
-        dot: '#93c5fd',
+        color: 'color-mix(in srgb, var(--bookshelf-primary) 42%, white)',
+        dot: 'color-mix(in srgb, var(--bookshelf-primary) 42%, white)',
     },
 ];
 
@@ -173,7 +172,7 @@ export function FavoriteGenresCard({
 
                             <Text
                                 size="sm"
-                                c="dimmed"
+                                className="bookshelf-text-muted"
                                 ta="center"
                             >
                                 Add genres to your read books
@@ -230,7 +229,7 @@ export function FavoriteGenresCard({
                                                 {genre.name}{' '}
                                                 <Text
                                                     component="span"
-                                                    c="dimmed"
+                                                    className="bookshelf-text-muted"
                                                     size="sm"
                                                 >
                                                     ({percentage}%)

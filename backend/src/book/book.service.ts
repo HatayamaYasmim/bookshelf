@@ -8,7 +8,7 @@ import { UpdateBookDto } from './dto/update-book-dto';
 export class BookService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async findAll(query: FindBooksQueryDto) {
+    async findAll(userId: number, query: FindBooksQueryDto,) {
         const {
             page,
             limit,
@@ -20,6 +20,7 @@ export class BookService {
         const skip = (page - 1) * limit;
 
         const where = {
+            userId,
             ...(search && {
                 title: {
                     contains: search,
@@ -65,7 +66,7 @@ export class BookService {
         }
     }
 
-    async create(data: CreateBookDto) {
+    async create(userId: number, data: CreateBookDto) {
         const author = await this.prisma.author.findUnique({
             where: {
                 id: data.authorId,
@@ -103,6 +104,9 @@ export class BookService {
         return this.prisma.book.create({
             data: {
                 title: data.title,
+                user: {
+                    connect: { id: userId },
+                },
                 ...(data.status && {
                     status: data.status,
                 }),
@@ -135,12 +139,13 @@ export class BookService {
     }
 
     async updateStatus(
+        userId: number,
         id: number,
         status: 'UNREAD' | 'READING' | 'READ',
     ) {
         const currentBook =
             await this.prisma.book.findUnique({
-                where: { id },
+                where: { id, userId },
             });
 
         if (!currentBook) {
@@ -175,26 +180,29 @@ export class BookService {
         });
     }
 
-    async getStats() {
+    async getStats(userId: number) {
         const [
             total,
             read,
             reading,
             unread,
         ] = await Promise.all([
-            this.prisma.book.count(),
+            this.prisma.book.count({ where: { userId },}),
             this.prisma.book.count({
                 where: {
+                    userId,
                     status: 'READ'
                 }
             }),
             this.prisma.book.count({
                 where: {
+                    userId,
                     status: 'READING'
                 }
             }),
             this.prisma.book.count({
                 where: {
+                    userId,
                     status: 'UNREAD'
                 }
             })
@@ -209,12 +217,12 @@ export class BookService {
     }
 
     async update(
+        userId: number,
         id: number,
         data: UpdateBookDto,
     ) {
-        const currentBook =
-            await this.prisma.book.findUnique({
-                where: { id },
+        const currentBook = await this.prisma.book.findFirst({
+                where: { id, userId },
             });
 
         if (!currentBook) {
@@ -289,8 +297,8 @@ export class BookService {
         })
     }
 
-    async remove(id: number) {
-        const book = await this.prisma.book.findUnique({ where: { id } })
+    async remove( userId: number, id: number) {
+        const book = await this.prisma.book.findUnique({ where: { userId, id } })
 
         if (!book) {
             throw new NotFoundException('Book not found')

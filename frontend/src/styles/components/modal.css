@@ -1,0 +1,42 @@
+.bookshelf-modal-content {
+  background: var(--bookshelf-surface) !important;
+  color: var(--bookshelf-text) !important;
+  border: 1px solid var(--bookshelf-glass-border) !important;
+  box-shadow: var(--bookshelf-modal-shadow) !important;
+}
+
+.bookshelf-modal-header {
+  background: transparent !important;
+}
+
+.bookshelf-modal-body {
+  background: transparent !important;
+}
+
+.bookshelf-modal-title {
+  color: var(--bookshelf-text) !important;
+  font-weight: 700 !important;
+}
+
+.bookshelf-modal-overlay {
+  background: var(--bookshelf-modal-overlay) !important;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.bookshelf-modal-close {
+  color: var(--bookshelf-text-muted) !important;
+  background: var(--bookshelf-surface) !important;
+  border: 1px solid var(--bookshelf-glass-border) !important;
+  border-radius:  999px !important;
+  box-shadow: var(--bookshelf-shadow-small) !important;
+}
+
+.bookshelf-modal-close:hover {
+  color: var(--bookshelf-primary) !important;
+  background: var(--bookshelf-primary-soft) !important;
+}
+
+.bookshelf-modal-close:active {
+  box-shadow: var(--bookshelf-shadow-inset) !important;
+}

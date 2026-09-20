@@ -44,7 +44,7 @@ export function DashboardPage() {
                         Dashboard
                     </Title>
 
-                    <Text c="dimmed">
+                    <Text className="bookshelf-text-muted">
                         Your reading activity and statistics.
                     </Text>
                 </Stack>

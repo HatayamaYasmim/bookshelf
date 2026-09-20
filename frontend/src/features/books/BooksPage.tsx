@@ -131,18 +131,10 @@ export function BooksPage() {
 
 const {
   data: genres = [],
-  isLoading: isGenresLoading,
-  isError: isGenresError,
-  error: genresError,
 } = useQuery({
   queryKey: ['genres'],
   queryFn: getGenres,
 });
-
-console.log('GENRES:', genres);
-console.log('GENRES LOADING:', isGenresLoading);
-console.log('GENRES ERROR:', isGenresError);
-console.log('GENRES ERROR DETAIL:', genresError);
 
     // =========================
     // Estados da página

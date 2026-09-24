@@ -24,16 +24,14 @@ export function DashboardStats({
 }: DashboardStatsProps) {
   const stats = [
     {
-      label: 'READ THIS MONTH',
+      label: 'THIS MONTH',
       value: dashboard.readThisMonth,
-      description: 'books completed',
       accentColor: 'var(--bookshelf-primary)',
       icon: RiBookAiLine,
     },
     {
-      label: 'READ THIS YEAR',
+      label: 'THIS YEAR',
       value: dashboard.readThisYear,
-      description: 'books completed',
       accentColor: 'var(--bookshelf-primary)',
       icon: IoBookOutline,
     },
@@ -47,7 +45,7 @@ export function DashboardStats({
   ];
 
   return (
-    <Grid gap="xl">
+    <Grid gap={{ base: 'sm', sm: 'xl' }} className="bookshelf-dashboard-stats">
       {stats.map((stat) => {
         const Icon = stat.icon;
 
@@ -55,13 +53,13 @@ export function DashboardStats({
           <Grid.Col
             key={stat.label}
             span={{
-              base: 12,
+              base: stat.label === 'TOTAL BOOKS' ? 12 : 6,
               sm: 6,
               lg: 4,
             }}
           >
             <Paper
-              p="xl"
+              p={{ base: 'sm', sm: 'xl' }}
               radius="xl"
               className="bookshelf-dashboard-card"
             >

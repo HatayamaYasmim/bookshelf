@@ -7,8 +7,7 @@
     color: var(--bookshelf-text-muted);
     font-weight: 600;
     text-decoration: none;
-    transition:
-        color 150ms ease;
+    transition: color 150ms ease;
 }
 
 .bookshelf-nav-link:hover {
@@ -17,4 +16,30 @@
 
 .bookshelf-nav-link-active {
     color: var(--bookshelf-primary);
+}
+
+.bookshelf-header-user {
+  min-width: 0;
+}
+
+.bookshelf-header-user-name {
+  display: block;
+  min-width: 0;
+  max-width: 180px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .bookshelf-header-user-name {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bookshelf-header-user-name {
+    max-width: 70px;
+  }
 }

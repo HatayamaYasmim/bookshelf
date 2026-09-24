@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { AppearanceSettings } from './components/ApperanceSettings';
 import { ProfileSettings } from './components/ProfileSettings';
-import { SecuritySettings } from './components/SecuriySettings';
+import { SecuritySettings } from './components/SecuritySettings';
 
 export function AccountPage() {
     return (

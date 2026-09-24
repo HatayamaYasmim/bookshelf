@@ -52,11 +52,11 @@ export function BooksStats({
   return (
     <SimpleGrid
       cols={{
-        base: 1,
+        base: 2,
         sm: 2,
         lg: 4,
       }}
-      spacing="xl"
+      spacing={{ base: 'sm', sm: 'xl' }}
     >
       {statsItems.map((stat) => {
         const Icon = stat.icon;
@@ -64,12 +64,12 @@ export function BooksStats({
         return (
           <Paper
             key={stat.label}
-            p="xl"
-            radius="xl"
-            className="neo-raised"
-            style={{
-              minHeight: 135,
+            p={{
+              base: 'sm',
+              sm: 'xl',
             }}
+            radius="xl"
+            className="neo-raised bookshelf-book-stat-card"
           >
             <Group justify="space-between">
               <div>
@@ -89,6 +89,7 @@ export function BooksStats({
                   size="2.5rem"
                   fw={700}
                   lh={1}
+                  className="bookshelf-book-stat-value"
                   style={{
                     color: stat.accentColor,
                   }}
@@ -99,11 +100,10 @@ export function BooksStats({
 
               <ThemeIcon
                 size={52}
-                radius="xl"
                 variant="transparent"
                 className="bookshelf-stat-icon"
                 style={{
-                   color: stat.accentColor,
+                  color: stat.accentColor,
                 }}
               >
                 <Icon size={26} />

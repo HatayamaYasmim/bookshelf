@@ -75,10 +75,17 @@ export function AppHeader() {
                         <Group>
                             <NavLink
                                 to="/account"
+                                title={user?.name}
                                 className={({ isActive }) =>
-                                    isActive
-                                        ? 'bookshelf-nav-link bookshelf-nav-link-active'
-                                        : 'bookshelf-nav-link'
+                                    [
+                                        'bookshelf-nav-link',
+                                        'bookshelf-header-user-name',
+                                        isActive
+                                            ? 'bookshelf-nav-link-active'
+                                            : '',
+                                    ]
+                                        .filter(Boolean)
+                                        .join(' ')
                                 }
                             >
                                 {user?.name}

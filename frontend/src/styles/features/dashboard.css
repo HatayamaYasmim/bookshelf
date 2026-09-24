@@ -80,3 +80,24 @@
   background: var(--bookshelf-surface);
   box-shadow: var(--bookshelf-shadow-inset);
 }
+
+@media (max-width: 768px) {
+  .bookshelf-dashboard-stats .bookshelf-dashboard-card {
+    min-height: 100px;
+    height: 100%;
+    padding: 12px !important;
+    border-radius: 18px;
+    box-shadow: var(--bookshelf-shadow-small);
+  }
+
+  .bookshelf-dashboard-stat-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  .bookshelf-dashboard-stat-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+}

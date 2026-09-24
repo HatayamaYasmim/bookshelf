@@ -1,41 +1,98 @@
 {
-    "common": {
-        "save": "Salvar",
-        "cancel": "Cancelar",
-        "logout": "Sair"
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "logout": "Sair"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "library": "Biblioteca",
+    "account": "Conta"
+  },
+  "dashboard": {
+    "thisMonth": "Este mês",
+    "thisYear": "Este ano",
+    "totalBooks": "Total de livros",
+    "read": "lidos",
+    "currentlyReading": {
+      "title": "Lendo atualmente",
+      "emptyTitle": "Nenhum livro em andamento",
+      "emptyDescription": "Livros marcados como Lendo aparecerão aqui.",
+      "status": "Lendo"
     },
-    "navigation": {
-        "dashboard": "Dashboard",
-        "library": "Biblioteca",
-        "account": "Conta"
+    "favoriteGenres": {
+      "title": "Gêneros favoritos",
+      "emptyTitle": "Nenhum dado de gênero ainda",
+      "emptyDescription": "Adicione gêneros aos livros lidos para ver seus favoritos."
     },
-    "dashboard": {
-        "thisMonth": "Este mês",
-        "thisYear": "Este ano",
-        "totalBooks": "Total de livros",
-        "read": "lidos",
-        "currentlyReading": {
-            "title": "Lendo atualmente",
-            "emptyTitle": "Nenhum livro em andamento",
-            "emptyDescription": "Livros marcados como Lendo aparecerão aqui.",
-            "status": "Lendo"
-        },
-        "favoriteGenres": {
-            "title": "Gêneros favoritos",
-            "emptyTitle": "Nenhum dado de gênero ainda",
-            "emptyDescription": "Adicione gêneros aos livros lidos para ver seus favoritos."
-        },
-        "readingActivity": {
-            "title": "Atividade de leitura",
-            "period": "Últimos 6 meses",
-            "emptyTitle": "Nenhuma atividade de leitura ainda",
-            "emptyDescription": "Os livros concluídos aparecerão aqui.",
-            "booksRead": "Livros lidos"
-        },
-        "page": {
-            "title": "Dashboard",
-            "description": "Sua atividade de leitura e estatísticas.",
-            "loadError": "Não foi possível carregar o dashboard."
-        }
+    "readingActivity": {
+      "title": "Atividade de leitura",
+      "period": "Últimos 6 meses",
+      "emptyTitle": "Nenhuma atividade de leitura ainda",
+      "emptyDescription": "Os livros concluídos aparecerão aqui.",
+      "booksRead": "Livros lidos"
+    },
+    "page": {
+      "title": "Dashboard",
+      "description": "Sua atividade de leitura e estatísticas.",
+      "loadError": "Não foi possível carregar o dashboard."
     }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Bem-vindo de volta. Entre para continuar na sua estante.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "voce@exemplo.com",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "submit": "Entrar",
+      "noAccount": "Ainda não tem uma conta?",
+      "createAccount": "Criar conta"
+    },
+    "register": {
+      "description": "Crie sua conta e comece a montar sua estante.",
+      "nameLabel": "Nome",
+      "namePlaceholder": "Seu nome",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "voce@exemplo.com",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Crie uma senha",
+      "confirmPasswordLabel": "Confirmar senha",
+      "confirmPasswordPlaceholder": "Repita sua senha",
+      "submit": "Criar conta",
+      "hasAccount": "Já possui uma conta?",
+      "signIn": "Entrar",
+      "successTitle": "Conta criada",
+      "successMessage": "Sua conta foi criada com sucesso. Agora você pode entrar.",
+      "errorTitle": "Não foi possível criar a conta",
+      "errorMessage": "Falha ao criar a conta"
+    },
+    "validation": {
+      "emailRequired": "O e-mail é obrigatório",
+      "invalidEmail": "Digite um e-mail válido",
+      "passwordRequired": "A senha é obrigatória",
+      "passwordMinLength": "A senha deve ter pelo menos 6 caracteres",
+      "nameMinLength": "O nome deve ter pelo menos 2 caracteres",
+      "passwordMinLengthRegister": "A senha deve ter pelo menos 8 caracteres",
+      "confirmPasswordRequired": "Confirme sua senha",
+      "passwordsDoNotMatch": "As senhas não coincidem"
+    },
+    "verifyEmail": {
+      "verifyingTitle": "Verificando e-mail",
+      "verifyingDescription": "Aguarde enquanto verificamos seu e-mail.",
+      "successTitle": "E-mail verificado",
+      "successDescription": "Seu e-mail foi verificado com sucesso.",
+      "goToLogin": "Ir para o login",
+      "errorTitle": "Falha na verificação",
+      "errorDescription": "Este link de verificação é inválido ou expirou.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "voce@exemplo.com",
+      "resend": "Enviar novo e-mail de verificação",
+      "backToLogin": "Voltar para o login",
+      "resendSuccessTitle": "E-mail de verificação solicitado",
+      "resendSuccessMessage": "Se a conta existir e ainda não estiver verificada, um novo link de verificação foi enviado.",
+      "resendErrorTitle": "Não foi possível reenviar o e-mail",
+      "resendErrorMessage": "Tente novamente mais tarde."
+    }
+  }
 }

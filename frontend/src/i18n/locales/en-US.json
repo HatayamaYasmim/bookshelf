@@ -1,41 +1,98 @@
 {
-    "common": {
-        "save": "Save",
-        "cancel": "Cancel",
-        "logout": "Logout"
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "logout": "Logout"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "library": "Library",
+    "account": "Account"
+  },
+  "dashboard": {
+    "thisMonth": "This month",
+    "thisYear": "This year",
+    "totalBooks": "Total books",
+    "read": "read",
+    "currentlyReading": {
+      "title": "Currently Reading",
+      "emptyTitle": "No book in progress",
+      "emptyDescription": "Books marked as Reading will appear here.",
+      "status": "Reading"
     },
-    "navigation": {
-        "dashboard": "Dashboard",
-        "library": "Library",
-        "account": "Account"
+    "favoriteGenres": {
+      "title": "Favorite Genres",
+      "emptyTitle": "No genre data yet",
+      "emptyDescription": "Add genres to your read books to see your favorites."
     },
-    "dashboard": {
-        "thisMonth": "This month",
-        "thisYear": "This year",
-        "totalBooks": "Total books",
-        "read": "read",
-        "currentlyReading": {
-            "title": "Currently Reading",
-            "emptyTitle": "No book in progress",
-            "emptyDescription": "Books marked as Reading will appear here.",
-            "status": "Reading"
-        },
-        "favoriteGenres": {
-            "title": "Favorite Genres",
-            "emptyTitle": "No genre data yet",
-            "emptyDescription": "Add genres to your read books to see your favorites."
-        },
-        "readingActivity": {
-            "title": "Reading Activity",
-            "period": "Last 6 months",
-            "emptyTitle": "No reading activity yet",
-            "emptyDescription": "Completed books will appear here.",
-            "booksRead": "Books read"
-        },
-        "page": {
-            "title": "Dashboard",
-            "description": "Your reading activity and statistics.",
-            "loadError": "It was not possible to load the dashboard."
-        }
+    "readingActivity": {
+      "title": "Reading Activity",
+      "period": "Last 6 months",
+      "emptyTitle": "No reading activity yet",
+      "emptyDescription": "Completed books will appear here.",
+      "booksRead": "Books read"
+    },
+    "page": {
+      "title": "Dashboard",
+      "description": "Your reading activity and statistics.",
+      "loadError": "It was not possible to load the dashboard."
     }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Welcome back. Sign in to continue to your bookshelf.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create account"
+    },
+    "register": {
+      "description": "Create your account and start building your bookshelf.",
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "successTitle": "Account created",
+      "successMessage": "Your account was created successfully. You can now sign in.",
+      "errorTitle": "Could not create account",
+      "errorMessage": "Failed to create account"
+    },
+    "validation": {
+      "emailRequired": "Email is required",
+      "invalidEmail": "Enter a valid email",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must have at least 6 characters",
+      "nameMinLength": "Name must have at least 2 characters",
+      "passwordMinLengthRegister": "Password must have at least 8 characters",
+      "confirmPasswordRequired": "Confirm your password",
+      "passwordsDoNotMatch": "Passwords do not match"
+    },
+    "verifyEmail": {
+      "verifyingTitle": "Verifying email",
+      "verifyingDescription": "Please wait while we verify your email.",
+      "successTitle": "Email verified",
+      "successDescription": "Your email has been successfully verified.",
+      "goToLogin": "Go to login",
+      "errorTitle": "Verification failed",
+      "errorDescription": "This verification link is invalid or has expired.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "resend": "Send new verification email",
+      "backToLogin": "Back to login",
+      "resendSuccessTitle": "Verification email requested",
+      "resendSuccessMessage": "If the account exists and is not verified, a new verification link has been sent.",
+      "resendErrorTitle": "Unable to resend email",
+      "resendErrorMessage": "Please try again later."
+    }
+  }
 }

@@ -1,7 +1,5 @@
 .bookshelf-badge {
-  background:
-    var(--bookshelf-surface) !important;
+  background: var(--bookshelf-surface) !important;
 
-  box-shadow:
-    var(--bookshelf-shadow-inset) !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
 }

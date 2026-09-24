@@ -4,18 +4,18 @@
 }
 
 .bookshelf-nav-link {
-    color: var(--bookshelf-text-muted);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 150ms ease;
+  color: var(--bookshelf-text-muted);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 150ms ease;
 }
 
 .bookshelf-nav-link:hover {
-    color: var(--bookshelf-primary);
+  color: var(--bookshelf-primary);
 }
 
 .bookshelf-nav-link-active {
-    color: var(--bookshelf-primary);
+  color: var(--bookshelf-primary);
 }
 
 .bookshelf-header-user {

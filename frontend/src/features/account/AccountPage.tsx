@@ -1,104 +1,66 @@
-import {
-    Container,
-    Grid,
-    Paper,
-    Stack,
-    Text,
-    Title,
-} from '@mantine/core';
+import { Container, Grid, Paper, Stack, Text, Title } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
+
 import { AppearanceSettings } from './components/ApperanceSettings';
 import { ProfileSettings } from './components/ProfileSettings';
 import { SecuritySettings } from './components/SecuritySettings';
 
 export function AccountPage() {
-    return (
-        <Container
-            size="xl"
-            py="xl"
-        >
-            <Stack gap="xl">
-                <Stack gap={4}>
-                    <Title
-                        order={2}
-                        c="var(--bookshelf-primary)"
-                        fw={700}
-                    >
-                        Account
-                    </Title>
+  const { t } = useTranslation();
 
-                    <Text className="bookshelf-text-muted">
-                        Manage your profile, appearance and security.
-                    </Text>
-                </Stack>
+  return (
+    <Container size="xl" py="xl">
+      <Stack gap="xl">
+        <Stack gap={4}>
+          <Title order={2} c="var(--bookshelf-primary)" fw={700}>
+            {t('account.page.title')}
+          </Title>
 
-                <Grid gap="xl">
-                    <Grid.Col
-                        span={{
-                            base: 12,
-                            md: 6,
-                        }}
-                    >
-                        <Paper
-                            p="xl"
-                            radius="xl"
-                            className="neo-raised bookshelf-account-card">
-                            <Stack gap="sm">
-                                <Title
-                                    order={3}
-                                    size="h4"
-                                >
-                                    Profile
-                                </Title>
+          <Text className="bookshelf-text-muted">{t('account.page.description')}</Text>
+        </Stack>
 
-                                <Text
-                                    size="sm"
-                                    className="bookshelf-text-muted"
-                                >
-                                 <ProfileSettings/>
-                                </Text>
-                            </Stack>
-                        </Paper>
-                    </Grid.Col>
-                    <Grid.Col
-                        span={{
-                            base: 12,
-                            md: 6,
-                        }}
-                    >
-                        <Paper
-                            p="xl"
-                            radius="xl"
-                            className="neo-raised"
-                        >
-                            <AppearanceSettings />
-                        </Paper>
-                    </Grid.Col>
+        <Grid gap="xl">
+          <Grid.Col
+            span={{
+              base: 12,
+              md: 6,
+            }}
+          >
+            <Paper p="xl" radius="xl" className="neo-raised bookshelf-account-card">
+              <Stack gap="sm">
+                <Title order={3} size="h4">
+                  {t('account.profile.title')}
+                </Title>
 
-                    <Grid.Col span={12}>
-                        <Paper
-                            p="xl"
-                            radius="xl"
-                            className="neo-raised bookshelf-account-card"
-                        >
-                            <Stack gap="sm">
-                                <Title
-                                    order={3}
-                                    size="h4"
-                                >
-                                    Security
-                                </Title>
+                <ProfileSettings />
+              </Stack>
+            </Paper>
+          </Grid.Col>
 
-                                <Text
-                                    size="sm"
-                                    className="bookshelf-text-muted"
-                                >
-                                   <SecuritySettings />
-                                </Text>
-                            </Stack>
-                        </Paper>
-                    </Grid.Col>
-                </Grid>
-            </Stack>
-        </Container>
-    );
+          <Grid.Col
+            span={{
+              base: 12,
+              md: 6,
+            }}
+          >
+            <Paper p="xl" radius="xl" className="neo-raised bookshelf-account-card">
+              <AppearanceSettings />
+            </Paper>
+          </Grid.Col>
+
+          <Grid.Col span={12}>
+            <Paper p="xl" radius="xl" className="neo-raised bookshelf-account-card">
+              <Stack gap="sm">
+                <Title order={3} size="h4">
+                  {t('account.security.title')}
+                </Title>
+
+                <SecuritySettings />
+              </Stack>
+            </Paper>
+          </Grid.Col>
+        </Grid>
+      </Stack>
+    </Container>
+  );
 }

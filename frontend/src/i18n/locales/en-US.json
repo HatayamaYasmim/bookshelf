@@ -1,0 +1,232 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "logout": "Logout",
+    "saveChanges": "Save changes",
+    "delete": "Delete",
+    "error": "Error"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "library": "Library",
+    "account": "Account"
+  },
+  "dashboard": {
+    "thisMonth": "This month",
+    "thisYear": "This year",
+    "totalBooks": "Total books",
+    "read": "read",
+    "currentlyReading": {
+      "title": "Currently Reading",
+      "emptyTitle": "No book in progress",
+      "emptyDescription": "Books marked as Reading will appear here.",
+      "status": "Reading"
+    },
+    "favoriteGenres": {
+      "title": "Favorite Genres",
+      "emptyTitle": "No genre data yet",
+      "emptyDescription": "Add genres to your read books to see your favorites."
+    },
+    "readingActivity": {
+      "title": "Reading Activity",
+      "period": "Last 6 months",
+      "emptyTitle": "No reading activity yet",
+      "emptyDescription": "Completed books will appear here.",
+      "booksRead": "Books read"
+    },
+    "page": {
+      "title": "Dashboard",
+      "description": "Your reading activity and statistics.",
+      "loadError": "It was not possible to load the dashboard."
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Welcome back. Sign in to continue to your bookshelf.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create account"
+    },
+    "register": {
+      "description": "Create your account and start building your bookshelf.",
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "successTitle": "Account created",
+      "successMessage": "Your account was created successfully. You can now sign in.",
+      "errorTitle": "Could not create account",
+      "errorMessage": "Failed to create account"
+    },
+    "validation": {
+      "emailRequired": "Email is required",
+      "invalidEmail": "Enter a valid email",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must have at least 6 characters",
+      "nameMinLength": "Name must have at least 2 characters",
+      "passwordMinLengthRegister": "Password must have at least 8 characters",
+      "confirmPasswordRequired": "Confirm your password",
+      "passwordsDoNotMatch": "Passwords do not match"
+    },
+    "verifyEmail": {
+      "verifyingTitle": "Verifying email",
+      "verifyingDescription": "Please wait while we verify your email.",
+      "successTitle": "Email verified",
+      "successDescription": "Your email has been successfully verified.",
+      "goToLogin": "Go to login",
+      "errorTitle": "Verification failed",
+      "errorDescription": "This verification link is invalid or has expired.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "resend": "Send new verification email",
+      "backToLogin": "Back to login",
+      "resendSuccessTitle": "Verification email requested",
+      "resendSuccessMessage": "If the account exists and is not verified, a new verification link has been sent.",
+      "resendErrorTitle": "Unable to resend email",
+      "resendErrorMessage": "Please try again later."
+    }
+  },
+  "account": {
+    "page": {
+      "title": "Account",
+      "description": "Manage your profile, appearance and security."
+    },
+    "profile": {
+      "title": "Profile",
+      "name": "Name",
+      "email": "Email",
+      "successTitle": "Profile updated",
+      "successMessage": "Your profile has been updated.",
+      "successEmailChanged": "Profile updated. Please verify your new email address.",
+      "errorTitle": "Unable to update profile",
+      "errorMessage": "Please try again."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize the application theme and primary color.",
+      "theme": "Theme",
+      "primaryColor": "Primary color",
+      "primaryColorDescription": "Choose the accent color used throughout the application.",
+      "successTitle": "Appearance updated",
+      "successMessage": "Your appearance preferences have been saved.",
+      "errorTitle": "Unable to save",
+      "errorMessage": "It was not possible to update your appearance preferences.",
+      "themes": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      }
+    },
+    "security": {
+      "title": "Security",
+      "description": "Update your account password.",
+      "currentPassword": "Current password",
+      "currentPasswordPlaceholder": "Enter your current password",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Enter your new password",
+      "passwordRequirement": "At least 8 characters",
+      "confirmPassword": "Confirm new password",
+      "confirmPasswordPlaceholder": "Confirm your new password",
+      "changePassword": "Change password",
+      "comingSoon": "Coming soon",
+      "unavailable": "Password change is temporarily unavailable."
+    }
+  },
+  "books": {
+    "form": {
+      "addTitle": "Add book",
+      "editTitle": "Edit book",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Ex: The Hobbit",
+      "authorLabel": "Author",
+      "authorPlaceholder": "Select an author",
+      "statusLabel": "Status",
+      "genresLabel": "Genres",
+      "genresPlaceholder": "Select genres"
+    },
+    "status": {
+      "unread": "Unread",
+      "reading": "Reading",
+      "read": "Read"
+    },
+    "validation": {
+      "titleRequired": "Enter the book title",
+      "authorRequired": "Select an author"
+    },
+    "emptyState": {
+      "filtered": "No books found",
+      "empty": "Your bookshelf is empty"
+    },
+    "library": {
+      "title": "Library",
+      "addAuthor": "Add author",
+      "addBook": "Add book",
+      "searchPlaceholder": "Search books...",
+      "allStatuses": "All statuses",
+      "authorPlaceholder": "Author",
+      "clearFilters": "Clear filters",
+      "showing_one": "Showing {{from}} - {{to}} of {{count}} book",
+      "showing_other": "Showing {{from}} - {{to}} of {{count}} books"
+    },
+    "stats": {
+      "totalBooks": "Total books"
+    },
+    "table": {
+      "title": "Title",
+      "author": "Author",
+      "genres": "Genres",
+      "status": "Status",
+      "actions": "Actions",
+      "editAriaLabel": "Edit {{title}}",
+      "deleteAriaLabel": "Delete {{title}}"
+    },
+    "authorForm": {
+      "title": "Author",
+      "nameLabel": "Name",
+      "namePlaceholder": "Ex: J.R.R. Tolkien",
+      "validation": {
+        "nameRequired": "Enter the author's name",
+        "nameMaxLength": "The name must contain at most 150 characters"
+      },
+      "delete": {
+        "title": "Delete book",
+        "confirmation": "Are you sure you want to delete {{title}}?",
+        "warning": "This action cannot be undone."
+      },
+      "authorNotifications": {
+        "successTitle": "Author registered",
+        "successMessage": "The author has been successfully registered.",
+        "errorMessage": "It was not possible to register the author."
+      },
+      "notifications": {
+        "statusUpdatedTitle": "Status changed",
+        "statusUpdatedMessage": "The book's status has been successfully changed.",
+        "statusUpdateError": "It was not possible to change the book's status.",
+        "createdTitle": "Book registered",
+        "createdMessage": "The book has been added to your bookshelf.",
+        "createError": "It was not possible to register the book.",
+        "deletedTitle": "Book deleted",
+        "deletedMessage": "The book has been successfully deleted.",
+        "deleteError": "It was not possible to delete the book.",
+        "updatedTitle": "Book updated",
+        "updatedMessage": "The book has been successfully updated.",
+        "updateError": "It was not possible to update the book."
+      },
+      "page": {
+        "loadError": "It was not possible to load the books."
+      }
+    }
+  }
+}

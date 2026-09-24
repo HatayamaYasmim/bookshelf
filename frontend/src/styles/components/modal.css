@@ -28,7 +28,7 @@
   color: var(--bookshelf-text-muted) !important;
   background: var(--bookshelf-surface) !important;
   border: 1px solid var(--bookshelf-glass-border) !important;
-  border-radius:  999px !important;
+  border-radius: 999px !important;
   box-shadow: var(--bookshelf-shadow-small) !important;
 }
 

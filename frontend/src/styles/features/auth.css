@@ -1,4 +1,3 @@
-
 .bookshelf-auth-shader {
   position: fixed;
   inset: 0;
@@ -25,7 +24,7 @@
 }
 
 .bookshelf-login-card {
-  background: var(--bookshelf-auth-card); 
+  background: var(--bookshelf-auth-card);
   border: 1px solid var(--bookshelf-auth-card-border);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -40,8 +39,8 @@
   justify-content: center;
   border-radius: 50%;
   color: var(--bookshelf-primary);
-  background:  var(--bookshelf-auth-logo);
-  box-shadow:  var(--bookshelf-shadow-small);
+  background: var(--bookshelf-auth-logo);
+  box-shadow: var(--bookshelf-shadow-small);
 }
 
 .bookshelf-auth-label {
@@ -50,8 +49,8 @@
 }
 
 .bookshelf-auth-input {
-  background:  var(--bookshelf-surface) !important;
-  color:  var(--bookshelf-text) !important;
+  background: var(--bookshelf-surface) !important;
+  color: var(--bookshelf-text) !important;
   border: none !important;
   box-shadow: var(--bookshelf-shadow-inset) !important;
 }
@@ -60,7 +59,7 @@
   background: transparent !important;
   color: var(--bookshelf-text) !important;
   border: none !important;
-  -webkit-text-fill-color:    var(--bookshelf-text);
+  -webkit-text-fill-color: var(--bookshelf-text);
 }
 
 .bookshelf-password-toggle {
@@ -76,7 +75,7 @@
 .bookshelf-login-button {
   min-height: 44px;
   background: var(--bookshelf-surface) !important;
-  color:  var(--bookshelf-primary) !important;
+  color: var(--bookshelf-primary) !important;
   border: none !important;
   border-radius: 999px !important;
   box-shadow: var(--bookshelf-shadow-raised) !important;
@@ -94,8 +93,7 @@
 .bookshelf-login-button:active {
   transform: translateY(1px);
 
-  box-shadow:
-    var(--bookshelf-shadow-inset) !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
 }
 
 .bookshelf-auth-input::placeholder,
@@ -127,24 +125,17 @@
 .bookshelf-password-inner-input:-webkit-autofill:hover,
 .bookshelf-password-inner-input:-webkit-autofill:focus,
 .bookshelf-password-inner-input:-webkit-autofill:active {
-  -webkit-text-fill-color:
-    var(--bookshelf-text) !important;
+  -webkit-text-fill-color: var(--bookshelf-text) !important;
 
-  caret-color:
-    var(--bookshelf-text);
+  caret-color: var(--bookshelf-text);
 
-  -webkit-box-shadow:
-    0 0 0 1000px
-      var(--bookshelf-surface)
-      inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--bookshelf-surface) inset !important;
 
-  transition:
-    background-color 9999s ease-out;
+  transition: background-color 9999s ease-out;
 }
 
 .bookshelf-auth-input:focus {
   box-shadow:
     var(--bookshelf-shadow-inset),
-    0 0 0 1px
-      var(--bookshelf-primary-soft-strong) !important;
+    0 0 0 1px var(--bookshelf-primary-soft-strong) !important;
 }

@@ -13,7 +13,7 @@
   width: max-content;
   min-width: 120px;
   background: var(--bookshelf-surface) !important;
-  color:var(--bookshelf-text) !important;
+  color: var(--bookshelf-text) !important;
   border: 1px solid var(--bookshelf-glass-border);
   box-shadow: var(--bookshelf-shadow-small);
 }
@@ -42,7 +42,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   background: var(--bookshelf-surface);
-  box-shadow:var(--bookshelf-shadow-small);
+  box-shadow: var(--bookshelf-shadow-small);
 }
 
 .bookshelf-dashboard-main-card {
@@ -56,8 +56,7 @@
   position: relative;
   isolation: isolate;
   box-shadow:
-    0 0 16px
-      var(--bookshelf-primary-soft-strong),
+    0 0 16px var(--bookshelf-primary-soft-strong),
     var(--bookshelf-shadow-raised);
 }
 

@@ -1,123 +1,113 @@
-import {
-    Button,
-    Group,
-    Stack,
-    TextInput,
-} from '@mantine/core';
+import { Button, Group, Stack, TextInput } from '@mantine/core';
 
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { CreateAuthorData } from '../../../services/authors';
+
 import { GiMagicPalm } from 'react-icons/gi';
+
+import type { CreateAuthorData } from '../../../services/authors';
+
 import { BookshelfModal } from '../../../components/ui/BookshellfModal';
 
-const createAuthorSchema = z.object({
+function createAuthorSchema(t: TFunction) {
+  return z.object({
     name: z
-        .string()
-        .trim()
-        .min(2, 'Informe o nome do autor')
-        .max(150, 'O nome deve possuir no máximo 150 caracteres'),
-});
+      .string()
+      .trim()
+      .min(2, t('books.authorForm.validation.nameRequired'))
+      .max(150, t('books.authorForm.validation.nameMaxLength')),
+  });
+}
 
-type CreateAuthorFormData = z.infer<
-    typeof createAuthorSchema
->;
+type CreateAuthorFormData = z.infer<ReturnType<typeof createAuthorSchema>>;
 
 interface CreateAuthorModalProps {
-    opened: boolean;
-    onClose: () => void;
-
-    onSubmit: (
-        data: CreateAuthorData,
-    ) => Promise<unknown>;
-
-    isSubmitting?: boolean;
+  opened: boolean;
+  onClose: () => void;
+  onSubmit: (data: CreateAuthorData) => Promise<unknown>;
+  isSubmitting?: boolean;
 }
 
 export function CreateAuthorModal({
-    opened,
-    onClose,
-    onSubmit,
-    isSubmitting = false,
+  opened,
+  onClose,
+  onSubmit,
+  isSubmitting = false,
 }: CreateAuthorModalProps) {
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm<CreateAuthorFormData>({
-        resolver: zodResolver(createAuthorSchema),
+  const { t } = useTranslation();
 
-        defaultValues: {
-            name: '',
-        },
+  const schema = createAuthorSchema(t);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CreateAuthorFormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      name: '',
+    },
+  });
+
+  async function handleCreateAuthor(data: CreateAuthorFormData) {
+    await onSubmit({
+      name: data.name,
     });
 
-    async function handleCreateAuthor(
-        data: CreateAuthorFormData,
-    ) {
-        await onSubmit({
-            name: data.name,
-        });
+    reset();
+    onClose();
+  }
 
-        reset();
-        onClose();
-    }
+  function handleClose() {
+    reset();
+    onClose();
+  }
 
-    function handleClose() {
-        reset();
-        onClose();
-    }
+  return (
+    <BookshelfModal
+      opened={opened}
+      onClose={handleClose}
+      title={t('books.authorForm.title')}
+      icon={<GiMagicPalm size={21} color="var(--bookshelf-primary)" />}
+    >
+      <form onSubmit={handleSubmit(handleCreateAuthor)}>
+        <Stack>
+          <TextInput
+            label={t('books.authorForm.nameLabel')}
+            placeholder={t('books.authorForm.namePlaceholder')}
+            withAsterisk
+            error={errors.name?.message}
+            {...register('name')}
+            classNames={{
+              input: 'bookshelf-input',
+            }}
+          />
 
-    return (
-        <BookshelfModal
-            opened={opened}
-            onClose={handleClose}
-            title="Author"
-            icon={
-                <GiMagicPalm
-                    size={21}
-                    color="var(--bookshelf-primary)"
-                />
-            }
-        >
-            <form
-                onSubmit={handleSubmit(handleCreateAuthor)}
+          <Group justify="flex-end" mt="md">
+            <Button
+              type="button"
+              variant="transparent"
+              className="bookshelf-button"
+              onClick={handleClose}
             >
-                <Stack>
-                    <TextInput
-                        label="Name"
-                        placeholder="Ex: J.R.R. Tolkien"
-                        withAsterisk
-                        error={errors.name?.message}
-                        {...register('name')}
-                        classNames={{
-                            input: 'bookshelf-input',
-                        }}
-                    />
+              {t('common.cancel')}
+            </Button>
 
-                    <Group justify="flex-end" mt="md">
-                        <Button
-                            type="button"
-                            variant="transparent"
-                            className='bookshelf-button'
-                            onClick={handleClose}
-                        >
-                            Cancel
-                        </Button>
-
-                        <Button
-                            type="submit"
-                            variant="transparent"
-                            loading={isSubmitting}
-                            className="bookshelf-button bookshelf-button-primary"
-                        >
-                            Save
-                        </Button>
-                    </Group>
-                </Stack>
-            </form>
-        </ BookshelfModal>
-    );
+            <Button
+              type="submit"
+              variant="transparent"
+              loading={isSubmitting}
+              className="bookshelf-button bookshelf-button-primary"
+            >
+              {t('common.save')}
+            </Button>
+          </Group>
+        </Stack>
+      </form>
+    </BookshelfModal>
+  );
 }

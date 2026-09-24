@@ -1,0 +1,232 @@
+{
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "logout": "Sair",
+    "saveChanges": "Salvar alterações",
+    "delete": "Excluir",
+    "error": "Erro"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "library": "Biblioteca",
+    "account": "Conta"
+  },
+  "dashboard": {
+    "thisMonth": "Este mês",
+    "thisYear": "Este ano",
+    "totalBooks": "Total de livros",
+    "read": "lidos",
+    "currentlyReading": {
+      "title": "Lendo atualmente",
+      "emptyTitle": "Nenhum livro em andamento",
+      "emptyDescription": "Livros marcados como Lendo aparecerão aqui.",
+      "status": "Lendo"
+    },
+    "favoriteGenres": {
+      "title": "Gêneros favoritos",
+      "emptyTitle": "Nenhum dado de gênero ainda",
+      "emptyDescription": "Adicione gêneros aos livros lidos para ver seus favoritos."
+    },
+    "readingActivity": {
+      "title": "Atividade de leitura",
+      "period": "Últimos 6 meses",
+      "emptyTitle": "Nenhuma atividade de leitura ainda",
+      "emptyDescription": "Os livros concluídos aparecerão aqui.",
+      "booksRead": "Livros lidos"
+    },
+    "page": {
+      "title": "Dashboard",
+      "description": "Sua atividade de leitura e estatísticas.",
+      "loadError": "Não foi possível carregar o dashboard."
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Bem-vindo de volta. Entre para continuar na sua estante.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "voce@exemplo.com",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "submit": "Entrar",
+      "noAccount": "Ainda não tem uma conta?",
+      "createAccount": "Criar conta"
+    },
+    "register": {
+      "description": "Crie sua conta e comece a montar sua estante.",
+      "nameLabel": "Nome",
+      "namePlaceholder": "Seu nome",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "voce@exemplo.com",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Crie uma senha",
+      "confirmPasswordLabel": "Confirmar senha",
+      "confirmPasswordPlaceholder": "Repita sua senha",
+      "submit": "Criar conta",
+      "hasAccount": "Já possui uma conta?",
+      "signIn": "Entrar",
+      "successTitle": "Conta criada",
+      "successMessage": "Sua conta foi criada com sucesso. Agora você pode entrar.",
+      "errorTitle": "Não foi possível criar a conta",
+      "errorMessage": "Falha ao criar a conta"
+    },
+    "validation": {
+      "emailRequired": "O e-mail é obrigatório",
+      "invalidEmail": "Digite um e-mail válido",
+      "passwordRequired": "A senha é obrigatória",
+      "passwordMinLength": "A senha deve ter pelo menos 6 caracteres",
+      "nameMinLength": "O nome deve ter pelo menos 2 caracteres",
+      "passwordMinLengthRegister": "A senha deve ter pelo menos 8 caracteres",
+      "confirmPasswordRequired": "Confirme sua senha",
+      "passwordsDoNotMatch": "As senhas não coincidem"
+    },
+    "verifyEmail": {
+      "verifyingTitle": "Verificando e-mail",
+      "verifyingDescription": "Aguarde enquanto verificamos seu e-mail.",
+      "successTitle": "E-mail verificado",
+      "successDescription": "Seu e-mail foi verificado com sucesso.",
+      "goToLogin": "Ir para o login",
+      "errorTitle": "Falha na verificação",
+      "errorDescription": "Este link de verificação é inválido ou expirou.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "voce@exemplo.com",
+      "resend": "Enviar novo e-mail de verificação",
+      "backToLogin": "Voltar para o login",
+      "resendSuccessTitle": "E-mail de verificação solicitado",
+      "resendSuccessMessage": "Se a conta existir e ainda não estiver verificada, um novo link de verificação foi enviado.",
+      "resendErrorTitle": "Não foi possível reenviar o e-mail",
+      "resendErrorMessage": "Tente novamente mais tarde."
+    }
+  },
+  "account": {
+    "page": {
+      "title": "Conta",
+      "description": "Gerencie seu perfil, aparência e segurança."
+    },
+    "profile": {
+      "title": "Perfil",
+      "name": "Nome",
+      "email": "E-mail",
+      "successTitle": "Perfil atualizado",
+      "successMessage": "Seu perfil foi atualizado.",
+      "successEmailChanged": "Perfil atualizado. Verifique seu novo endereço de e-mail.",
+      "errorTitle": "Não foi possível atualizar o perfil",
+      "errorMessage": "Tente novamente."
+    },
+    "appearance": {
+      "title": "Aparência",
+      "description": "Personalize o tema e a cor principal da aplicação.",
+      "theme": "Tema",
+      "primaryColor": "Cor principal",
+      "primaryColorDescription": "Escolha a cor de destaque utilizada em toda a aplicação.",
+      "successTitle": "Aparência atualizada",
+      "successMessage": "Suas preferências de aparência foram salvas.",
+      "errorTitle": "Não foi possível salvar",
+      "errorMessage": "Não foi possível atualizar suas preferências de aparência.",
+      "themes": {
+        "system": "Sistema",
+        "light": "Claro",
+        "dark": "Escuro"
+      }
+    },
+    "security": {
+      "title": "Segurança",
+      "description": "Atualize a senha da sua conta.",
+      "currentPassword": "Senha atual",
+      "currentPasswordPlaceholder": "Digite sua senha atual",
+      "newPassword": "Nova senha",
+      "newPasswordPlaceholder": "Digite sua nova senha",
+      "passwordRequirement": "Pelo menos 8 caracteres",
+      "confirmPassword": "Confirmar nova senha",
+      "confirmPasswordPlaceholder": "Confirme sua nova senha",
+      "changePassword": "Alterar senha",
+      "comingSoon": "Em breve",
+      "unavailable": "A alteração de senha está temporariamente indisponível."
+    }
+  },
+  "books": {
+    "form": {
+      "addTitle": "Adicionar livro",
+      "editTitle": "Editar livro",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Ex.: O Hobbit",
+      "authorLabel": "Autor",
+      "authorPlaceholder": "Selecione um autor",
+      "statusLabel": "Status",
+      "genresLabel": "Gêneros",
+      "genresPlaceholder": "Selecione os gêneros"
+    },
+    "status": {
+      "unread": "Não lido",
+      "reading": "Lendo",
+      "read": "Lido"
+    },
+    "validation": {
+      "titleRequired": "Informe o título do livro",
+      "authorRequired": "Selecione um autor"
+    },
+    "emptyState": {
+      "filtered": "Nenhum livro encontrado",
+      "empty": "Sua estante está vazia"
+    },
+    "library": {
+      "title": "Biblioteca",
+      "addAuthor": "Adicionar autor",
+      "addBook": "Adicionar livro",
+      "searchPlaceholder": "Pesquisar livros...",
+      "allStatuses": "Todos os status",
+      "authorPlaceholder": "Autor",
+      "clearFilters": "Limpar filtros",
+      "showing_one": "Mostrando {{from}} - {{to}} de {{count}} livro",
+      "showing_other": "Mostrando {{from}} - {{to}} de {{count}} livros"
+    },
+    "stats": {
+      "totalBooks": "Total de livros"
+    },
+    "table": {
+      "title": "Título",
+      "author": "Autor",
+      "genres": "Gêneros",
+      "status": "Status",
+      "actions": "Ações",
+      "editAriaLabel": "Editar {{title}}",
+      "deleteAriaLabel": "Excluir {{title}}"
+    },
+    "authorForm": {
+      "title": "Autor",
+      "nameLabel": "Nome",
+      "namePlaceholder": "Ex.: J.R.R. Tolkien",
+      "validation": {
+        "nameRequired": "Informe o nome do autor",
+        "nameMaxLength": "O nome deve possuir no máximo 150 caracteres"
+      },
+      "delete": {
+        "title": "Excluir livro",
+        "confirmation": "Tem certeza de que deseja excluir {{title}}?",
+        "warning": "Esta ação não pode ser desfeita."
+      },
+      "authorNotifications": {
+        "successTitle": "Autor cadastrado",
+        "successMessage": "O autor foi cadastrado com sucesso.",
+        "errorMessage": "Não foi possível cadastrar o autor."
+      },
+      "notifications": {
+        "statusUpdatedTitle": "Status alterado",
+        "statusUpdatedMessage": "O status do livro foi alterado com sucesso.",
+        "statusUpdateError": "Não foi possível alterar o status do livro.",
+        "createdTitle": "Livro cadastrado",
+        "createdMessage": "O livro foi adicionado à sua estante.",
+        "createError": "Não foi possível cadastrar o livro.",
+        "deletedTitle": "Livro excluído",
+        "deletedMessage": "O livro foi excluído com sucesso.",
+        "deleteError": "Não foi possível excluir o livro.",
+        "updatedTitle": "Livro atualizado",
+        "updatedMessage": "O livro foi atualizado com sucesso.",
+        "updateError": "Não foi possível atualizar o livro."
+      },
+      "page": {
+        "loadError": "Não foi possível carregar os livros."
+      }
+    }
+  }
+}

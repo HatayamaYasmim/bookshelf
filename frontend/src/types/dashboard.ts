@@ -1,4 +1,4 @@
-import type { ReadingStatus } from "./book";
+import type { ReadingStatus } from './book';
 
 export interface MonthlyActivity {
   month: string;

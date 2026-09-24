@@ -1,16 +1,7 @@
-import {
-  Group,
-  Paper,
-  SimpleGrid,
-  Text,
-  ThemeIcon,
-} from '@mantine/core';
+import { Group, Paper, SimpleGrid, Text, ThemeIcon } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 
-import {
-  LuBookmark,
-  LuBookOpenCheck,
-} from 'react-icons/lu';
-
+import { LuBookmark, LuBookOpenCheck } from 'react-icons/lu';
 import { GiBookCover, GiBookshelf } from 'react-icons/gi';
 
 import type { BooksStatsResponse } from '../../../types/book';
@@ -19,30 +10,30 @@ interface BooksStatsProps {
   stats: BooksStatsResponse;
 }
 
-export function BooksStats({
-  stats,
-}: BooksStatsProps) {
+export function BooksStats({ stats }: BooksStatsProps) {
+  const { t } = useTranslation();
+
   const statsItems = [
     {
-      label: 'TOTAL BOOKS',
+      label: t('books.stats.totalBooks'),
       value: stats.total,
       accentColor: 'var(--bookshelf-primary)',
       icon: GiBookshelf,
     },
     {
-      label: 'READ',
+      label: t('books.status.read'),
       value: stats.read,
       accentColor: 'var(--mantine-color-green-9)',
       icon: LuBookOpenCheck,
     },
     {
-      label: 'READING',
+      label: t('books.status.reading'),
       value: stats.reading,
       accentColor: 'var(--mantine-color-blue-9)',
       icon: GiBookCover,
     },
     {
-      label: 'UNREAD',
+      label: t('books.status.unread'),
       value: stats.unread,
       accentColor: 'var(--bookshelf-text-muted)',
       icon: LuBookmark,
@@ -77,6 +68,7 @@ export function BooksStats({
                   size="xs"
                   fw={700}
                   c="dimmed"
+                  tt="uppercase"
                   style={{
                     letterSpacing: '0.08em',
                   }}

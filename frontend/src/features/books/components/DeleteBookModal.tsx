@@ -1,6 +1,6 @@
 import { Button, Group, Stack, Text } from '@mantine/core';
-
 import { IconTrash } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 import type { Book } from '../../../types/book';
 import { BookshelfModal } from '../../../components/ui/BookshellfModal';
@@ -20,6 +20,8 @@ export function DeleteBookModal({
   onConfirm,
   isDeleting,
 }: DeleteBookModalProps) {
+  const { t } = useTranslation();
+
   if (!book) {
     return null;
   }
@@ -28,16 +30,18 @@ export function DeleteBookModal({
     <BookshelfModal
       opened={opened}
       onClose={onClose}
-      title="Delete book"
+      title={t('books.delete.title')}
       icon={<IconTrash size={20} color="var(--bookshelf-primary)" />}
     >
       <Stack gap="lg">
         <Text>
-          Are you sure you want to delete <strong>{book.title}</strong>?
+          {t('books.delete.confirmation', {
+            title: book.title,
+          })}
         </Text>
 
         <Text size="sm" c="dimmed">
-          This action cannot be undone.
+          {t('books.delete.warning')}
         </Text>
 
         <Group justify="flex-end">
@@ -48,7 +52,7 @@ export function DeleteBookModal({
             onClick={onClose}
             disabled={isDeleting}
           >
-            Cancel
+            {t('common.cancel')}
           </Button>
 
           <Button
@@ -59,7 +63,7 @@ export function DeleteBookModal({
             onClick={onConfirm}
             className="bookshelf-button bookshelf-button-primary"
           >
-            Delete
+            {t('common.delete')}
           </Button>
         </Group>
       </Stack>

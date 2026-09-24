@@ -1,28 +1,33 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core';
 
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { CreateAuthorData } from '../../../services/authors';
+
 import { GiMagicPalm } from 'react-icons/gi';
+
+import type { CreateAuthorData } from '../../../services/authors';
+
 import { BookshelfModal } from '../../../components/ui/BookshellfModal';
 
-const createAuthorSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, 'Informe o nome do autor')
-    .max(150, 'O nome deve possuir no máximo 150 caracteres'),
-});
+function createAuthorSchema(t: TFunction) {
+  return z.object({
+    name: z
+      .string()
+      .trim()
+      .min(2, t('books.authorForm.validation.nameRequired'))
+      .max(150, t('books.authorForm.validation.nameMaxLength')),
+  });
+}
 
-type CreateAuthorFormData = z.infer<typeof createAuthorSchema>;
+type CreateAuthorFormData = z.infer<ReturnType<typeof createAuthorSchema>>;
 
 interface CreateAuthorModalProps {
   opened: boolean;
   onClose: () => void;
-
   onSubmit: (data: CreateAuthorData) => Promise<unknown>;
-
   isSubmitting?: boolean;
 }
 
@@ -32,14 +37,17 @@ export function CreateAuthorModal({
   onSubmit,
   isSubmitting = false,
 }: CreateAuthorModalProps) {
+  const { t } = useTranslation();
+
+  const schema = createAuthorSchema(t);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<CreateAuthorFormData>({
-    resolver: zodResolver(createAuthorSchema),
-
+    resolver: zodResolver(schema),
     defaultValues: {
       name: '',
     },
@@ -63,14 +71,14 @@ export function CreateAuthorModal({
     <BookshelfModal
       opened={opened}
       onClose={handleClose}
-      title="Author"
+      title={t('books.authorForm.title')}
       icon={<GiMagicPalm size={21} color="var(--bookshelf-primary)" />}
     >
       <form onSubmit={handleSubmit(handleCreateAuthor)}>
         <Stack>
           <TextInput
-            label="Name"
-            placeholder="Ex: J.R.R. Tolkien"
+            label={t('books.authorForm.nameLabel')}
+            placeholder={t('books.authorForm.namePlaceholder')}
             withAsterisk
             error={errors.name?.message}
             {...register('name')}
@@ -86,7 +94,7 @@ export function CreateAuthorModal({
               className="bookshelf-button"
               onClick={handleClose}
             >
-              Cancel
+              {t('common.cancel')}
             </Button>
 
             <Button
@@ -95,7 +103,7 @@ export function CreateAuthorModal({
               loading={isSubmitting}
               className="bookshelf-button bookshelf-button-primary"
             >
-              Save
+              {t('common.save')}
             </Button>
           </Group>
         </Stack>

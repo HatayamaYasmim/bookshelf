@@ -15,8 +15,10 @@ import { useBookMutations } from './hooks/useBookMutations';
 import { useAuthorMutations } from './hooks/useAuthorMutations';
 import { getAuthors } from '../../services/authors';
 import { getGenres } from '../../services/genres';
+import { useTranslation } from 'react-i18next';
 
 export function BooksPage() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<ReadingStatus | null>(null);
   const [authorId, setAuthorId] = useState<number | null>(null);
@@ -94,7 +96,7 @@ export function BooksPage() {
   if (isBooksError && !booksResponse) {
     return (
       <Center h="100vh">
-        <Text c="red">It was not possible to load the books.</Text>
+        <Text c="red">{t('books.page.loadError')}</Text>
       </Center>
     );
   }

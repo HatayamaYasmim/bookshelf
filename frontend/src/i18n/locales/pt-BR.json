@@ -3,7 +3,9 @@
     "save": "Salvar",
     "cancel": "Cancelar",
     "logout": "Sair",
-    "saveChanges": "Salvar alterações"
+    "saveChanges": "Salvar alterações",
+    "delete": "Excluir",
+    "error": "Erro"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -140,6 +142,91 @@
       "changePassword": "Alterar senha",
       "comingSoon": "Em breve",
       "unavailable": "A alteração de senha está temporariamente indisponível."
+    }
+  },
+  "books": {
+    "form": {
+      "addTitle": "Adicionar livro",
+      "editTitle": "Editar livro",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Ex.: O Hobbit",
+      "authorLabel": "Autor",
+      "authorPlaceholder": "Selecione um autor",
+      "statusLabel": "Status",
+      "genresLabel": "Gêneros",
+      "genresPlaceholder": "Selecione os gêneros"
+    },
+    "status": {
+      "unread": "Não lido",
+      "reading": "Lendo",
+      "read": "Lido"
+    },
+    "validation": {
+      "titleRequired": "Informe o título do livro",
+      "authorRequired": "Selecione um autor"
+    },
+    "emptyState": {
+      "filtered": "Nenhum livro encontrado",
+      "empty": "Sua estante está vazia"
+    },
+    "library": {
+      "title": "Biblioteca",
+      "addAuthor": "Adicionar autor",
+      "addBook": "Adicionar livro",
+      "searchPlaceholder": "Pesquisar livros...",
+      "allStatuses": "Todos os status",
+      "authorPlaceholder": "Autor",
+      "clearFilters": "Limpar filtros",
+      "showing_one": "Mostrando {{from}} - {{to}} de {{count}} livro",
+      "showing_other": "Mostrando {{from}} - {{to}} de {{count}} livros"
+    },
+    "stats": {
+      "totalBooks": "Total de livros"
+    },
+    "table": {
+      "title": "Título",
+      "author": "Autor",
+      "genres": "Gêneros",
+      "status": "Status",
+      "actions": "Ações",
+      "editAriaLabel": "Editar {{title}}",
+      "deleteAriaLabel": "Excluir {{title}}"
+    },
+    "authorForm": {
+      "title": "Autor",
+      "nameLabel": "Nome",
+      "namePlaceholder": "Ex.: J.R.R. Tolkien",
+      "validation": {
+        "nameRequired": "Informe o nome do autor",
+        "nameMaxLength": "O nome deve possuir no máximo 150 caracteres"
+      },
+      "delete": {
+        "title": "Excluir livro",
+        "confirmation": "Tem certeza de que deseja excluir {{title}}?",
+        "warning": "Esta ação não pode ser desfeita."
+      },
+      "authorNotifications": {
+        "successTitle": "Autor cadastrado",
+        "successMessage": "O autor foi cadastrado com sucesso.",
+        "errorMessage": "Não foi possível cadastrar o autor."
+      },
+      "notifications": {
+        "statusUpdatedTitle": "Status alterado",
+        "statusUpdatedMessage": "O status do livro foi alterado com sucesso.",
+        "statusUpdateError": "Não foi possível alterar o status do livro.",
+        "createdTitle": "Livro cadastrado",
+        "createdMessage": "O livro foi adicionado à sua estante.",
+        "createError": "Não foi possível cadastrar o livro.",
+        "deletedTitle": "Livro excluído",
+        "deletedMessage": "O livro foi excluído com sucesso.",
+        "deleteError": "Não foi possível excluir o livro.",
+        "updatedTitle": "Livro atualizado",
+        "updatedMessage": "O livro foi atualizado com sucesso.",
+        "updateError": "Não foi possível atualizar o livro."
+      },
+      "page": {
+        "loadError": "Não foi possível carregar os livros."
+      }
     }
   }
 }

@@ -1,14 +1,12 @@
 import { ActionIcon, Badge, Group, Menu, Table, Text } from '@mantine/core';
-
 import { IconCheck, IconChevronDown, IconEdit, IconTrash } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 import type { Book, ReadingStatus } from '../../../types/book';
 
 interface BooksTableProps {
   books: Book[];
-
   onStatusChange: (id: number, status: ReadingStatus) => void;
-
   onEdit: (book: Book) => void;
   onDelete: (book: Book) => void;
 }
@@ -26,19 +24,6 @@ function getStatusColor(status: ReadingStatus) {
   }
 }
 
-function getStatusLabel(status: ReadingStatus) {
-  switch (status) {
-    case 'READ':
-      return 'Read';
-
-    case 'READING':
-      return 'Reading';
-
-    case 'UNREAD':
-      return 'Unread';
-  }
-}
-
 function getStatusDotColor(status: ReadingStatus) {
   switch (status) {
     case 'READ':
@@ -53,11 +38,26 @@ function getStatusDotColor(status: ReadingStatus) {
 }
 
 export function BooksTable({ books, onStatusChange, onEdit, onDelete }: BooksTableProps) {
+  const { t } = useTranslation();
+
+  const statusOptions: ReadingStatus[] = ['READ', 'READING', 'UNREAD'];
+
+  function getStatusLabel(status: ReadingStatus) {
+    switch (status) {
+      case 'READ':
+        return t('books.status.read');
+
+      case 'READING':
+        return t('books.status.reading');
+
+      case 'UNREAD':
+        return t('books.status.unread');
+    }
+  }
+
   function handleStatusChange(book: Book, status: ReadingStatus) {
     onStatusChange(book.id, status);
   }
-
-  const statusOptions: ReadingStatus[] = ['READ', 'READING', 'UNREAD'];
 
   const rows = books.map((book) => (
     <Table.Tr key={book.id}>
@@ -149,6 +149,7 @@ export function BooksTable({ books, onStatusChange, onEdit, onDelete }: BooksTab
           </Menu.Dropdown>
         </Menu>
       </Table.Td>
+
       <Table.Td ta="center">
         <Group gap="xs" justify="center" wrap="nowrap">
           <ActionIcon
@@ -156,7 +157,7 @@ export function BooksTable({ books, onStatusChange, onEdit, onDelete }: BooksTab
             radius="xl"
             size="lg"
             className="bookshelf-grid-action"
-            aria-label={`Edit ${book.title}`}
+            aria-label={t('books.table.editAriaLabel', { title: book.title })}
             onClick={() => onEdit(book)}
           >
             <IconEdit size={17} />
@@ -167,7 +168,7 @@ export function BooksTable({ books, onStatusChange, onEdit, onDelete }: BooksTab
             radius="xl"
             size="lg"
             className="bookshelf-grid-action bookshelf-grid-action-danger"
-            aria-label={`Delete ${book.title}`}
+            aria-label={t('books.table.deleteAriaLabel', { title: book.title })}
             onClick={() => onDelete(book)}
           >
             <IconTrash size={17} />
@@ -181,12 +182,12 @@ export function BooksTable({ books, onStatusChange, onEdit, onDelete }: BooksTab
     <Table highlightOnHover verticalSpacing="sm" miw={480}>
       <Table.Thead>
         <Table.Tr>
-          <Table.Th>Title</Table.Th>
-          <Table.Th>Author</Table.Th>
-          <Table.Th>Genres</Table.Th>
-          <Table.Th>Status</Table.Th>
+          <Table.Th>{t('books.table.title')}</Table.Th>
+          <Table.Th>{t('books.table.author')}</Table.Th>
+          <Table.Th>{t('books.table.genres')}</Table.Th>
+          <Table.Th>{t('books.table.status')}</Table.Th>
           <Table.Th ta="center" w={80}>
-            Actions
+            {t('books.table.actions')}
           </Table.Th>
         </Table.Tr>
       </Table.Thead>

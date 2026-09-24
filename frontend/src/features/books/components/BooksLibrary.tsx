@@ -12,18 +12,21 @@ import {
   Title,
 } from '@mantine/core';
 
+import { useTranslation } from 'react-i18next';
+
 import { IoSearchOutline } from 'react-icons/io5';
 import { LuBookOpen } from 'react-icons/lu';
+import { GiMagicBroom, GiMagicPalm } from 'react-icons/gi';
+import { RiBookAiFill } from 'react-icons/ri';
 
 import type { Book, ReadingStatus } from '../../../types/book';
 import type { Author } from '../../../types/author';
 
 import { BooksTable } from './BooksTable';
-import { GiMagicBroom, GiMagicPalm } from 'react-icons/gi';
 import { BooksEmptyState } from './BooksEmptyState';
-import { bookshelfPaginationClassNames, bookshelfSelectClassNames } from '../../../styles/mantine';
 import { BooksTableSkeleton } from './BooksTableSkeleton';
-import { RiBookAiFill } from 'react-icons/ri';
+
+import { bookshelfPaginationClassNames, bookshelfSelectClassNames } from '../../../styles/mantine';
 
 interface BooksLibraryProps {
   books: Book[];
@@ -72,16 +75,20 @@ export function BooksLibrary({
   onAddBook,
   onAddAuthor,
 }: BooksLibraryProps) {
+  const { t } = useTranslation();
+
+  const firstBook = totalBooks === 0 ? 0 : (page - 1) * limit + 1;
+  const lastBook = Math.min(page * limit, totalBooks);
+
   return (
     <Paper p="xl" radius="xl" className="neo-raised">
       <Stack gap="xl">
-        {/* Header da Library */}
         <Group justify="space-between" align="center" wrap="wrap" gap="md">
           <Group gap="xs">
             <LuBookOpen size={28} color="var(--bookshelf-primary)" />
 
             <Title order={2} c="var(--bookshelf-primary)" fw={700}>
-              Library
+              {t('books.library.title')}
             </Title>
           </Group>
 
@@ -91,12 +98,9 @@ export function BooksLibrary({
               leftSection={<GiMagicPalm size={18} />}
               onClick={onAddAuthor}
               radius="lg"
-              className="
-                            bookshelf-button
-                            bookshelf-button-primary
-                            bookshelf-add-author-button"
+              className="bookshelf-button bookshelf-button-primary bookshelf-add-author-button"
             >
-              Add author
+              {t('books.library.addAuthor')}
             </Button>
 
             <Button
@@ -104,17 +108,13 @@ export function BooksLibrary({
               leftSection={<RiBookAiFill size={18} />}
               onClick={onAddBook}
               radius="lg"
-              className="
-                            bookshelf-button
-                            bookshelf-button-primary
-                            bookshelf-add-author-button"
+              className="bookshelf-button bookshelf-button-primary bookshelf-add-author-button"
             >
-              Add book
+              {t('books.library.addBook')}
             </Button>
           </Group>
         </Group>
 
-        {/* Filtros */}
         <Grid gap="md" align="center">
           <Grid.Col
             span={{
@@ -124,7 +124,7 @@ export function BooksLibrary({
             }}
           >
             <TextInput
-              placeholder="Search books..."
+              placeholder={t('books.library.searchPlaceholder')}
               leftSection={<IoSearchOutline size={18} />}
               value={search}
               onChange={(event) => onSearchChange(event.currentTarget.value)}
@@ -142,22 +142,22 @@ export function BooksLibrary({
             }}
           >
             <Select
-              placeholder="All status"
+              placeholder={t('books.library.allStatuses')}
               clearable
               value={status}
               onChange={(value) => onStatusFilterChange(value as ReadingStatus | null)}
               data={[
                 {
                   value: 'READ',
-                  label: 'Read',
+                  label: t('books.status.read'),
                 },
                 {
                   value: 'READING',
-                  label: 'Reading',
+                  label: t('books.status.reading'),
                 },
                 {
                   value: 'UNREAD',
-                  label: 'Unread',
+                  label: t('books.status.unread'),
                 },
               ]}
               classNames={bookshelfSelectClassNames}
@@ -172,7 +172,7 @@ export function BooksLibrary({
             }}
           >
             <Select
-              placeholder="Author"
+              placeholder={t('books.library.authorPlaceholder')}
               searchable
               clearable
               value={authorId !== null ? String(authorId) : null}
@@ -201,14 +201,14 @@ export function BooksLibrary({
                 onClick={onClearFilters}
                 className="bookshelf-clear-filters"
               >
-                Clear filters
+                {t('books.library.clearFilters')}
               </Button>
             </Grid.Col>
           )}
         </Grid>
 
         {!isLoading && books.length === 0 ? (
-          <BooksEmptyState hasActiveFilters={hasActiveFilters} onClearFilters={onClearFilters} />
+          <BooksEmptyState hasActiveFilters={hasActiveFilters} />
         ) : (
           <ScrollArea className="bookshelf-table-scroll" type="auto" offsetScrollbars>
             {isLoading ? (
@@ -223,11 +223,14 @@ export function BooksLibrary({
             )}
           </ScrollArea>
         )}
+
         <Group justify="space-between" align="center" mt="md">
           <Text size="sm" c="dimmed">
-            Showing {totalBooks === 0 ? 0 : (page - 1) * limit + 1}
-            {' - '}
-            {Math.min(page * limit, totalBooks)} of {totalBooks} books
+            {t('books.library.showing', {
+              from: firstBook,
+              to: lastBook,
+              count: totalBooks,
+            })}
           </Text>
 
           <Pagination

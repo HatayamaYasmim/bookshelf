@@ -1,38 +1,38 @@
 import { Button, Group, MultiSelect, Select, Stack, TextInput } from '@mantine/core';
-
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { RiBookAiFill } from 'react-icons/ri';
+import { useEffect } from 'react';
+
 import type { CreateBookData } from '../../../services/books';
 import type { Author } from '../../../types/author';
 import type { Book } from '../../../types/book';
-import { RiBookAiFill } from 'react-icons/ri';
-import { BookshelfModal } from '../../../components/ui/BookshellfModal';
-import { bookshelfSelectClassNames } from '../../../styles/mantine';
-import { useEffect } from 'react';
 import type { Genre } from '../../../types/genre';
 
-const createBookSchema = z.object({
-  title: z.string().trim().min(1, 'Informe o título do livro'),
+import { BookshelfModal } from '../../../components/ui/BookshellfModal';
+import { bookshelfSelectClassNames } from '../../../styles/mantine';
 
-  authorId: z.string().min(1, 'Selecione um autor'),
+function createBookSchema(t: TFunction) {
+  return z.object({
+    title: z.string().trim().min(1, t('books.validation.titleRequired')),
+    authorId: z.string().min(1, t('books.validation.authorRequired')),
+    status: z.enum(['UNREAD', 'READING', 'READ']),
+    genreIds: z.array(z.string()),
+  });
+}
 
-  status: z.enum(['UNREAD', 'READING', 'READ']),
-  genreIds: z.array(z.string()),
-});
-
-type CreateBookFormData = z.infer<typeof createBookSchema>;
+type CreateBookFormData = z.infer<ReturnType<typeof createBookSchema>>;
 
 interface BookFormModalProps {
   opened: boolean;
   onClose: () => void;
   authors: Author[];
   genres: Genre[];
-
   book?: Book | null;
-
   onSubmit: (data: CreateBookData) => Promise<unknown>;
-
   isSubmitting?: boolean;
 }
 
@@ -45,6 +45,10 @@ export function BookFormModal({
   book,
   isSubmitting = false,
 }: BookFormModalProps) {
+  const { t } = useTranslation();
+
+  const schema = createBookSchema(t);
+
   const {
     control,
     register,
@@ -52,8 +56,7 @@ export function BookFormModal({
     reset,
     formState: { errors },
   } = useForm<CreateBookFormData>({
-    resolver: zodResolver(createBookSchema),
-
+    resolver: zodResolver(schema),
     defaultValues: {
       title: '',
       authorId: '',
@@ -110,7 +113,7 @@ export function BookFormModal({
     <BookshelfModal
       opened={opened}
       onClose={handleClose}
-      title={isEditing ? 'Edit book' : 'Add book'}
+      title={isEditing ? t('books.form.editTitle') : t('books.form.addTitle')}
       icon={<RiBookAiFill size={21} color="var(--bookshelf-primary)" />}
     >
       <form onSubmit={handleSubmit(handleCreateBook)}>
@@ -119,8 +122,8 @@ export function BookFormModal({
             classNames={{
               input: 'bookshelf-input',
             }}
-            label="Title"
-            placeholder="Ex: The Hobbit"
+            label={t('books.form.titleLabel')}
+            placeholder={t('books.form.titlePlaceholder')}
             withAsterisk
             error={errors.title?.message}
             {...register('title')}
@@ -132,8 +135,8 @@ export function BookFormModal({
             render={({ field }) => (
               <Select
                 classNames={bookshelfSelectClassNames}
-                label="Author"
-                placeholder="Select an author"
+                label={t('books.form.authorLabel')}
+                placeholder={t('books.form.authorPlaceholder')}
                 withAsterisk
                 searchable
                 data={authors.map((author) => ({
@@ -152,22 +155,22 @@ export function BookFormModal({
             control={control}
             render={({ field }) => (
               <Select
-                label="Status"
+                label={t('books.form.statusLabel')}
                 withAsterisk
                 allowDeselect={false}
                 classNames={bookshelfSelectClassNames}
                 data={[
                   {
                     value: 'UNREAD',
-                    label: 'Unread',
+                    label: t('books.status.unread'),
                   },
                   {
                     value: 'READING',
-                    label: 'Reading',
+                    label: t('books.status.reading'),
                   },
                   {
                     value: 'READ',
-                    label: 'Read',
+                    label: t('books.status.read'),
                   },
                 ]}
                 value={field.value}
@@ -182,8 +185,8 @@ export function BookFormModal({
             control={control}
             render={({ field }) => (
               <MultiSelect
-                label="Genres"
-                placeholder="Select genres"
+                label={t('books.form.genresLabel')}
+                placeholder={t('books.form.genresPlaceholder')}
                 data={genreOptions}
                 value={field.value}
                 onChange={field.onChange}
@@ -196,7 +199,7 @@ export function BookFormModal({
 
           <Group justify="flex-end" mt="md">
             <Button variant="transparent" className="bookshelf-button" onClick={handleClose}>
-              Cancel
+              {t('common.cancel')}
             </Button>
 
             <Button
@@ -205,7 +208,7 @@ export function BookFormModal({
               className="bookshelf-button bookshelf-button-primary"
               loading={isSubmitting}
             >
-              Save
+              {t('common.save')}
             </Button>
           </Group>
         </Stack>

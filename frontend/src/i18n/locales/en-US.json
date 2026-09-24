@@ -3,7 +3,9 @@
     "save": "Save",
     "cancel": "Cancel",
     "logout": "Logout",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save changes",
+    "delete": "Delete",
+    "error": "Error"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -140,6 +142,91 @@
       "changePassword": "Change password",
       "comingSoon": "Coming soon",
       "unavailable": "Password change is temporarily unavailable."
+    }
+  },
+  "books": {
+    "form": {
+      "addTitle": "Add book",
+      "editTitle": "Edit book",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Ex: The Hobbit",
+      "authorLabel": "Author",
+      "authorPlaceholder": "Select an author",
+      "statusLabel": "Status",
+      "genresLabel": "Genres",
+      "genresPlaceholder": "Select genres"
+    },
+    "status": {
+      "unread": "Unread",
+      "reading": "Reading",
+      "read": "Read"
+    },
+    "validation": {
+      "titleRequired": "Enter the book title",
+      "authorRequired": "Select an author"
+    },
+    "emptyState": {
+      "filtered": "No books found",
+      "empty": "Your bookshelf is empty"
+    },
+    "library": {
+      "title": "Library",
+      "addAuthor": "Add author",
+      "addBook": "Add book",
+      "searchPlaceholder": "Search books...",
+      "allStatuses": "All statuses",
+      "authorPlaceholder": "Author",
+      "clearFilters": "Clear filters",
+      "showing_one": "Showing {{from}} - {{to}} of {{count}} book",
+      "showing_other": "Showing {{from}} - {{to}} of {{count}} books"
+    },
+    "stats": {
+      "totalBooks": "Total books"
+    },
+    "table": {
+      "title": "Title",
+      "author": "Author",
+      "genres": "Genres",
+      "status": "Status",
+      "actions": "Actions",
+      "editAriaLabel": "Edit {{title}}",
+      "deleteAriaLabel": "Delete {{title}}"
+    },
+    "authorForm": {
+      "title": "Author",
+      "nameLabel": "Name",
+      "namePlaceholder": "Ex: J.R.R. Tolkien",
+      "validation": {
+        "nameRequired": "Enter the author's name",
+        "nameMaxLength": "The name must contain at most 150 characters"
+      },
+      "delete": {
+        "title": "Delete book",
+        "confirmation": "Are you sure you want to delete {{title}}?",
+        "warning": "This action cannot be undone."
+      },
+      "authorNotifications": {
+        "successTitle": "Author registered",
+        "successMessage": "The author has been successfully registered.",
+        "errorMessage": "It was not possible to register the author."
+      },
+      "notifications": {
+        "statusUpdatedTitle": "Status changed",
+        "statusUpdatedMessage": "The book's status has been successfully changed.",
+        "statusUpdateError": "It was not possible to change the book's status.",
+        "createdTitle": "Book registered",
+        "createdMessage": "The book has been added to your bookshelf.",
+        "createError": "It was not possible to register the book.",
+        "deletedTitle": "Book deleted",
+        "deletedMessage": "The book has been successfully deleted.",
+        "deleteError": "It was not possible to delete the book.",
+        "updatedTitle": "Book updated",
+        "updatedMessage": "The book has been successfully updated.",
+        "updateError": "It was not possible to update the book."
+      },
+      "page": {
+        "loadError": "It was not possible to load the books."
+      }
     }
   }
 }

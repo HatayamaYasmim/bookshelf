@@ -1,10 +1,11 @@
 import { notifications } from '@mantine/notifications';
-
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 import { createBook, deleteBook, updateBook, updateBookStatus } from '../../../services/books';
 
 export function useBookMutations() {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   function invalidateBookData() {
@@ -25,16 +26,16 @@ export function useBookMutations() {
       await invalidateBookData();
 
       notifications.show({
-        title: 'Status changed',
-        message: "The book's status has been successfully changed.",
+        title: t('books.notifications.statusUpdatedTitle'),
+        message: t('books.notifications.statusUpdatedMessage'),
         color: 'green',
       });
     },
 
     onError: () => {
       notifications.show({
-        title: 'Error',
-        message: "It was not possible to change the book's status.",
+        title: t('common.error'),
+        message: t('books.notifications.statusUpdateError'),
         color: 'red',
       });
     },
@@ -47,16 +48,16 @@ export function useBookMutations() {
       await invalidateBookData();
 
       notifications.show({
-        title: 'Book registered',
-        message: 'The book has been added to your bookshelf.',
+        title: t('books.notifications.createdTitle'),
+        message: t('books.notifications.createdMessage'),
         color: 'green',
       });
     },
 
     onError: () => {
       notifications.show({
-        title: 'Error',
-        message: 'It was not possible to register the book.',
+        title: t('common.error'),
+        message: t('books.notifications.createError'),
         color: 'red',
       });
     },
@@ -69,16 +70,16 @@ export function useBookMutations() {
       await invalidateBookData();
 
       notifications.show({
-        title: 'Book deleted',
-        message: 'The book has been successfully deleted.',
+        title: t('books.notifications.deletedTitle'),
+        message: t('books.notifications.deletedMessage'),
         color: 'green',
       });
     },
 
     onError: () => {
       notifications.show({
-        title: 'Error',
-        message: 'It was not possible to delete the book.',
+        title: t('common.error'),
+        message: t('books.notifications.deleteError'),
         color: 'red',
       });
     },
@@ -91,16 +92,16 @@ export function useBookMutations() {
       await invalidateBookData();
 
       notifications.show({
-        title: 'Book updated',
-        message: 'The book has been successfully updated.',
+        title: t('books.notifications.updatedTitle'),
+        message: t('books.notifications.updatedMessage'),
         color: 'green',
       });
     },
 
     onError: () => {
       notifications.show({
-        title: 'Error',
-        message: 'It was not possible to update the book.',
+        title: t('common.error'),
+        message: t('books.notifications.updateError'),
         color: 'red',
       });
     },

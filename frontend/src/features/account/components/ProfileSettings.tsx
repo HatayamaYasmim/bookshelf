@@ -1,7 +1,6 @@
 import {
     Button,
     Stack,
-    Text,
     TextInput,
 } from '@mantine/core';
 
@@ -98,7 +97,7 @@ export function ProfileSettings() {
                 }}
             />
 
-            <div className="bookshelf-profile-meta">
+            {/* <div className="bookshelf-profile-meta">
                 {currentUser.emailVerifiedAt ? (
                     <Text
                         size="sm"
@@ -124,7 +123,7 @@ export function ProfileSettings() {
                         </Button>
                     </Stack>
                 )}
-            </div>
+            </div> */}
 
             <div className="bookshelf-profile-footer">
                 <Button

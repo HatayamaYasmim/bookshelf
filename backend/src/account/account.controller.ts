@@ -4,6 +4,7 @@ import { AccountService } from './account.service';
 import type { AuthenticatedRequest } from 'src/auth/types/authenticated-request';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 import { UpdateProfileDto } from './dto/update.profile.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('account')
@@ -26,5 +27,11 @@ export class AccountController {
     updateProfile(@Req() request: AuthenticatedRequest, @Body() data: UpdateProfileDto) {
         return this.accountService.updateProfile(request.user.userId, data)
     }
+
+    // Temporarily disabled until password recovery flow is available.
+    // @Patch('password')
+    // updatePassword(@Req() request: AuthenticatedRequest, @Body() data: ChangePasswordDto){
+    //     return this.accountService.updatePassword(request.user.userId, data)
+    // }
 
 }

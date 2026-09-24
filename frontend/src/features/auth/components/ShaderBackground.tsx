@@ -1,48 +1,33 @@
-import {
-    useEffect,
-    useRef,
-} from 'react';
+import { useEffect, useRef } from 'react';
 
-import {
-    useComputedColorScheme,
-} from '@mantine/core';
+import { useComputedColorScheme } from '@mantine/core';
 
 export function ShaderBackground() {
-    const canvasRef =
-        useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const colorScheme =
-        useComputedColorScheme('light');
+  const colorScheme = useComputedColorScheme('light');
 
-    const isDark =
-        colorScheme === 'dark';
+  const isDark = colorScheme === 'dark';
 
-    useEffect(() => {
-        const canvasRefCurrent =
-            canvasRef.current;
+  useEffect(() => {
+    const canvasRefCurrent = canvasRef.current;
 
-        if (!canvasRefCurrent) {
-            return;
-        }
+    if (!canvasRefCurrent) {
+      return;
+    }
 
-        const canvas: HTMLCanvasElement =
-            canvasRefCurrent;
+    const canvas: HTMLCanvasElement = canvasRefCurrent;
 
-        const glContext = (
-            canvas.getContext('webgl') ??
-            canvas.getContext(
-                'experimental-webgl',
-            )
-        ) as WebGLRenderingContext | null;
+    const glContext = (canvas.getContext('webgl') ??
+      canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
 
-        if (!glContext) {
-            return;
-        }
+    if (!glContext) {
+      return;
+    }
 
-        const gl: WebGLRenderingContext =
-            glContext;
+    const gl: WebGLRenderingContext = glContext;
 
-        const vertexShaderSource = `
+    const vertexShaderSource = `
             attribute vec2 a_position;
 
             varying vec2 v_texCoord;
@@ -60,7 +45,7 @@ export function ShaderBackground() {
             }
         `;
 
-        const fragmentShaderSource = `
+    const fragmentShaderSource = `
             precision highp float;
 
             uniform float u_time;
@@ -427,326 +412,152 @@ export function ShaderBackground() {
             }
         `;
 
-        function createShader(
-            type: number,
-            source: string,
-        ) {
-            const shader =
-                gl.createShader(type);
+    function createShader(type: number, source: string) {
+      const shader = gl.createShader(type);
 
-            if (!shader) {
-                return null;
-            }
+      if (!shader) {
+        return null;
+      }
 
-            gl.shaderSource(
-                shader,
-                source,
-            );
+      gl.shaderSource(shader, source);
 
-            gl.compileShader(shader);
+      gl.compileShader(shader);
 
-            if (
-                !gl.getShaderParameter(
-                    shader,
-                    gl.COMPILE_STATUS,
-                )
-            ) {
-                console.error(
-                    'Shader compilation error:',
-                    gl.getShaderInfoLog(
-                        shader,
-                    ),
-                );
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error('Shader compilation error:', gl.getShaderInfoLog(shader));
 
-                gl.deleteShader(shader);
+        gl.deleteShader(shader);
 
-                return null;
-            }
+        return null;
+      }
 
-            return shader;
-        }
+      return shader;
+    }
 
-        const vertexShader =
-            createShader(
-                gl.VERTEX_SHADER,
-                vertexShaderSource,
-            );
+    const vertexShader = createShader(gl.VERTEX_SHADER, vertexShaderSource);
 
-        const fragmentShader =
-            createShader(
-                gl.FRAGMENT_SHADER,
-                fragmentShaderSource,
-            );
+    const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
 
-        if (
-            !vertexShader ||
-            !fragmentShader
-        ) {
-            return;
-        }
+    if (!vertexShader || !fragmentShader) {
+      return;
+    }
 
-        const program =
-            gl.createProgram();
+    const program = gl.createProgram();
 
-        if (!program) {
-            return;
-        }
+    if (!program) {
+      return;
+    }
 
-        gl.attachShader(
-            program,
-            vertexShader,
-        );
+    gl.attachShader(program, vertexShader);
 
-        gl.attachShader(
-            program,
-            fragmentShader,
-        );
+    gl.attachShader(program, fragmentShader);
 
-        gl.linkProgram(program);
+    gl.linkProgram(program);
 
-        if (
-            !gl.getProgramParameter(
-                program,
-                gl.LINK_STATUS,
-            )
-        ) {
-            console.error(
-                'Shader program link error:',
-                gl.getProgramInfoLog(
-                    program,
-                ),
-            );
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error('Shader program link error:', gl.getProgramInfoLog(program));
 
-            gl.deleteProgram(program);
-            gl.deleteShader(vertexShader);
-            gl.deleteShader(fragmentShader);
+      gl.deleteProgram(program);
+      gl.deleteShader(vertexShader);
+      gl.deleteShader(fragmentShader);
 
-            return;
-        }
+      return;
+    }
 
-        gl.useProgram(program);
+    gl.useProgram(program);
 
-        const buffer =
-            gl.createBuffer();
+    const buffer = gl.createBuffer();
 
-        if (!buffer) {
-            return;
-        }
+    if (!buffer) {
+      return;
+    }
 
-        gl.bindBuffer(
-            gl.ARRAY_BUFFER,
-            buffer,
-        );
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
-        gl.bufferData(
-            gl.ARRAY_BUFFER,
-            new Float32Array([
-                -1, -1,
-                1, -1,
-                -1, 1,
-                1, 1,
-            ]),
-            gl.STATIC_DRAW,
-        );
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
 
-        const position =
-            gl.getAttribLocation(
-                program,
-                'a_position',
-            );
+    const position = gl.getAttribLocation(program, 'a_position');
 
-        gl.enableVertexAttribArray(
-            position,
-        );
+    gl.enableVertexAttribArray(position);
 
-        gl.vertexAttribPointer(
-            position,
-            2,
-            gl.FLOAT,
-            false,
-            0,
-            0,
-        );
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
 
-        const timeLocation =
-            gl.getUniformLocation(
-                program,
-                'u_time',
-            );
+    const timeLocation = gl.getUniformLocation(program, 'u_time');
 
-        const resolutionLocation =
-            gl.getUniformLocation(
-                program,
-                'u_resolution',
-            );
+    const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
 
-        const mouseLocation =
-            gl.getUniformLocation(
-                program,
-                'u_mouse',
-            );
+    const mouseLocation = gl.getUniformLocation(program, 'u_mouse');
 
-        const darkModeLocation =
-            gl.getUniformLocation(
-                program,
-                'u_darkMode',
-            );
+    const darkModeLocation = gl.getUniformLocation(program, 'u_darkMode');
 
-        const mouse = {
-            x: canvas.width / 2,
-            y: canvas.height / 2,
-        };
+    const mouse = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+    };
 
-        function resize() {
-            const width =
-                canvas.clientWidth;
+    function resize() {
+      const width = canvas.clientWidth;
 
-            const height =
-                canvas.clientHeight;
+      const height = canvas.clientHeight;
 
-            const dpr = Math.min(
-                window.devicePixelRatio || 1,
-                2,
-            );
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-            canvas.width =
-                Math.max(
-                    1,
-                    Math.floor(
-                        width * dpr,
-                    ),
-                );
+      canvas.width = Math.max(1, Math.floor(width * dpr));
 
-            canvas.height =
-                Math.max(
-                    1,
-                    Math.floor(
-                        height * dpr,
-                    ),
-                );
-        }
+      canvas.height = Math.max(1, Math.floor(height * dpr));
+    }
 
-        const resizeObserver =
-            new ResizeObserver(
-                resize,
-            );
+    const resizeObserver = new ResizeObserver(resize);
 
-        resizeObserver.observe(
-            canvas,
-        );
+    resizeObserver.observe(canvas);
 
-        resize();
+    resize();
 
-        function handleMouseMove(
-            event: MouseEvent,
-        ) {
-            const rect =
-                canvas.getBoundingClientRect();
+    function handleMouseMove(event: MouseEvent) {
+      const rect = canvas.getBoundingClientRect();
 
-            const x =
-                (
-                    event.clientX -
-                    rect.left
-                ) /
-                rect.width;
+      const x = (event.clientX - rect.left) / rect.width;
 
-            const y =
-                1 -
-                (
-                    event.clientY -
-                    rect.top
-                ) /
-                rect.height;
+      const y = 1 - (event.clientY - rect.top) / rect.height;
 
-            mouse.x =
-                x * canvas.width;
+      mouse.x = x * canvas.width;
 
-            mouse.y =
-                y * canvas.height;
-        }
+      mouse.y = y * canvas.height;
+    }
 
-        window.addEventListener(
-            'mousemove',
-            handleMouseMove,
-        );
+    window.addEventListener('mousemove', handleMouseMove);
 
-        let animationFrame = 0;
+    let animationFrame = 0;
 
-        function render(
-            time: number,
-        ) {
-            gl.viewport(
-                0,
-                0,
-                canvas.width,
-                canvas.height,
-            );
+    function render(time: number) {
+      gl.viewport(0, 0, canvas.width, canvas.height);
 
-            gl.uniform1f(
-                timeLocation,
-                time * 0.001,
-            );
+      gl.uniform1f(timeLocation, time * 0.001);
 
-            gl.uniform2f(
-                resolutionLocation,
-                canvas.width,
-                canvas.height,
-            );
+      gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
 
-            gl.uniform2f(
-                mouseLocation,
-                mouse.x,
-                mouse.y,
-            );
+      gl.uniform2f(mouseLocation, mouse.x, mouse.y);
 
-            gl.uniform1f(
-                darkModeLocation,
-                isDark ? 1 : 0,
-            );
+      gl.uniform1f(darkModeLocation, isDark ? 1 : 0);
 
-            gl.drawArrays(
-                gl.TRIANGLE_STRIP,
-                0,
-                4,
-            );
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-            animationFrame =
-                requestAnimationFrame(
-                    render,
-                );
-        }
+      animationFrame = requestAnimationFrame(render);
+    }
 
-        animationFrame =
-            requestAnimationFrame(
-                render,
-            );
+    animationFrame = requestAnimationFrame(render);
 
-        return () => {
-            cancelAnimationFrame(
-                animationFrame,
-            );
-            resizeObserver.disconnect();
-            window.removeEventListener(
-                'mousemove',
-                handleMouseMove,
-            );
-            gl.deleteBuffer(buffer);
-            gl.deleteProgram(program);
-            gl.deleteShader(
-                vertexShader,
-            );
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      window.removeEventListener('mousemove', handleMouseMove);
+      gl.deleteBuffer(buffer);
+      gl.deleteProgram(program);
+      gl.deleteShader(vertexShader);
 
-            gl.deleteShader(
-                fragmentShader,
-            );
-        };
-    }, [isDark]);
+      gl.deleteShader(fragmentShader);
+    };
+  }, [isDark]);
 
-    return (
-        <canvas
-            ref={canvasRef}
-            className="bookshelf-auth-shader"
-            aria-hidden="true"
-        />
-    );
+  return <canvas ref={canvasRef} className="bookshelf-auth-shader" aria-hidden="true" />;
 }

@@ -1,10 +1,6 @@
 import type { ReactNode } from 'react';
 
-import {
-  Group,
-  Modal,
-  Text,
-} from '@mantine/core';
+import { Group, Modal, Text } from '@mantine/core';
 
 interface BookshelfModalProps {
   opened: boolean;
@@ -38,27 +34,18 @@ export function BookshelfModal({
         <Group gap="xs">
           {icon}
 
-          <Text
-            size="lg"
-            fw={600}
-          >
+          <Text size="lg" fw={600}>
             {title}
           </Text>
         </Group>
       }
       classNames={{
-        overlay:
-          'bookshelf-modal-overlay',
-        content:
-          'bookshelf-modal-content',
-        header:
-          'bookshelf-modal-header',
-        title:
-          'bookshelf-modal-title',
-        body:
-          'bookshelf-modal-body',
-        close:
-          'bookshelf-modal-close',
+        overlay: 'bookshelf-modal-overlay',
+        content: 'bookshelf-modal-content',
+        header: 'bookshelf-modal-header',
+        title: 'bookshelf-modal-title',
+        body: 'bookshelf-modal-body',
+        close: 'bookshelf-modal-close',
       }}
     >
       {children}

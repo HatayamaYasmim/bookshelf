@@ -1,15 +1,6 @@
-import {
-  Group,
-  Paper,
-  SimpleGrid,
-  Text,
-  ThemeIcon,
-} from '@mantine/core';
+import { Group, Paper, SimpleGrid, Text, ThemeIcon } from '@mantine/core';
 
-import {
-  LuBookmark,
-  LuBookOpenCheck,
-} from 'react-icons/lu';
+import { LuBookmark, LuBookOpenCheck } from 'react-icons/lu';
 
 import { GiBookCover, GiBookshelf } from 'react-icons/gi';
 
@@ -19,9 +10,7 @@ interface BooksStatsProps {
   stats: BooksStatsResponse;
 }
 
-export function BooksStats({
-  stats,
-}: BooksStatsProps) {
+export function BooksStats({ stats }: BooksStatsProps) {
   const statsItems = [
     {
       label: 'TOTAL BOOKS',

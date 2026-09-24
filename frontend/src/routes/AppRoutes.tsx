@@ -1,9 +1,4 @@
-import {
-    Navigate,
-    Outlet,
-    Route,
-    Routes,
-} from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
 import { AppHeader } from '../components/layout/AppHeader';
 import { LoginPage } from '../features/auth/LoginPage';
@@ -15,71 +10,36 @@ import { AccountPage } from '../features/account/AccountPage';
 import { VerifyEmailPage } from '../features/auth/VerifyEmailPage';
 
 function MainLayout() {
-    return (
-        <>
-            <AppHeader />
-            <Outlet />
-        </>
-    );
+  return (
+    <>
+      <AppHeader />
+      <Outlet />
+    </>
+  );
 }
 
 export function AppRoutes() {
-    return (
-        <Routes>
-            {/* Public routes */}
-            <Route
-                path="/login"
-                element={<LoginPage />}
-            />
-            <Route
-                path="/register"
-                element={<RegisterPage />}
-            />
+  return (
+    <Routes>
+      {/* Public routes */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
 
-            <Route
-                path="/verify-email"
-                element={<VerifyEmailPage />}
-            />
+      <Route path="/verify-email" element={<VerifyEmailPage />} />
 
-            {/* Protected routes */}
-            <Route element={<ProtectedRoute />}>
-                <Route element={<MainLayout />}>
-                    <Route
-                        path="/"
-                        element={
-                            <Navigate
-                                to="/library"
-                                replace
-                            />
-                        }
-                    />
+      {/* Protected routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Navigate to="/library" replace />} />
 
-                    <Route
-                        path="/library"
-                        element={<BooksPage />}
-                    />
+          <Route path="/library" element={<BooksPage />} />
 
-                    <Route
-                        path="/dashboard"
-                        element={<DashboardPage />}
-                    />
-                    <Route
-                        path="/account"
-                        element={<AccountPage />}
-                    />
-                </Route>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/account" element={<AccountPage />} />
+        </Route>
+      </Route>
 
-            </Route>
-
-            <Route
-                path="*"
-                element={
-                    <Navigate
-                        to="/library"
-                        replace
-                    />
-                }
-            />
-        </Routes>
-    );
+      <Route path="*" element={<Navigate to="/library" replace />} />
+    </Routes>
+  );
 }

@@ -1,10 +1,7 @@
 import type { Author } from './author';
 import type { Genre } from './genre';
 
-export type ReadingStatus =
-  | 'UNREAD'
-  | 'READING'
-  | 'READ';
+export type ReadingStatus = 'UNREAD' | 'READING' | 'READ';
 
 export interface Book {
   id: number;

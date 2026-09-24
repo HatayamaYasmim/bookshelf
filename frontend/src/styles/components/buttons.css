@@ -9,8 +9,7 @@
   border: none !important;
   border-radius: 999px !important;
 
-  box-shadow:
-    var(--bookshelf-shadow-raised);
+  box-shadow: var(--bookshelf-shadow-raised);
 }
 
 .bookshelf-button:hover {
@@ -18,8 +17,7 @@
 }
 
 .bookshelf-button:active {
-  box-shadow:
-    var(--bookshelf-shadow-inset);
+  box-shadow: var(--bookshelf-shadow-inset);
 }
 
 .bookshelf-button-primary {
@@ -46,10 +44,9 @@
 
 .bookshelf-grid-action:active {
   transform: translateY(1px);
-  box-shadow:  var(--bookshelf-shadow-inset) !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
 }
 
 .bookshelf-grid-action-danger:hover {
-  color:
-    var(--bookshelf-danger) !important;
+  color: var(--bookshelf-danger) !important;
 }

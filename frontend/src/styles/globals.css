@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
 }
@@ -14,7 +13,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background: var(--bookshelf-background);
-  color:  var(--bookshelf-text);
+  color: var(--bookshelf-text);
   font-family: var(--bookshelf-font-family);
 }
 

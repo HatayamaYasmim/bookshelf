@@ -36,9 +36,9 @@
 }
 
 @media (max-width: 768px) {
-    .bookshelf-table-scroll {
-        max-height: 360px;
-    }
+  .bookshelf-table-scroll {
+    max-height: 360px;
+  }
 }
 
 .bookshelf-menu-dropdown {
@@ -89,7 +89,6 @@
 
 /* Library actions */
 
-
 .bookshelf-add-author-button {
   color: var(--bookshelf-primary) !important;
   background: var(--bookshelf-surface) !important;
@@ -103,8 +102,7 @@
 
 .bookshelf-add-author-button:active {
   transform: translateY(1px);
-  box-shadow:
-    var(--bookshelf-shadow-inset) !important;
+  box-shadow: var(--bookshelf-shadow-inset) !important;
 }
 
 .bookshelf-clear-filters {

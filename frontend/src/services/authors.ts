@@ -15,9 +15,7 @@ export interface CreateAuthorData {
   name: string;
 }
 
-export async function createAuthor(
-  data: CreateAuthorData,
-): Promise<Author> {
+export async function createAuthor(data: CreateAuthorData): Promise<Author> {
   const response = await apiFetch('/authors', {
     method: 'POST',
     headers: {

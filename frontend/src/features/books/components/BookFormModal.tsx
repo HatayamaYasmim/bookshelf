@@ -1,11 +1,4 @@
-import {
-  Button,
-  Group,
-  MultiSelect,
-  Select,
-  Stack,
-  TextInput,
-} from '@mantine/core';
+import { Button, Group, MultiSelect, Select, Stack, TextInput } from '@mantine/core';
 
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -20,26 +13,15 @@ import { useEffect } from 'react';
 import type { Genre } from '../../../types/genre';
 
 const createBookSchema = z.object({
-  title: z
-    .string()
-    .trim()
-    .min(1, 'Informe o título do livro'),
+  title: z.string().trim().min(1, 'Informe o título do livro'),
 
-  authorId: z
-    .string()
-    .min(1, 'Selecione um autor'),
+  authorId: z.string().min(1, 'Selecione um autor'),
 
-  status: z.enum([
-    'UNREAD',
-    'READING',
-    'READ',
-  ]),
+  status: z.enum(['UNREAD', 'READING', 'READ']),
   genreIds: z.array(z.string()),
 });
 
-type CreateBookFormData = z.infer<
-  typeof createBookSchema
->;
+type CreateBookFormData = z.infer<typeof createBookSchema>;
 
 interface BookFormModalProps {
   opened: boolean;
@@ -49,9 +31,7 @@ interface BookFormModalProps {
 
   book?: Book | null;
 
-  onSubmit: (
-    data: CreateBookData,
-  ) => Promise<unknown>;
+  onSubmit: (data: CreateBookData) => Promise<unknown>;
 
   isSubmitting?: boolean;
 }
@@ -82,9 +62,7 @@ export function BookFormModal({
     },
   });
 
-  async function handleCreateBook(
-    data: CreateBookFormData,
-  ) {
+  async function handleCreateBook(data: CreateBookFormData) {
     await onSubmit({
       title: data.title,
       authorId: Number(data.authorId),
@@ -114,9 +92,7 @@ export function BookFormModal({
         title: book.title,
         authorId: String(book.authorId),
         status: book.status,
-        genreIds: book.genres.map((genre) =>
-          String(genre.id),
-        ),
+        genreIds: book.genres.map((genre) => String(genre.id)),
       });
 
       return;
@@ -134,21 +110,10 @@ export function BookFormModal({
     <BookshelfModal
       opened={opened}
       onClose={handleClose}
-      title={
-        isEditing
-          ? 'Edit book'
-          : 'Add book'
-      }
-      icon={
-        <RiBookAiFill
-          size={21}
-          color="var(--bookshelf-primary)"
-        />
-      }
+      title={isEditing ? 'Edit book' : 'Add book'}
+      icon={<RiBookAiFill size={21} color="var(--bookshelf-primary)" />}
     >
-      <form
-        onSubmit={handleSubmit(handleCreateBook)}
-      >
+      <form onSubmit={handleSubmit(handleCreateBook)}>
         <Stack>
           <TextInput
             classNames={{
@@ -176,9 +141,7 @@ export function BookFormModal({
                   label: author.name,
                 }))}
                 value={field.value}
-                onChange={(value) =>
-                  field.onChange(value ?? '')
-                }
+                onChange={(value) => field.onChange(value ?? '')}
                 error={errors.authorId?.message}
               />
             )}
@@ -208,9 +171,7 @@ export function BookFormModal({
                   },
                 ]}
                 value={field.value}
-                onChange={(value) =>
-                  field.onChange(value)
-                }
+                onChange={(value) => field.onChange(value)}
                 error={errors.status?.message}
               />
             )}
@@ -234,17 +195,13 @@ export function BookFormModal({
           />
 
           <Group justify="flex-end" mt="md">
-            <Button
-              variant="transparent"
-              className="bookshelf-button"
-              onClick={handleClose}
-            >
+            <Button variant="transparent" className="bookshelf-button" onClick={handleClose}>
               Cancel
             </Button>
 
             <Button
               type="submit"
-              variant='transparent'
+              variant="transparent"
               className="bookshelf-button bookshelf-button-primary"
               loading={isSubmitting}
             >

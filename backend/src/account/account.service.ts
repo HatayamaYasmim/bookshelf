@@ -1,10 +1,12 @@
-import { ConflictException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 import { EmailVerificationService } from 'src/auth/services/email-verification/email-verification.service';
 import { MailService } from 'src/mail/mail.service';
 import { UpdateProfileDto } from './dto/update.profile.dto';
-import { CUSTOM_ROUTE_ARGS_METADATA } from '@nestjs/common/constants';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import * as argon2 from 'argon2';
+
 
 @Injectable()
 export class AccountService {
@@ -132,5 +134,45 @@ export class AccountService {
 
         }
         return user
+    }
+
+    async updatePassword(userId: number, data: ChangePasswordDto) {
+        const currentUser = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                passwordHash: true
+            },
+        })
+        if (!currentUser) {
+            throw new NotFoundException(`User not found`)
+        }
+
+        const { currentPassword, newPassword } = data;
+
+        const isCurrentPasswordValid = await argon2.verify(currentUser.passwordHash, currentPassword)
+
+        if (!isCurrentPasswordValid) {
+            throw new BadRequestException('Current password is incorrect')
+        }
+
+        const isSamePassword =
+            await argon2.verify(currentUser.passwordHash, newPassword)
+
+        if (isSamePassword) {
+            throw new BadRequestException('New password must be different from current password');
+        }
+
+        const newPasswordHash = await argon2.hash(newPassword)
+
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                passwordHash: newPasswordHash,
+            },
+        });
+        return {
+            message: 'Password updated successfully',
+        };
     }
 }

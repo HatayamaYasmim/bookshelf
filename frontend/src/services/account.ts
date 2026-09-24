@@ -40,6 +40,16 @@ export interface UpdateProfileResponse {
     updatedAt: string;
 }
 
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordResponse {
+  message: string;
+}
+
+
 export async function getUserPreferences(): Promise<UserPreferences> {
     const response = await apiFetch(
         '/account/preferences',
@@ -104,4 +114,27 @@ export async function updateProfile(
     }
 
     return response.json();
+}
+
+export async function changePassword( data: ChangePasswordRequest,) {
+  const response = await apiFetch('/account/password', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    },
+  );
+
+  if (!response.ok) {
+    const error = await response
+      .json()
+      .catch(() => null);
+
+    throw new Error(
+      error?.message ??
+        'Unable to change password',
+    );
+  }
+  return response.json();
 }

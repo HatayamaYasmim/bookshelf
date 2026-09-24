@@ -8,6 +8,7 @@ import {
 } from '@mantine/core';
 import { AppearanceSettings } from './components/ApperanceSettings';
 import { ProfileSettings } from './components/ProfileSettings';
+import { SecuritySettings } from './components/SecuriySettings';
 
 export function AccountPage() {
     return (
@@ -91,7 +92,7 @@ export function AccountPage() {
                                     size="sm"
                                     className="bookshelf-text-muted"
                                 >
-                                    Manage your password and account security.
+                                   <SecuritySettings />
                                 </Text>
                             </Stack>
                         </Paper>

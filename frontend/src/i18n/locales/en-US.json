@@ -2,7 +2,8 @@
   "common": {
     "save": "Save",
     "cancel": "Cancel",
-    "logout": "Logout"
+    "logout": "Logout",
+    "saveChanges": "Save changes"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -93,6 +94,52 @@
       "resendSuccessMessage": "If the account exists and is not verified, a new verification link has been sent.",
       "resendErrorTitle": "Unable to resend email",
       "resendErrorMessage": "Please try again later."
+    }
+  },
+  "account": {
+    "page": {
+      "title": "Account",
+      "description": "Manage your profile, appearance and security."
+    },
+    "profile": {
+      "title": "Profile",
+      "name": "Name",
+      "email": "Email",
+      "successTitle": "Profile updated",
+      "successMessage": "Your profile has been updated.",
+      "successEmailChanged": "Profile updated. Please verify your new email address.",
+      "errorTitle": "Unable to update profile",
+      "errorMessage": "Please try again."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize the application theme and primary color.",
+      "theme": "Theme",
+      "primaryColor": "Primary color",
+      "primaryColorDescription": "Choose the accent color used throughout the application.",
+      "successTitle": "Appearance updated",
+      "successMessage": "Your appearance preferences have been saved.",
+      "errorTitle": "Unable to save",
+      "errorMessage": "It was not possible to update your appearance preferences.",
+      "themes": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      }
+    },
+    "security": {
+      "title": "Security",
+      "description": "Update your account password.",
+      "currentPassword": "Current password",
+      "currentPasswordPlaceholder": "Enter your current password",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Enter your new password",
+      "passwordRequirement": "At least 8 characters",
+      "confirmPassword": "Confirm new password",
+      "confirmPasswordPlaceholder": "Confirm your new password",
+      "changePassword": "Change password",
+      "comingSoon": "Coming soon",
+      "unavailable": "Password change is temporarily unavailable."
     }
   }
 }

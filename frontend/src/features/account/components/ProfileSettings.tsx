@@ -1,11 +1,14 @@
 import { Button, Stack, TextInput } from '@mantine/core';
-
 import { notifications } from '@mantine/notifications';
+
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { updateProfile } from '../../../services/account';
 import { useAuth } from '../../auth/hooks/useAuth';
 
 export function ProfileSettings() {
+  const { t } = useTranslation();
   const { user, refreshUser } = useAuth();
 
   const [name, setName] = useState(user?.name ?? '');
@@ -45,16 +48,16 @@ export function ProfileSettings() {
       await refreshUser();
 
       notifications.show({
-        title: 'Profile updated',
+        title: t('account.profile.successTitle'),
         message: emailChanged
-          ? 'Profile updated. Please verify your new email address.'
-          : 'Your profile has been updated.',
+          ? t('account.profile.successEmailChanged')
+          : t('account.profile.successMessage'),
         color: 'green',
       });
     } catch (error) {
       notifications.show({
-        title: 'Unable to update profile',
-        message: error instanceof Error ? error.message : 'Please try again.',
+        title: t('account.profile.errorTitle'),
+        message: error instanceof Error ? error.message : t('account.profile.errorMessage'),
         color: 'red',
       });
     } finally {
@@ -65,7 +68,7 @@ export function ProfileSettings() {
   return (
     <Stack gap="md" className="bookshelf-profile-settings">
       <TextInput
-        label="Name"
+        label={t('account.profile.name')}
         value={name}
         onChange={(event) => setName(event.currentTarget.value)}
         classNames={{
@@ -74,7 +77,7 @@ export function ProfileSettings() {
       />
 
       <TextInput
-        label="Email"
+        label={t('account.profile.email')}
         type="email"
         value={email}
         onChange={(event) => setEmail(event.currentTarget.value)}
@@ -83,34 +86,6 @@ export function ProfileSettings() {
         }}
       />
 
-      {/* <div className="bookshelf-profile-meta">
-                {currentUser.emailVerifiedAt ? (
-                    <Text
-                        size="sm"
-                        className="bookshelf-text-muted"
-                    >
-                        Email verified
-                    </Text>
-                ) : (
-                    <Stack gap="xs">
-                        <Text
-                            size="sm"
-                            className="bookshelf-text-muted"
-                        >
-                            Email not verified
-                        </Text>
-
-                        <Button
-                            className="bookshelf-button bookshelf-button-primary"
-                            size="compact-sm"
-                            w="fit-content"
-                        >
-                            Resend verification email
-                        </Button>
-                    </Stack>
-                )}
-            </div> */}
-
       <div className="bookshelf-profile-footer">
         <Button
           onClick={handleSave}
@@ -118,7 +93,7 @@ export function ProfileSettings() {
           disabled={!hasChanges || !normalizedName || !normalizedEmail}
           className="bookshelf-button bookshelf-button-primary"
         >
-          Save changes
+          {t('common.saveChanges')}
         </Button>
       </div>
     </Stack>

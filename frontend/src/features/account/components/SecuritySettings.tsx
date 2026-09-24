@@ -1,10 +1,14 @@
 import { Button, Paper, PasswordInput, Stack, Text } from '@mantine/core';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function SecuritySettings() {
+  const { t } = useTranslation();
+
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const isDisabled = true;
 
   return (
@@ -12,13 +16,13 @@ export function SecuritySettings() {
       <Stack gap="lg" className="bookshelf-security-settings">
         <div>
           <Text size="sm" className="bookshelf-text-muted">
-            Update your account password.
+            {t('account.security.description')}
           </Text>
         </div>
 
         <PasswordInput
-          label="Current password"
-          placeholder="Enter your current password"
+          label={t('account.security.currentPassword')}
+          placeholder={t('account.security.currentPasswordPlaceholder')}
           value={currentPassword}
           onChange={(event) => setCurrentPassword(event.currentTarget.value)}
           classNames={{
@@ -28,9 +32,9 @@ export function SecuritySettings() {
         />
 
         <PasswordInput
-          label="New password"
-          placeholder="Enter your new password"
-          description="At least 8 characters"
+          label={t('account.security.newPassword')}
+          placeholder={t('account.security.newPasswordPlaceholder')}
+          description={t('account.security.passwordRequirement')}
           value={newPassword}
           onChange={(event) => setNewPassword(event.currentTarget.value)}
           classNames={{
@@ -40,8 +44,8 @@ export function SecuritySettings() {
         />
 
         <PasswordInput
-          label="Confirm new password"
-          placeholder="Confirm your new password"
+          label={t('account.security.confirmPassword')}
+          placeholder={t('account.security.confirmPasswordPlaceholder')}
           value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.currentTarget.value)}
           disabled={isDisabled}
@@ -52,17 +56,18 @@ export function SecuritySettings() {
 
         <div className="bookshelf-security-footer">
           <Button disabled={isDisabled} className="bookshelf-button bookshelf-button-primary">
-            Change password
+            {t('account.security.changePassword')}
           </Button>
         </div>
       </Stack>
+
       {isDisabled && (
         <div className="bookshelf-card-overlay">
           <div className="bookshelf-card-overlay-content">
-            <Text fw={700}>Coming soon</Text>
+            <Text fw={700}>{t('account.security.comingSoon')}</Text>
 
             <Text size="sm" className="bookshelf-text-muted" ta="center">
-              Password change is temporarily unavailable.
+              {t('account.security.unavailable')}
             </Text>
           </div>
         </div>

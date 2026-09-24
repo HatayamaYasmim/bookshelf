@@ -1,29 +1,13 @@
 import { Button, Group, Stack, Text, Title } from '@mantine/core';
-
 import { notifications } from '@mantine/notifications';
 
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { PrimaryColor, ThemePreference } from '../../../services/account';
 import { useAppearance } from '../AppearanceContext';
 
-const themeOptions: {
-  label: string;
-  value: ThemePreference;
-}[] = [
-  {
-    label: 'System',
-    value: 'SYSTEM',
-  },
-  {
-    label: 'Light',
-    value: 'LIGHT',
-  },
-  {
-    label: 'Dark',
-    value: 'DARK',
-  },
-];
+const themeOptions: ThemePreference[] = ['SYSTEM', 'LIGHT', 'DARK'];
 
 const primaryColors: PrimaryColor[] = [
   'indigo',
@@ -41,17 +25,15 @@ const primaryColors: PrimaryColor[] = [
 ];
 
 export function AppearanceSettings() {
+  const { t } = useTranslation();
   const { preferences, savePreferences } = useAppearance();
 
   const [theme, setTheme] = useState<ThemePreference>(preferences.theme);
-
   const [primaryColor, setPrimaryColor] = useState<PrimaryColor>(preferences.primaryColor);
-
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     setTheme(preferences.theme);
-
     setPrimaryColor(preferences.primaryColor);
   }, [preferences]);
 
@@ -67,14 +49,14 @@ export function AppearanceSettings() {
       });
 
       notifications.show({
-        title: 'Appearance updated',
-        message: 'Your appearance preferences have been saved.',
+        title: t('account.appearance.successTitle'),
+        message: t('account.appearance.successMessage'),
         color: 'green',
       });
     } catch {
       notifications.show({
-        title: 'Unable to save',
-        message: 'It was not possible to update your appearance preferences.',
+        title: t('account.appearance.errorTitle'),
+        message: t('account.appearance.errorMessage'),
         color: 'red',
       });
     } finally {
@@ -86,31 +68,32 @@ export function AppearanceSettings() {
     <Stack gap="xl">
       <Stack gap={4}>
         <Title order={3} size="h4">
-          Appearance
+          {t('account.appearance.title')}
         </Title>
 
         <Text size="sm" className="bookshelf-text-muted">
-          Customize the application theme and primary color.
+          {t('account.appearance.description')}
         </Text>
       </Stack>
 
       <Stack gap="sm">
-        <Text fw={600}>Theme</Text>
+        <Text fw={600}>{t('account.appearance.theme')}</Text>
 
         <Group gap="sm">
           {themeOptions.map((option) => {
-            const isSelected = theme === option.value;
+            const isSelected = theme === option;
+
             return (
               <Button
-                key={option.value}
+                key={option}
                 type="button"
                 variant="transparent"
-                className={` bookshelf-button bookshelf-appearance-option ${
+                className={`bookshelf-button bookshelf-appearance-option ${
                   isSelected ? 'bookshelf-appearance-option-active' : ''
                 }`}
-                onClick={() => setTheme(option.value)}
+                onClick={() => setTheme(option)}
               >
-                {option.label}
+                {t(`account.appearance.themes.${option.toLowerCase()}`)}
               </Button>
             );
           })}
@@ -118,15 +101,16 @@ export function AppearanceSettings() {
       </Stack>
 
       <Stack gap="sm">
-        <Text fw={600}>Primary color</Text>
+        <Text fw={600}>{t('account.appearance.primaryColor')}</Text>
 
         <Text size="sm" className="bookshelf-text-muted">
-          Choose the accent color used throughout the application.
+          {t('account.appearance.primaryColorDescription')}
         </Text>
 
         <Group gap="sm">
           {primaryColors.map((color) => {
             const isSelected = primaryColor === color;
+            const colorLabel = t(`account.appearance.colors.${color}`);
 
             return (
               <button
@@ -138,8 +122,8 @@ export function AppearanceSettings() {
                 style={{
                   background: `var(--mantine-color-${color}-6)`,
                 }}
-                aria-label={color}
-                title={color}
+                aria-label={colorLabel}
+                title={colorLabel}
                 onClick={() => setPrimaryColor(color)}
               />
             );
@@ -156,7 +140,7 @@ export function AppearanceSettings() {
           loading={isSaving}
           onClick={handleSave}
         >
-          Save changes
+          {t('common.saveChanges')}
         </Button>
       </Group>
     </Stack>

@@ -2,7 +2,8 @@
   "common": {
     "save": "Salvar",
     "cancel": "Cancelar",
-    "logout": "Sair"
+    "logout": "Sair",
+    "saveChanges": "Salvar alterações"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -93,6 +94,52 @@
       "resendSuccessMessage": "Se a conta existir e ainda não estiver verificada, um novo link de verificação foi enviado.",
       "resendErrorTitle": "Não foi possível reenviar o e-mail",
       "resendErrorMessage": "Tente novamente mais tarde."
+    }
+  },
+  "account": {
+    "page": {
+      "title": "Conta",
+      "description": "Gerencie seu perfil, aparência e segurança."
+    },
+    "profile": {
+      "title": "Perfil",
+      "name": "Nome",
+      "email": "E-mail",
+      "successTitle": "Perfil atualizado",
+      "successMessage": "Seu perfil foi atualizado.",
+      "successEmailChanged": "Perfil atualizado. Verifique seu novo endereço de e-mail.",
+      "errorTitle": "Não foi possível atualizar o perfil",
+      "errorMessage": "Tente novamente."
+    },
+    "appearance": {
+      "title": "Aparência",
+      "description": "Personalize o tema e a cor principal da aplicação.",
+      "theme": "Tema",
+      "primaryColor": "Cor principal",
+      "primaryColorDescription": "Escolha a cor de destaque utilizada em toda a aplicação.",
+      "successTitle": "Aparência atualizada",
+      "successMessage": "Suas preferências de aparência foram salvas.",
+      "errorTitle": "Não foi possível salvar",
+      "errorMessage": "Não foi possível atualizar suas preferências de aparência.",
+      "themes": {
+        "system": "Sistema",
+        "light": "Claro",
+        "dark": "Escuro"
+      }
+    },
+    "security": {
+      "title": "Segurança",
+      "description": "Atualize a senha da sua conta.",
+      "currentPassword": "Senha atual",
+      "currentPasswordPlaceholder": "Digite sua senha atual",
+      "newPassword": "Nova senha",
+      "newPasswordPlaceholder": "Digite sua nova senha",
+      "passwordRequirement": "Pelo menos 8 caracteres",
+      "confirmPassword": "Confirmar nova senha",
+      "confirmPasswordPlaceholder": "Confirme sua nova senha",
+      "changePassword": "Alterar senha",
+      "comingSoon": "Em breve",
+      "unavailable": "A alteração de senha está temporariamente indisponível."
     }
   }
 }

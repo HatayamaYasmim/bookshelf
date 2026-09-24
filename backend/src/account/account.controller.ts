@@ -28,9 +28,10 @@ export class AccountController {
         return this.accountService.updateProfile(request.user.userId, data)
     }
 
-    @Patch('password')
-    updatePassword(@Req() request: AuthenticatedRequest, @Body() data: ChangePasswordDto){
-        return this.accountService.updatePassword(request.user.userId, data)
-    }
+    // Temporarily disabled until password recovery flow is available.
+    // @Patch('password')
+    // updatePassword(@Req() request: AuthenticatedRequest, @Body() data: ChangePasswordDto){
+    //     return this.accountService.updatePassword(request.user.userId, data)
+    // }
 
 }

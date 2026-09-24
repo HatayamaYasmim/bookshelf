@@ -102,9 +102,12 @@ export function ReadingActivityCard({ activity }: ReadingActivityCardProps) {
   );
 }
 
+interface ReadingTooltipItem {
+  value?: React.ReactNode;
+}
 interface ReadingTooltipProps {
   label: React.ReactNode;
-  payload: readonly Record<string, any>[] | undefined;
+  payload: readonly ReadingTooltipItem[] | undefined;
 }
 
 function ReadingTooltip({ label, payload }: ReadingTooltipProps) {

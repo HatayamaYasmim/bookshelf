@@ -15,6 +15,10 @@ import {
   IconChartBar,
 } from '@tabler/icons-react';
 
+import {
+  useTranslation,
+} from 'react-i18next';
+
 import type {
   MonthlyActivity,
 } from '../../../types/dashboard';
@@ -23,7 +27,10 @@ interface ReadingActivityCardProps {
   activity: MonthlyActivity[];
 }
 
-function formatMonth(month: string) {
+function formatMonth(
+  month: string,
+  locale: string,
+) {
   const [year, monthNumber] =
     month.split('-');
 
@@ -34,23 +41,26 @@ function formatMonth(month: string) {
   );
 
   return date.toLocaleDateString(
-    'en-US',
+    locale,
     {
       month: 'short',
     },
   );
 }
 
-
-
 export function ReadingActivityCard({
   activity,
 }: ReadingActivityCardProps) {
   const theme = useMantineTheme();
+  const {t,i18n} = useTranslation();
+  const locale = i18n.resolvedLanguage ?? i18n.language;
 
   const chartData = activity.map(
     (item) => ({
-      month: formatMonth(item.month),
+      month: formatMonth(
+        item.month,
+        locale,
+      ),
       books: item.count,
     }),
   );
@@ -78,7 +88,7 @@ export function ReadingActivityCard({
               order={3}
               size="h4"
             >
-              Reading Activity
+              {t('dashboard.readingActivity.title')}
             </Title>
           </Group>
 
@@ -86,7 +96,7 @@ export function ReadingActivityCard({
             size="sm"
             className="bookshelf-dashboard-period bookshelf-text-muted"
           >
-            Last 6 months
+            {t('dashboard.readingActivity.period')}
           </Text>
         </Group>
 
@@ -97,7 +107,7 @@ export function ReadingActivityCard({
             mih={220}
           >
             <Text fw={500}>
-              No reading activity yet
+              {t('dashboard.readingActivity.emptyTitle')}
             </Text>
 
             <Text
@@ -105,8 +115,7 @@ export function ReadingActivityCard({
               ta="center"
               className="bookshelf-text-muted"
             >
-              Completed books will
-              appear here.
+              {t('dashboard.readingActivity.emptyDescription')}
             </Text>
           </Stack>
         ) : (
@@ -117,8 +126,9 @@ export function ReadingActivityCard({
             series={[
               {
                 name: 'books',
-                label: 'Books read',
-                color: theme.primaryColor,
+                label: t('dashboard.readingActivity.booksRead'),
+                color:
+                  theme.primaryColor,
               },
             ]}
             tickLine="none"
@@ -160,14 +170,16 @@ export function ReadingActivityCard({
 interface ReadingTooltipProps {
   label: React.ReactNode;
   payload:
-  | readonly Record<string, any>[]
-  | undefined;
+    | readonly Record<string, any>[]
+    | undefined;
 }
 
 function ReadingTooltip({
   label,
   payload,
 }: ReadingTooltipProps) {
+  const { t } = useTranslation();
+
   if (!payload?.length) {
     return null;
   }
@@ -196,7 +208,8 @@ function ReadingTooltip({
             'var(--bookshelf-primary)',
         }}
       >
-        Books read: {item.value}
+        {t( 'dashboard.readingActivity.booksRead')}
+        : {item.value}
       </Text>
     </Paper>
   );

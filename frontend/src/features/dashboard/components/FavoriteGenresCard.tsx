@@ -8,6 +8,7 @@ import {
 } from '@mantine/core';
 
 import { IconChartDonut } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 import type {
     FavoriteGenre,
@@ -43,6 +44,8 @@ const genreColors = [
 export function FavoriteGenresCard({
     genres,
 }: FavoriteGenresCardProps) {
+    const { t } = useTranslation();
+
     const total = genres.reduce(
         (sum, genre) => sum + genre.count,
         0,
@@ -59,21 +62,19 @@ export function FavoriteGenresCard({
         : firstColor;
 
     const seamColor = `color-mix(
-    in srgb,
-    ${lastColor} 50%,
-    ${firstColor} 50%
-)`;
+        in srgb,
+        ${lastColor} 50%,
+        ${firstColor} 50%
+    )`;
 
     const seamSize = 3;
 
     let accumulatedPercentage = 0;
 
     const gradientSections: string[] = [
-        // Continua a mistura depois do ponto 0%
         `${seamColor} 0%`,
         `${firstColor} ${seamSize}%`,
     ];
-
 
     genres.forEach((genre, index) => {
         const percentage =
@@ -112,7 +113,6 @@ export function FavoriteGenresCard({
             );
         }
 
-        // Na última cor, prepara a transição para atravessar o topo
         if (index === genres.length - 1) {
             gradientSections.push(
                 `${currentColor} ${Math.min(
@@ -132,8 +132,8 @@ export function FavoriteGenresCard({
     });
 
     const genreGradient = `conic-gradient(
-    ${gradientSections.join(', ')}
-)`;
+        ${gradientSections.join(', ')}
+    )`;
 
     return (
         <Paper
@@ -150,7 +150,7 @@ export function FavoriteGenresCard({
                     />
 
                     <Title order={3} size="h4">
-                        Favorite Genres
+                        {t('dashboard.favoriteGenres.title')}
                     </Title>
                 </Group>
 
@@ -167,7 +167,9 @@ export function FavoriteGenresCard({
                             />
 
                             <Text fw={500}>
-                                No genre data yet
+                                {t(
+                                    'dashboard.favoriteGenres.emptyTitle',
+                                )}
                             </Text>
 
                             <Text
@@ -175,8 +177,9 @@ export function FavoriteGenresCard({
                                 className="bookshelf-text-muted"
                                 ta="center"
                             >
-                                Add genres to your read books
-                                to see your favorites.
+                                {t(
+                                    'dashboard.favoriteGenres.emptyDescription',
+                                )}
                             </Text>
                         </Stack>
                     </Center>
@@ -202,7 +205,7 @@ export function FavoriteGenresCard({
                                             ? Math.round(
                                                 (genre.count /
                                                     total) *
-                                                100,
+                                                    100,
                                             )
                                             : 0;
 
@@ -220,7 +223,8 @@ export function FavoriteGenresCard({
                                                     flexShrink: 0,
                                                     background:
                                                         genreColors[
-                                                            index % genreColors.length
+                                                            index %
+                                                                genreColors.length
                                                         ].dot,
                                                 }}
                                             />

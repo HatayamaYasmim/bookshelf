@@ -1,0 +1,41 @@
+{
+    "common": {
+        "save": "Salvar",
+        "cancel": "Cancelar",
+        "logout": "Sair"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "library": "Biblioteca",
+        "account": "Conta"
+    },
+    "dashboard": {
+        "thisMonth": "Este mês",
+        "thisYear": "Este ano",
+        "totalBooks": "Total de livros",
+        "read": "lidos",
+        "currentlyReading": {
+            "title": "Lendo atualmente",
+            "emptyTitle": "Nenhum livro em andamento",
+            "emptyDescription": "Livros marcados como Lendo aparecerão aqui.",
+            "status": "Lendo"
+        },
+        "favoriteGenres": {
+            "title": "Gêneros favoritos",
+            "emptyTitle": "Nenhum dado de gênero ainda",
+            "emptyDescription": "Adicione gêneros aos livros lidos para ver seus favoritos."
+        },
+        "readingActivity": {
+            "title": "Atividade de leitura",
+            "period": "Últimos 6 meses",
+            "emptyTitle": "Nenhuma atividade de leitura ainda",
+            "emptyDescription": "Os livros concluídos aparecerão aqui.",
+            "booksRead": "Livros lidos"
+        },
+        "page": {
+            "title": "Dashboard",
+            "description": "Sua atividade de leitura e estatísticas.",
+            "loadError": "Não foi possível carregar o dashboard."
+        }
+    }
+}

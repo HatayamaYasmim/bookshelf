@@ -9,6 +9,8 @@ import {
 
 import { IconBook2 } from '@tabler/icons-react';
 
+import { useTranslation } from 'react-i18next';
+
 import type {
   CurrentlyReadingBook,
 } from '../../../types/dashboard';
@@ -20,6 +22,8 @@ interface CurrentlyReadingCardProps {
 export function CurrentlyReadingCard({
   books,
 }: CurrentlyReadingCardProps) {
+  const { t } = useTranslation();
+
   const currentBook = books[0];
 
   return (
@@ -40,7 +44,7 @@ export function CurrentlyReadingCard({
             order={3}
             size="h4"
           >
-            Currently Reading
+            {t('dashboard.currentlyReading.title')}
           </Title>
         </Group>
 
@@ -61,7 +65,9 @@ export function CurrentlyReadingCard({
               fw={500}
               ta="center"
             >
-              No book in progress
+              {t(
+                'dashboard.currentlyReading.emptyTitle',
+              )}
             </Text>
 
             <Text
@@ -69,7 +75,9 @@ export function CurrentlyReadingCard({
               ta="center"
               className="bookshelf-text-muted"
             >
-              Books marked as Reading will appear here.
+              {t(
+                'dashboard.currentlyReading.emptyDescription',
+              )}
             </Text>
           </Stack>
         ) : (
@@ -149,7 +157,9 @@ export function CurrentlyReadingCard({
                 },
               }}
             >
-              Reading
+              {t(
+                'dashboard.currentlyReading.status',
+              )}
             </Badge>
           </Stack>
         )}

@@ -1,0 +1,41 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "logout": "Logout"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "library": "Library",
+        "account": "Account"
+    },
+    "dashboard": {
+        "thisMonth": "This month",
+        "thisYear": "This year",
+        "totalBooks": "Total books",
+        "read": "read",
+        "currentlyReading": {
+            "title": "Currently Reading",
+            "emptyTitle": "No book in progress",
+            "emptyDescription": "Books marked as Reading will appear here.",
+            "status": "Reading"
+        },
+        "favoriteGenres": {
+            "title": "Favorite Genres",
+            "emptyTitle": "No genre data yet",
+            "emptyDescription": "Add genres to your read books to see your favorites."
+        },
+        "readingActivity": {
+            "title": "Reading Activity",
+            "period": "Last 6 months",
+            "emptyTitle": "No reading activity yet",
+            "emptyDescription": "Completed books will appear here.",
+            "booksRead": "Books read"
+        },
+        "page": {
+            "title": "Dashboard",
+            "description": "Your reading activity and statistics.",
+            "loadError": "It was not possible to load the dashboard."
+        }
+    }
+}

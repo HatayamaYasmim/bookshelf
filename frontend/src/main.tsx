@@ -16,6 +16,7 @@ import '@mantine/notifications/styles.css';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './features/auth/context/AuthContext.tsx';
 import { AppearanceProvider } from './features/account/AppearanceContext.tsx';
+import './i18n';
 
 const queryClient = new QueryClient();
 

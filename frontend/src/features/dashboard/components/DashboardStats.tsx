@@ -7,6 +7,8 @@ import {
   Title,
 } from '@mantine/core';
 
+import { useTranslation } from 'react-i18next';
+
 import type {
   ReadingDashboardResponse,
 } from '../../../types/dashboard';
@@ -22,44 +24,61 @@ interface DashboardStatsProps {
 export function DashboardStats({
   dashboard,
 }: DashboardStatsProps) {
+  const { t } = useTranslation();
+
   const stats = [
     {
-      label: 'THIS MONTH',
+      id: 'month',
+      label: t('dashboard.thisMonth'),
       value: dashboard.readThisMonth,
       accentColor: 'var(--bookshelf-primary)',
       icon: RiBookAiLine,
     },
     {
-      label: 'THIS YEAR',
+      id: 'year',
+      label: t('dashboard.thisYear'),
       value: dashboard.readThisYear,
       accentColor: 'var(--bookshelf-primary)',
       icon: IoBookOutline,
     },
     {
-      label: 'TOTAL BOOKS',
+      id: 'total',
+      label: t('dashboard.totalBooks'),
       value: dashboard.totalBooks,
-      description: `${dashboard.read} read`,
+      description: `${dashboard.read} ${t('dashboard.read')}`,
       accentColor: 'var(--bookshelf-primary)',
       icon: PiBooksLight,
     },
   ];
 
   return (
-    <Grid gap={{ base: 'sm', sm: 'xl' }} className="bookshelf-dashboard-stats">
+    <Grid
+      gap={{
+        base: 'sm',
+        sm: 'xl',
+      }}
+      className="bookshelf-dashboard-stats"
+    >
       {stats.map((stat) => {
         const Icon = stat.icon;
 
         return (
           <Grid.Col
-            key={stat.label}
+            key={stat.id}
             span={{
-              base: stat.label === 'TOTAL BOOKS' ? 12 : 6,
+              base:
+                stat.id === 'total'
+                  ? 12
+                  : 6,
               sm: 6,
               lg: 4,
             }}
           >
             <Paper
-              p={{ base: 'sm', sm: 'xl' }}
+              p={{
+                base: 'sm',
+                sm: 'xl',
+              }}
               radius="xl"
               className="bookshelf-dashboard-card"
             >
@@ -72,6 +91,7 @@ export function DashboardStats({
                   <Text
                     size="sm"
                     fw={500}
+                    tt="uppercase"
                     className="bookshelf-text-muted"
                   >
                     {stat.label}
@@ -86,12 +106,14 @@ export function DashboardStats({
                     {stat.value}
                   </Title>
 
-                  <Text
-                    size="sm"
-                    className="bookshelf-text-muted"
-                  >
-                    {stat.description}
-                  </Text>
+                  {stat.description && (
+                    <Text
+                      size="sm"
+                      className="bookshelf-text-muted"
+                    >
+                      {stat.description}
+                    </Text>
+                  )}
                 </Stack>
 
                 <div

@@ -1,13 +1,16 @@
 import { Button, Container, Group, Text } from '@mantine/core';
-
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { GiSpellBook } from 'react-icons/gi';
+
 import { useAuth } from '../../features/auth/hooks/useAuth';
 
 export function AppHeader() {
+  const { t } = useTranslation();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
   async function handleLogout() {
     try {
       await signOut();
@@ -39,7 +42,7 @@ export function AppHeader() {
                 isActive ? 'bookshelf-nav-link bookshelf-nav-link-active' : 'bookshelf-nav-link'
               }
             >
-              Library
+              {t('navigation.library')}
             </NavLink>
 
             <NavLink
@@ -48,8 +51,9 @@ export function AppHeader() {
                 isActive ? 'bookshelf-nav-link bookshelf-nav-link-active' : 'bookshelf-nav-link'
               }
             >
-              Dashboard
+              {t('navigation.dashboard')}
             </NavLink>
+
             <Group>
               <NavLink
                 to="/account"
@@ -72,7 +76,7 @@ export function AppHeader() {
                 className="bookshelf-nav-link bookshelf-nav-link-active"
                 onClick={handleLogout}
               >
-                Logout
+                {t('common.logout')}
               </Button>
             </Group>
           </Group>

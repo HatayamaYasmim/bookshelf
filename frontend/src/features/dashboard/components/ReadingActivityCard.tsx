@@ -1,73 +1,38 @@
-import {
-  Group,
-  Paper,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from '@mantine/core';
+import { Group, Paper, Stack, Text, Title, useMantineTheme } from '@mantine/core';
 
-import {
-  BarChart,
-} from '@mantine/charts';
+import { BarChart } from '@mantine/charts';
 
-import {
-  IconChartBar,
-} from '@tabler/icons-react';
+import { IconChartBar } from '@tabler/icons-react';
 
-import {
-  useTranslation,
-} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-import type {
-  MonthlyActivity,
-} from '../../../types/dashboard';
+import type { MonthlyActivity } from '../../../types/dashboard';
 
 interface ReadingActivityCardProps {
   activity: MonthlyActivity[];
 }
 
-function formatMonth(
-  month: string,
-  locale: string,
-) {
-  const [year, monthNumber] =
-    month.split('-');
+function formatMonth(month: string, locale: string) {
+  const [year, monthNumber] = month.split('-');
 
-  const date = new Date(
-    Number(year),
-    Number(monthNumber) - 1,
-    1,
-  );
+  const date = new Date(Number(year), Number(monthNumber) - 1, 1);
 
-  return date.toLocaleDateString(
-    locale,
-    {
-      month: 'short',
-    },
-  );
+  return date.toLocaleDateString(locale, {
+    month: 'short',
+  });
 }
 
-export function ReadingActivityCard({
-  activity,
-}: ReadingActivityCardProps) {
+export function ReadingActivityCard({ activity }: ReadingActivityCardProps) {
   const theme = useMantineTheme();
-  const {t,i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
   const locale = i18n.resolvedLanguage ?? i18n.language;
 
-  const chartData = activity.map(
-    (item) => ({
-      month: formatMonth(
-        item.month,
-        locale,
-      ),
-      books: item.count,
-    }),
-  );
+  const chartData = activity.map((item) => ({
+    month: formatMonth(item.month, locale),
+    books: item.count,
+  }));
 
-  const hasActivity = activity.some(
-    (item) => item.count > 0,
-  );
+  const hasActivity = activity.some((item) => item.count > 0);
 
   return (
     <Paper
@@ -79,42 +44,23 @@ export function ReadingActivityCard({
       <Stack gap="xl">
         <Group justify="space-between">
           <Group gap="sm">
-            <IconChartBar
-              size={21}
-              color="var(--bookshelf-text-muted)"
-            />
+            <IconChartBar size={21} color="var(--bookshelf-text-muted)" />
 
-            <Title
-              order={3}
-              size="h4"
-            >
+            <Title order={3} size="h4">
               {t('dashboard.readingActivity.title')}
             </Title>
           </Group>
 
-          <Text
-            size="sm"
-            className="bookshelf-dashboard-period bookshelf-text-muted"
-          >
+          <Text size="sm" className="bookshelf-dashboard-period bookshelf-text-muted">
             {t('dashboard.readingActivity.period')}
           </Text>
         </Group>
 
         {!hasActivity ? (
-          <Stack
-            align="center"
-            justify="center"
-            mih={220}
-          >
-            <Text fw={500}>
-              {t('dashboard.readingActivity.emptyTitle')}
-            </Text>
+          <Stack align="center" justify="center" mih={220}>
+            <Text fw={500}>{t('dashboard.readingActivity.emptyTitle')}</Text>
 
-            <Text
-              size="sm"
-              ta="center"
-              className="bookshelf-text-muted"
-            >
+            <Text size="sm" ta="center" className="bookshelf-text-muted">
               {t('dashboard.readingActivity.emptyDescription')}
             </Text>
           </Stack>
@@ -127,8 +73,7 @@ export function ReadingActivityCard({
               {
                 name: 'books',
                 label: t('dashboard.readingActivity.booksRead'),
-                color:
-                  theme.primaryColor,
+                color: theme.primaryColor,
               },
             ]}
             tickLine="none"
@@ -138,27 +83,17 @@ export function ReadingActivityCard({
             yAxisProps={{
               allowDecimals: false,
               tick: {
-                fill:
-                  'var(--bookshelf-text-muted)',
+                fill: 'var(--bookshelf-text-muted)',
               },
             }}
             xAxisProps={{
               tick: {
-                fill:
-                  'var(--bookshelf-text-muted)',
+                fill: 'var(--bookshelf-text-muted)',
               },
             }}
             tooltipProps={{
               cursor: false,
-              content: ({
-                label,
-                payload,
-              }) => (
-                <ReadingTooltip
-                  label={label}
-                  payload={payload}
-                />
-              ),
+              content: ({ label, payload }) => <ReadingTooltip label={label} payload={payload} />,
             }}
           />
         )}
@@ -169,15 +104,10 @@ export function ReadingActivityCard({
 
 interface ReadingTooltipProps {
   label: React.ReactNode;
-  payload:
-    | readonly Record<string, any>[]
-    | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
-function ReadingTooltip({
-  label,
-  payload,
-}: ReadingTooltipProps) {
+function ReadingTooltip({ label, payload }: ReadingTooltipProps) {
   const { t } = useTranslation();
 
   if (!payload?.length) {
@@ -187,29 +117,18 @@ function ReadingTooltip({
   const item = payload[0];
 
   return (
-    <Paper
-      px="md"
-      py="sm"
-      radius="md"
-      className="bookshelf-chart-tooltip"
-    >
-      <Text
-        fw={600}
-        size="sm"
-        mb={4}
-      >
+    <Paper px="md" py="sm" radius="md" className="bookshelf-chart-tooltip">
+      <Text fw={600} size="sm" mb={4}>
         {label}
       </Text>
 
       <Text
         size="sm"
         style={{
-          color:
-            'var(--bookshelf-primary)',
+          color: 'var(--bookshelf-primary)',
         }}
       >
-        {t( 'dashboard.readingActivity.booksRead')}
-        : {item.value}
+        {t('dashboard.readingActivity.booksRead')}: {item.value}
       </Text>
     </Paper>
   );

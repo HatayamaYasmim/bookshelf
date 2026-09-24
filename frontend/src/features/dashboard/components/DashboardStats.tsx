@@ -1,17 +1,8 @@
-import {
-  Grid,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Grid, Group, Paper, Stack, Text, Title } from '@mantine/core';
 
 import { useTranslation } from 'react-i18next';
 
-import type {
-  ReadingDashboardResponse,
-} from '../../../types/dashboard';
+import type { ReadingDashboardResponse } from '../../../types/dashboard';
 
 import { RiBookAiLine } from 'react-icons/ri';
 import { PiBooksLight } from 'react-icons/pi';
@@ -21,9 +12,7 @@ interface DashboardStatsProps {
   dashboard: ReadingDashboardResponse;
 }
 
-export function DashboardStats({
-  dashboard,
-}: DashboardStatsProps) {
+export function DashboardStats({ dashboard }: DashboardStatsProps) {
   const { t } = useTranslation();
 
   const stats = [
@@ -66,10 +55,7 @@ export function DashboardStats({
           <Grid.Col
             key={stat.id}
             span={{
-              base:
-                stat.id === 'total'
-                  ? 12
-                  : 6,
+              base: stat.id === 'total' ? 12 : 6,
               sm: 6,
               lg: 4,
             }}
@@ -82,18 +68,9 @@ export function DashboardStats({
               radius="xl"
               className="bookshelf-dashboard-card"
             >
-              <Group
-                justify="space-between"
-                align="flex-start"
-                wrap="nowrap"
-              >
+              <Group justify="space-between" align="flex-start" wrap="nowrap">
                 <Stack gap={4}>
-                  <Text
-                    size="sm"
-                    fw={500}
-                    tt="uppercase"
-                    className="bookshelf-text-muted"
-                  >
+                  <Text size="sm" fw={500} tt="uppercase" className="bookshelf-text-muted">
                     {stat.label}
                   </Text>
 
@@ -107,10 +84,7 @@ export function DashboardStats({
                   </Title>
 
                   {stat.description && (
-                    <Text
-                      size="sm"
-                      className="bookshelf-text-muted"
-                    >
+                    <Text size="sm" className="bookshelf-text-muted">
                       {stat.description}
                     </Text>
                   )}

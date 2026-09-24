@@ -1,11 +1,4 @@
-import {
-  Center,
-  Container,
-  Grid,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Center, Container, Grid, Stack, Text, Title } from '@mantine/core';
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -41,9 +34,7 @@ export function DashboardPage() {
   if (isError || !dashboard) {
     return (
       <Center h="60vh">
-        <Text c="red">
-          {t('dashboard.page.loadError')}
-        </Text>
+        <Text c="red">{t('dashboard.page.loadError')}</Text>
       </Center>
     );
   }
@@ -52,17 +43,11 @@ export function DashboardPage() {
     <Container size="xl" py="xl">
       <Stack gap="xl">
         <Stack gap={4}>
-          <Title
-            order={2}
-            c="var(--bookshelf-primary)"
-            fw={700}
-          >
+          <Title order={2} c="var(--bookshelf-primary)" fw={700}>
             {t('dashboard.page.title')}
           </Title>
 
-          <Text className="bookshelf-text-muted">
-            {t('dashboard.page.description')}
-          </Text>
+          <Text className="bookshelf-text-muted">{t('dashboard.page.description')}</Text>
         </Stack>
 
         <DashboardStats dashboard={dashboard} />
@@ -74,9 +59,7 @@ export function DashboardPage() {
               md: 8,
             }}
           >
-            <FavoriteGenresCard
-              genres={dashboard.favoriteGenres}
-            />
+            <FavoriteGenresCard genres={dashboard.favoriteGenres} />
           </Grid.Col>
 
           <Grid.Col
@@ -85,15 +68,11 @@ export function DashboardPage() {
               md: 4,
             }}
           >
-            <CurrentlyReadingCard
-              books={dashboard.currentlyReading}
-            />
+            <CurrentlyReadingCard books={dashboard.currentlyReading} />
           </Grid.Col>
         </Grid>
 
-        <ReadingActivityCard
-          activity={dashboard.monthlyActivity}
-        />
+        <ReadingActivityCard activity={dashboard.monthlyActivity} />
       </Stack>
     </Container>
   );

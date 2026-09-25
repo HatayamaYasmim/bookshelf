@@ -9,8 +9,16 @@ interface ApiFetchOptions extends RequestInit {
 export async function apiFetch(path: string, options: ApiFetchOptions = {}): Promise<Response> {
   const { skipUnauthorizedHandler = false, ...requestOptions } = options;
 
+  const headers = new Headers(requestOptions.headers);
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  if (timeZone) {
+    headers.set('X-Time-Zone', timeZone);
+  }
+
   const response = await fetch(`${apiUrl}${path}`, {
     ...requestOptions,
+    headers,
     credentials: 'include',
   });
 

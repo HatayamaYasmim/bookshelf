@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   ActionIcon,
   Badge,
@@ -23,6 +23,7 @@ import type { MediaStatus } from '../../../../types/media';
 import { BookshelfModal } from '../../../../components/ui/BookshellfModal';
 import { searchMedia } from '../media.api';
 import { LuTicketCheck } from 'react-icons/lu';
+import { MdMovieFilter } from "react-icons/md";
 
 interface AddMediaModalProps {
   opened: boolean;
@@ -41,7 +42,7 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
   const [addedKeys, setAddedKeys] = useState<string[]>([]);
   const [selections, setSelections] = useState<Record<string, MediaSelection>>({});
   const language = (i18n.resolvedLanguage ?? i18n.language).startsWith('pt') ? 'pt-BR' : 'en-US';
-  
+
   const searchQuery = useQuery({
     queryKey: ['tmdb-search', submittedQuery, language],
     queryFn: () => searchMedia(submittedQuery, language),
@@ -108,7 +109,7 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
       opened={opened}
       onClose={onClose}
       title={t('media.addModal.title')}
-      icon={<FiFilm size={20} />}
+      icon={<MdMovieFilter   size={20} color="var(--bookshelf-primary)" />}
       size="xl"
     >
       <Stack gap="md">

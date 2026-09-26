@@ -76,6 +76,7 @@ model User {
   emailVerificationTokens EmailVerificationToken[]
 
   books           Book[]
+  media           UserMedia[]
   preferences     UserPreference?
   emailVerifiedAt DateTime?
 
@@ -112,4 +113,90 @@ model EmailVerificationToken {
   createdAt DateTime @default(now())
 
   @@index([userId])
+}
+
+enum MediaType {
+  MOVIE
+  TV
+}
+
+enum MediaStatus {
+  WATCHLIST
+  WATCHING
+  WATCHED
+}
+
+model Media {
+  id     Int       @id @default(autoincrement())
+  tmdbId Int
+  type   MediaType
+
+  title        String
+  overview     String?
+  posterPath   String?
+  backdropPath String?
+  releaseDate  DateTime? @db.Date
+  rating       Float?
+
+  users UserMedia[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tmdbId, type])
+}
+
+model UserMedia {
+  id       Int         @id @default(autoincrement())
+  status   MediaStatus @default(WATCHLIST)
+  favorite Boolean     @default(false)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  mediaId Int
+  media   Media @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  movieWatchHistory MovieWatchHistory[]
+  watchedEpisodes   WatchedEpisode[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, mediaId])
+  @@index([userId, status])
+  @@index([userId, favorite])
+}
+
+model MovieWatchHistory {
+  id Int @id @default(autoincrement())
+
+  runtimeMinutes Int?
+  watchedAt      DateTime @default(now())
+
+  userMediaId Int
+  userMedia   UserMedia @relation(fields: [userMediaId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userMediaId, watchedAt])
+}
+
+model WatchedEpisode {
+  id Int @id @default(autoincrement())
+
+  tmdbEpisodeId  Int
+  seasonNumber   Int
+  episodeNumber  Int
+  runtimeMinutes Int?
+
+  watchedAt DateTime @default(now())
+
+  userMediaId Int
+  userMedia   UserMedia @relation(fields: [userMediaId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userMediaId, tmdbEpisodeId])
+  @@index([userMediaId, watchedAt])
 }

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   ActionIcon,
   Badge,
@@ -16,14 +16,14 @@ import {
   Tooltip,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { FiBookmark, FiFilm, FiHeart, FiPlay, FiSearch } from 'react-icons/fi';
+import { FiBookmark, FiHeart, FiPlay, FiSearch } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 
-import type { MediaStatus } from '../../../../types/media';
+import type { MediaStatus, MediaType } from '../../../../types/media';
 import { BookshelfModal } from '../../../../components/ui/BookshellfModal';
-import { searchMedia } from '../media.api';
+import { addMediaToCollection, searchMedia } from '../media.api';
 import { LuTicketCheck } from 'react-icons/lu';
-import { MdMovieFilter } from "react-icons/md";
+import { MdMovieFilter } from 'react-icons/md';
 
 interface AddMediaModalProps {
   opened: boolean;
@@ -39,9 +39,37 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
   const { t, i18n } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState('');
-  const [addedKeys, setAddedKeys] = useState<string[]>([]);
+
   const [selections, setSelections] = useState<Record<string, MediaSelection>>({});
   const language = (i18n.resolvedLanguage ?? i18n.language).startsWith('pt') ? 'pt-BR' : 'en-US';
+
+  const queryClient = useQueryClient();
+
+  const mediaMutation = useMutation({
+    mutationFn: ({
+      tmdbId,
+      type,
+      status,
+      favorite,
+    }: {
+      tmdbId: number;
+      type: MediaType;
+      status?: MediaStatus | null;
+      favorite?: boolean;
+    }) =>
+      addMediaToCollection({
+        tmdbId,
+        type,
+        status,
+        favorite,
+      }),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['user-media'],
+      });
+    },
+  });
 
   const searchQuery = useQuery({
     queryKey: ['tmdb-search', submittedQuery, language],
@@ -70,37 +98,42 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
     );
   }
 
-  function handleStatus(key: string, status: MediaStatus) {
-    setSelections((current) => {
-      const selection = current[key] ?? {
-        status: null,
-        favorite: false,
-      };
+  function handleStatus(key: string, tmdbId: number, type: MediaType, status: MediaStatus) {
+    const selection = getSelection(key);
 
-      return {
-        ...current,
-        [key]: {
-          ...selection,
-          status: selection.status === status ? null : status,
-        },
-      };
+    const newStatus = selection.status === status ? null : status;
+
+    setSelections((current) => ({
+      ...current,
+      [key]: {
+        ...selection,
+        status: newStatus,
+      },
+    }));
+
+    mediaMutation.mutate({
+      tmdbId,
+      type,
+      status: newStatus,
     });
   }
 
-  function handleFavorite(key: string) {
-    setSelections((current) => {
-      const selection = current[key] ?? {
-        status: null,
-        favorite: false,
-      };
+  function handleFavorite(key: string, tmdbId: number, type: MediaType) {
+    const selection = getSelection(key);
+    const newFavorite = !selection.favorite;
 
-      return {
-        ...current,
-        [key]: {
-          ...selection,
-          favorite: !selection.favorite,
-        },
-      };
+    setSelections((current) => ({
+      ...current,
+      [key]: {
+        ...selection,
+        favorite: newFavorite,
+      },
+    }));
+
+    mediaMutation.mutate({
+      tmdbId,
+      type,
+      favorite: newFavorite,
     });
   }
 
@@ -109,7 +142,7 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
       opened={opened}
       onClose={onClose}
       title={t('media.addModal.title')}
-      icon={<MdMovieFilter   size={20} color="var(--bookshelf-primary)" />}
+      icon={<MdMovieFilter size={20} color="var(--bookshelf-primary)" />}
       size="xl"
     >
       <Stack gap="md">
@@ -162,7 +195,7 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
             <Stack gap="sm">
               {searchQuery.data.results.map((result) => {
                 const key = `${result.type}-${result.id}`;
-                const added = addedKeys.includes(key);
+
                 const selection = getSelection(key);
                 const year = result.releaseDate ? new Date(result.releaseDate).getFullYear() : null;
 
@@ -213,8 +246,9 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
                                     : ''
                                 }`}
                                 aria-label={t('media.status.WATCHING')}
-                                onClick={() => handleStatus(key, 'WATCHING')}
-                                disabled={added}
+                                onClick={() =>
+                                  handleStatus(key, result.id, result.type, 'WATCHING')
+                                }
                               >
                                 <FiPlay size={15} />
                               </ActionIcon>
@@ -230,8 +264,7 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
                                     : ''
                                 }`}
                                 aria-label={t('media.status.WATCHED')}
-                                onClick={() => handleStatus(key, 'WATCHED')}
-                                disabled={added}
+                                onClick={() => handleStatus(key, result.id, result.type, 'WATCHED')}
                               >
                                 <LuTicketCheck size={18} />
                               </ActionIcon>
@@ -255,8 +288,7 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
                                     ? t('media.actions.unfavorite')
                                     : t('media.actions.favorite')
                                 }
-                                onClick={() => handleFavorite(key)}
-                                disabled={added}
+                                onClick={() => handleFavorite(key, result.id, result.type)}
                               >
                                 {selection.favorite ? <FaHeart size={14} /> : <FiHeart size={15} />}
                               </ActionIcon>
@@ -272,8 +304,9 @@ export function AddMediaModal({ opened, onClose }: AddMediaModalProps) {
                                     : ''
                                 }`}
                                 aria-label={t('media.status.WATCHLIST')}
-                                onClick={() => handleStatus(key, 'WATCHLIST')}
-                                disabled={added}
+                                onClick={() =>
+                                  handleStatus(key, result.id, result.type, 'WATCHLIST')
+                                }
                               >
                                 <FiBookmark size={15} />
                               </ActionIcon>

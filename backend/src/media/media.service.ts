@@ -85,31 +85,56 @@ export class MediaService {
   }
 
   async updateStatus(
-  userId: number,
-  userMediaId: number,
-  data: UpdateMediaStatusDto,
-) {
-  const userMedia = await this.prisma.userMedia.findFirst({
-    where: {
-      id: userMediaId,
-      userId,
-    },
-  });
+    userId: number,
+    userMediaId: number,
+    data: UpdateMediaStatusDto,
+  ) {
+    const userMedia = await this.prisma.userMedia.findFirst({
+      where: {
+        id: userMediaId,
+        userId,
+      },
+    });
 
-  if (!userMedia) {
-    throw new NotFoundException('Media not found in user collection');
+    if (!userMedia) {
+      throw new NotFoundException('Media not found in user collection');
+    }
+
+    return this.prisma.userMedia.update({
+      where: {
+        id: userMedia.id,
+      },
+      data: {
+        status: data.status,
+      },
+      include: {
+        media: true,
+      },
+    });
   }
 
-  return this.prisma.userMedia.update({
-    where: {
-      id: userMedia.id,
-    },
-    data: {
-      status: data.status,
-    },
-    include: {
-      media: true,
-    },
-  });
-}
+  async updateFavorite(userId: number, userMediaId: number, favorite: boolean) {
+    const userMedia = await this.prisma.userMedia.findFirst({
+      where: {
+        id: userMediaId,
+        userId,
+      },
+    });
+
+    if (!userMedia) {
+      throw new NotFoundException('Media not found in user collection');
+    }
+
+    return this.prisma.userMedia.update({
+      where: {
+        id: userMedia.id,
+      },
+      data: {
+        favorite,
+      },
+      include: {
+        media: true,
+      },
+    });
+  }
 }

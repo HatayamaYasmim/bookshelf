@@ -28,3 +28,13 @@ export async function apiFetch(path: string, options: ApiFetchOptions = {}): Pro
 
   return response;
 }
+
+export async function apiJson<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
+  const response = await apiFetch(path, options);
+
+  if (!response.ok) {
+    throw new Error(`API request failed with status ${response.status}`);
+  }
+
+  return response.json() as Promise<T>;
+}

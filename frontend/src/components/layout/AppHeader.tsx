@@ -39,7 +39,9 @@ export function AppHeader() {
             <NavLink
               to="/library"
               className={({ isActive }) =>
-                isActive ? 'bookshelf-nav-link bookshelf-nav-link-active' : 'bookshelf-nav-link'
+                isActive
+                  ? 'bookshelf-nav-link bookshelf-nav-link-active'
+                  : 'bookshelf-nav-link'
               }
             >
               {t('navigation.library')}
@@ -48,10 +50,23 @@ export function AppHeader() {
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                isActive ? 'bookshelf-nav-link bookshelf-nav-link-active' : 'bookshelf-nav-link'
+                isActive
+                  ? 'bookshelf-nav-link bookshelf-nav-link-active'
+                  : 'bookshelf-nav-link'
               }
             >
               {t('navigation.dashboard')}
+            </NavLink>
+
+            <NavLink
+              to="/media"
+              className={({ isActive }) =>
+                isActive
+                  ? 'bookshelf-nav-link bookshelf-nav-link-active'
+                  : 'bookshelf-nav-link'
+              }
+            >
+              {t('navigation.media')}
             </NavLink>
 
             <Group>

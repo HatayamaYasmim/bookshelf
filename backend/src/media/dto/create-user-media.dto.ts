@@ -1,4 +1,10 @@
-import { IsIn, IsInt, IsPositive } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsPositive,
+} from 'class-validator';
 
 export class CreateUserMediaDto {
   @IsInt()
@@ -7,4 +13,12 @@ export class CreateUserMediaDto {
 
   @IsIn(['MOVIE', 'TV'])
   type!: 'MOVIE' | 'TV';
+
+  @IsOptional()
+  @IsIn(['WATCHLIST', 'WATCHING', 'WATCHED'])
+  status?: 'WATCHLIST' | 'WATCHING' | 'WATCHED' | null;
+
+  @IsOptional()
+  @IsBoolean()
+  favorite?: boolean;
 }

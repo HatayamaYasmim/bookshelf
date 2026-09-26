@@ -58,11 +58,23 @@ export class MediaService {
             mediaId: media.id,
           },
         },
-        update: {},
+
+        update: {
+          ...(data.status !== undefined && {
+            status: data.status,
+          }),
+          ...(data.favorite !== undefined && {
+            favorite: data.favorite,
+          }),
+        },
+
         create: {
           userId,
           mediaId: media.id,
+          status: data.status ?? null,
+          favorite: data.favorite ?? false,
         },
+
         include: {
           media: true,
         },

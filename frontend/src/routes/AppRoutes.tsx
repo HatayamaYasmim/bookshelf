@@ -8,6 +8,7 @@ import { DashboardPage } from '../features/dashboard/DashboardPage';
 import { RegisterPage } from '../features/auth/RegisterPage';
 import { AccountPage } from '../features/account/AccountPage';
 import { VerifyEmailPage } from '../features/auth/VerifyEmailPage';
+import { MediaPage } from '../features/media/api/MediaPage';
 
 function MainLayout() {
   return (
@@ -35,6 +36,7 @@ export function AppRoutes() {
           <Route path="/library" element={<BooksPage />} />
 
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/media" element={<MediaPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>

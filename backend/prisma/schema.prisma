@@ -148,7 +148,7 @@ model Media {
 
 model UserMedia {
   id       Int         @id @default(autoincrement())
-  status   MediaStatus @default(WATCHLIST)
+  status MediaStatus?
   favorite Boolean     @default(false)
 
   userId Int

@@ -10,7 +10,8 @@
   "navigation": {
     "dashboard": "Dashboard",
     "library": "Library",
-    "account": "Account"
+    "account": "Account",
+    "media": "Movies & TV Shows"
   },
   "dashboard": {
     "thisMonth": "This month",
@@ -227,6 +228,68 @@
       "page": {
         "loadError": "It was not possible to load the books."
       }
+    }
+  },
+  "media": {
+    "page": {
+      "title": "Movies & TV Shows",
+      "subtitle": "Organize the movies and TV shows you want to watch, are watching, or have completed.",
+      "addTitle": "Add title"
+    },
+    "search": {
+      "placeholder": "Search movies and TV shows...",
+      "results": "Search results",
+      "noResults": "No movies or TV shows found.",
+      "searching": "Searching..."
+    },
+    "addModal": {
+      "title": "Add movie or TV show",
+      "searchLabel": "Search TMDB",
+      "searchButton": "Search"
+    },
+    "sections": {
+      "watchlist": "Watchlist",
+      "watching": "Watching",
+      "watched": "Watched",
+      "favorites": "Favorites"
+    },
+    "status": {
+      "WATCHLIST": "Want to watch",
+      "WATCHING": "Watching",
+      "WATCHED": "Watched"
+    },
+    "type": {
+      "MOVIE": "Movie",
+      "TV": "TV Show"
+    },
+    "actions": {
+      "add": "Add to list",
+      "added": "Added",
+      "adding": "Adding...",
+      "startWatching": "Start watching",
+      "markWatched": "Mark as watched",
+      "favorite": "Add to favorites",
+      "unfavorite": "Remove from favorites",
+      "viewAll": "View all"
+    },
+    "stats": {
+      "watchlist": "Want to watch",
+      "watching": "Watching",
+      "watched": "Watched",
+      "favorites": "Favorites"
+    },
+    "watchlist": {
+      "title": "Watchlist",
+      "subtitle": "Your list of movies and TV shows waiting to be watched.",
+      "empty": "Your watchlist is empty."
+    },
+    "notifications": {
+      "added": "Title added to your list.",
+      "statusUpdated": "Status updated.",
+      "favoriteAdded": "Added to favorites.",
+      "favoriteRemoved": "Removed from favorites.",
+      "searchError": "Unable to search movies and TV shows.",
+      "error": "Unable to complete the operation."
     }
   }
 }

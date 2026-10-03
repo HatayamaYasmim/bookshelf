@@ -16,7 +16,7 @@ export interface Media {
 
 export interface UserMedia {
   id: number;
-  status: MediaStatus;
+  status: MediaStatus | null;
   favorite: boolean;
   userId: number;
   mediaId: number;

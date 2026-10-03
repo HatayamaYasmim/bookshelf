@@ -236,6 +236,12 @@
       "subtitle": "Organize os filmes e séries que você quer assistir, está assistindo ou já concluiu.",
       "addTitle": "Adicionar título"
     },
+    "ai": {
+      "eyebrow": "SESSÃO RÁPIDA | CURADORIA INTELIGENTE",
+      "title": "Tem pouco tempo hoje?",
+      "description": "Selecionamos títulos com menos de 100 minutos na sua lista para você curtir uma obra completa sem comprometer seu sono.",
+      "comingSoon": "Em breve"
+    },
     "search": {
       "placeholder": "Buscar filmes e séries...",
       "results": "Resultados da busca",

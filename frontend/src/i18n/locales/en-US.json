@@ -234,7 +234,13 @@
     "page": {
       "title": "Movies & TV Shows",
       "subtitle": "Organize the movies and TV shows you want to watch, are watching, or have completed.",
-      "addTitle": "Add title"
+      "addTitle": "Add title",
+      "ai": {
+        "eyebrow": "QUICK SESSION | SMART CURATION",
+        "title": "Short on time today?",
+        "description": "We selected titles under 100 minutes from your list so you can enjoy a complete story without staying up too late.",
+        "comingSoon": "Coming soon"
+      }
     },
     "search": {
       "placeholder": "Search movies and TV shows...",

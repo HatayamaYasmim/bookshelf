@@ -287,7 +287,8 @@
     "watchlist": {
       "title": "Watchlist",
       "subtitle": "Your list of movies and TV shows waiting to be watched.",
-      "empty": "Your watchlist is empty."
+      "collection": "Your collection is empty.",
+      "collectionDescription": "Add movies and TV shows to start organizing what you want to watch."
     },
     "notifications": {
       "added": "Title added to your list.",

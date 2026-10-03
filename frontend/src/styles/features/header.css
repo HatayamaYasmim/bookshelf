@@ -43,3 +43,17 @@
     max-width: 70px;
   }
 }
+
+.bookshelf-mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 48em) {
+  .bookshelf-desktop-nav {
+    display: none;
+  }
+
+  .bookshelf-mobile-menu-button {
+    display: flex;
+  }
+}

@@ -183,7 +183,9 @@ export function MediaPage() {
         >
           {watching.length > 0 && (
             <Stack gap="md">
-              <Title c="var(--bookshelf-primary)" order={3}>{t('media.sections.watching')}</Title>
+              <Title c="var(--bookshelf-primary)" order={3}>
+                {t('media.sections.watching')}
+              </Title>
 
               <SimpleGrid
                 cols={{
@@ -223,7 +225,9 @@ export function MediaPage() {
           {watchlist.length > 0 && (
             <Stack gap="md">
               <Group justify="space-between">
-                <Title order={3} c="var(--bookshelf-primary)">{t('media.sections.watchlist')}</Title>
+                <Title order={3} c="var(--bookshelf-primary)">
+                  {t('media.sections.watchlist')}
+                </Title>
 
                 {watchlist.length > 3 && (
                   <Button variant="subtle">{t('media.actions.viewAll')}</Button>
@@ -276,7 +280,9 @@ export function MediaPage() {
           >
             {favorites.length > 0 && (
               <Stack gap="md">
-                <Title order={3} c="var(--bookshelf-primary)">{t('media.sections.favorites')}</Title>
+                <Title order={3} c="var(--bookshelf-primary)">
+                  {t('media.sections.favorites')}
+                </Title>
 
                 <SimpleGrid
                   cols={{
@@ -315,7 +321,9 @@ export function MediaPage() {
 
             {watched.length > 0 && (
               <Stack gap="md">
-                <Title order={3} c="var(--bookshelf-primary)">{t('media.sections.watched')}</Title>
+                <Title order={3} c="var(--bookshelf-primary)">
+                  {t('media.sections.watched')}
+                </Title>
 
                 <SimpleGrid
                   cols={{
@@ -357,6 +365,9 @@ export function MediaPage() {
         {media.length === 0 && (
           <Paper withBorder radius="lg" p="xl" ta="center" className="neo-raised">
             <Title order={4}>{t('media.watchlist.collection')}</Title>
+            <Text size="sm" c="dimmed">
+              {t('media.watchlist.collectionDescription')}
+            </Text>
 
             <Button
               mt="md"

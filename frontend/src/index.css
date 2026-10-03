@@ -1,10 +1,7 @@
 @import './styles/theme.css';
 @import './styles/globals.css';
 
-@import './styles/components/badges.css';
-@import './styles/components/buttons.css';
 @import './styles/components/forms.css';
-@import './styles/components/menu.css';
 @import './styles/components/modal.css';
 
 @import './styles/features/auth.css';

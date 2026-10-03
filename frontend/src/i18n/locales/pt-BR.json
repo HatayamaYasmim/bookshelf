@@ -287,7 +287,8 @@
     "watchlist": {
       "title": "Quero Assistir",
       "subtitle": "Sua lista de filmes e séries aguardando para serem assistidos.",
-      "empty": "Sua lista de assistir está vazia."
+      "collection": "Sua coleção está vazia",
+      "collectionDescription": "Adicione filmes e séries para começar a organizar o que você quer assistir."
     },
     "notifications": {
       "added": "Título adicionado à sua lista.",

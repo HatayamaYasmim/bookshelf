@@ -363,7 +363,7 @@ export function MediaPage() {
         )}
 
         {media.length === 0 && (
-          <Paper withBorder radius="lg" p="xl" ta="center" className="neo-raised">
+          <Paper withBorder radius="lg" p="xl" ta="center" className="bookshelf-card">
             <Title order={4}>{t('media.watchlist.collection')}</Title>
             <Text size="sm" c="dimmed">
               {t('media.watchlist.collectionDescription')}

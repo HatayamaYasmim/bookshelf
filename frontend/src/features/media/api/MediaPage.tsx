@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import {
   Badge,
   Button,
@@ -11,15 +13,110 @@ import {
   Stack,
   Text,
   Title,
+  ActionIcon,
 } from '@mantine/core';
+
 import { useTranslation } from 'react-i18next';
-import { FiBookmark, FiHeart, FiPlay, FiPlus } from 'react-icons/fi';
-import type { MediaStatus } from '../../../types/media';
-import { MediaCard } from './components/MediaCard';
-import { AddMediaModal } from './components/AddMediaModal';
-import { getUserMedia, updateMediaStatus, updateMediaFavorite } from './media.api';
+import { Link } from 'react-router-dom';
+
+import { FiBookmark, FiChevronLeft, FiChevronRight, FiHeart, FiPlay, FiPlus } from 'react-icons/fi';
 import { LuTicketCheck } from 'react-icons/lu';
 import { BsStars } from 'react-icons/bs';
+
+import type { MediaStatus, UserMedia } from '../../../types/media';
+
+import { MediaCard } from './components/MediaCard';
+import { AddMediaModal } from './components/AddMediaModal';
+
+import { getUserMedia, updateMediaFavorite, updateMediaStatus } from './media.api';
+
+interface MediaCarouselProps {
+  title: string;
+  viewAllUrl: string;
+  showViewAll: boolean;
+  viewAllLabel: string;
+  children: ReactNode;
+}
+
+interface MediaSection {
+  key: string;
+  title: string;
+  items: UserMedia[];
+  viewAllUrl: string;
+}
+
+function MediaCarousel({
+  title,
+  viewAllUrl,
+  showViewAll,
+  viewAllLabel,
+  children,
+}: MediaCarouselProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  function scroll(direction: 'left' | 'right') {
+    const container = scrollRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    const distance = container.clientWidth * 0.8;
+
+    container.scrollBy({
+      left: direction === 'left' ? -distance : distance,
+      behavior: 'smooth',
+    });
+  }
+
+  return (
+    <Stack gap="md" style={{ minWidth: 0 }}>
+      <Group justify="space-between" align="center">
+        <Title order={3} c="var(--bookshelf-primary)">
+          {title}
+        </Title>
+
+        <Group gap={6} wrap="nowrap">
+          {showViewAll && (
+            <>
+              <ActionIcon
+                variant="outline"
+                radius="xl"
+                size="sm"
+                aria-label="Anterior"
+                onClick={() => scroll('left')}
+                className="bookshelf-media-carousel-arrow"
+              >
+                <FiChevronLeft size={16} />
+              </ActionIcon>
+
+              <ActionIcon
+                variant="outline"
+                radius="xl"
+                size="sm"
+                aria-label="Próximo"
+                onClick={() => scroll('right')}
+                className="bookshelf-media-carousel-arrow"
+              >
+                <FiChevronRight size={16} />
+              </ActionIcon>
+            </>
+          )}
+
+          {showViewAll && (
+            <Button component={Link} to={viewAllUrl} variant="outline" radius="xl" size="xs">
+              {viewAllLabel}
+            </Button>
+          )}
+        </Group>
+      </Group>
+
+      <div ref={scrollRef} className="bookshelf-media-carousel">
+        {children}
+      </div>
+    </Stack>
+  );
+}
 
 export function MediaPage() {
   const { t } = useTranslation();
@@ -99,16 +196,93 @@ export function MediaPage() {
     },
   ];
 
+  const sectionRows: MediaSection[][] = [
+    [
+      {
+        key: 'watching',
+        title: t('media.sections.watching'),
+        items: watching,
+        viewAllUrl: '/media/collection?status=WATCHING',
+      },
+      {
+        key: 'watchlist',
+        title: t('media.sections.watchlist'),
+        items: watchlist,
+        viewAllUrl: '/media/collection?status=WATCHLIST',
+      },
+    ],
+    [
+      {
+        key: 'favorites',
+        title: t('media.sections.favorites'),
+        items: favorites,
+        viewAllUrl: '/media/collection?favorite=true',
+      },
+      {
+        key: 'watched',
+        title: t('media.sections.watched'),
+        items: watched,
+        viewAllUrl: '/media/collection?status=WATCHED',
+      },
+    ],
+  ];
+
+  function renderMediaCard(item: UserMedia) {
+    return (
+      <MediaCard
+        item={item}
+        statusLoading={statusMutation.isPending && statusMutation.variables?.id === item.id}
+        favoriteLoading={favoriteMutation.isPending && favoriteMutation.variables?.id === item.id}
+        onStatusChange={(id, status) =>
+          statusMutation.mutate({
+            id,
+            status,
+          })
+        }
+        onFavoriteChange={(id, favorite) =>
+          favoriteMutation.mutate({
+            id,
+            favorite,
+          })
+        }
+      />
+    );
+  }
+
+  function renderMediaSection(section: MediaSection) {
+    if (section.items.length === 0) {
+      return null;
+    }
+
+    return (
+      <MediaCarousel
+        key={section.key}
+        title={section.title}
+        viewAllUrl={section.viewAllUrl}
+        showViewAll={section.items.length > 3}
+        viewAllLabel={t('media.actions.viewAll')}
+      >
+        {section.items.map((item) => (
+          <div key={item.id} className="bookshelf-media-carousel-item">
+            {renderMediaCard(item)}
+          </div>
+        ))}
+      </MediaCarousel>
+    );
+  }
+
   return (
     <Container size="xl" py="xl">
       <Stack gap="xl">
-        <Button
-          leftSection={<FiPlus size={16} />}
-          onClick={() => setAddModalOpened(true)}
-          className="bookshelf-button bookshelf-button-primary"
-        >
-          {t('media.page.addTitle')}
-        </Button>
+        <Group justify="flex-end">
+          <Button
+            leftSection={<FiPlus size={16} />}
+            onClick={() => setAddModalOpened(true)}
+            className="bookshelf-button bookshelf-button-primary"
+          >
+            {t('media.page.addTitle')}
+          </Button>
+        </Group>
 
         <SimpleGrid
           cols={{
@@ -146,14 +320,14 @@ export function MediaPage() {
           <Stack gap="sm" className="bookshelf-media-ai-preview">
             <Group gap="xs">
               <BsStars size={14} color="var(--bookshelf-primary)" />
+
               <Text size="xs" fw={400} c="var(--bookshelf-primary)">
                 {t('media.ai.eyebrow')}
               </Text>
             </Group>
 
             <Title order={4} c="dimmed">
-              {' '}
-              {t('media.ai.title')}{' '}
+              {t('media.ai.title')}
             </Title>
 
             <Text size="sm" c="dimmed">
@@ -174,197 +348,31 @@ export function MediaPage() {
           </Stack>
         </SimpleGrid>
 
-        <SimpleGrid
-          cols={{
-            base: 1,
-            lg: 2,
-          }}
-          spacing="xl"
-        >
-          {watching.length > 0 && (
-            <Stack gap="md">
-              <Title c="var(--bookshelf-primary)" order={3}>
-                {t('media.sections.watching')}
-              </Title>
+        {sectionRows.map((row, index) => {
+          const hasItems = row.some((section) => section.items.length > 0);
 
-              <SimpleGrid
-                cols={{
-                  base: 2,
-                  sm: 3,
-                }}
-                spacing="sm"
-              >
-                {watching.slice(0, 3).map((item) => (
-                  <MediaCard
-                    key={item.id}
-                    item={item}
-                    statusLoading={
-                      statusMutation.isPending && statusMutation.variables?.id === item.id
-                    }
-                    favoriteLoading={
-                      favoriteMutation.isPending && favoriteMutation.variables?.id === item.id
-                    }
-                    onStatusChange={(id, status) =>
-                      statusMutation.mutate({
-                        id,
-                        status,
-                      })
-                    }
-                    onFavoriteChange={(id, favorite) =>
-                      favoriteMutation.mutate({
-                        id,
-                        favorite,
-                      })
-                    }
-                  />
-                ))}
-              </SimpleGrid>
-            </Stack>
-          )}
+          if (!hasItems) {
+            return null;
+          }
 
-          {watchlist.length > 0 && (
-            <Stack gap="md">
-              <Group justify="space-between">
-                <Title order={3} c="var(--bookshelf-primary)">
-                  {t('media.sections.watchlist')}
-                </Title>
-
-                {watchlist.length > 3 && (
-                  <Button variant="subtle">{t('media.actions.viewAll')}</Button>
-                )}
-              </Group>
-
-              <SimpleGrid
-                cols={{
-                  base: 2,
-                  sm: 3,
-                }}
-                spacing="sm"
-              >
-                {watchlist.slice(0, 3).map((item) => (
-                  <MediaCard
-                    key={item.id}
-                    item={item}
-                    statusLoading={
-                      statusMutation.isPending && statusMutation.variables?.id === item.id
-                    }
-                    favoriteLoading={
-                      favoriteMutation.isPending && favoriteMutation.variables?.id === item.id
-                    }
-                    onStatusChange={(id, status) =>
-                      statusMutation.mutate({
-                        id,
-                        status,
-                      })
-                    }
-                    onFavoriteChange={(id, favorite) =>
-                      favoriteMutation.mutate({
-                        id,
-                        favorite,
-                      })
-                    }
-                  />
-                ))}
-              </SimpleGrid>
-            </Stack>
-          )}
-        </SimpleGrid>
-
-        {(favorites.length > 0 || watched.length > 0) && (
-          <SimpleGrid
-            cols={{
-              base: 1,
-              lg: 2,
-            }}
-            spacing="xl"
-          >
-            {favorites.length > 0 && (
-              <Stack gap="md">
-                <Title order={3} c="var(--bookshelf-primary)">
-                  {t('media.sections.favorites')}
-                </Title>
-
-                <SimpleGrid
-                  cols={{
-                    base: 2,
-                    sm: 3,
-                  }}
-                  spacing="sm"
-                >
-                  {favorites.slice(0, 3).map((item) => (
-                    <MediaCard
-                      key={item.id}
-                      item={item}
-                      statusLoading={
-                        statusMutation.isPending && statusMutation.variables?.id === item.id
-                      }
-                      favoriteLoading={
-                        favoriteMutation.isPending && favoriteMutation.variables?.id === item.id
-                      }
-                      onStatusChange={(id, status) =>
-                        statusMutation.mutate({
-                          id,
-                          status,
-                        })
-                      }
-                      onFavoriteChange={(id, favorite) =>
-                        favoriteMutation.mutate({
-                          id,
-                          favorite,
-                        })
-                      }
-                    />
-                  ))}
-                </SimpleGrid>
-              </Stack>
-            )}
-
-            {watched.length > 0 && (
-              <Stack gap="md">
-                <Title order={3} c="var(--bookshelf-primary)">
-                  {t('media.sections.watched')}
-                </Title>
-
-                <SimpleGrid
-                  cols={{
-                    base: 2,
-                    sm: 3,
-                  }}
-                  spacing="sm"
-                >
-                  {watched.slice(0, 3).map((item) => (
-                    <MediaCard
-                      key={item.id}
-                      item={item}
-                      statusLoading={
-                        statusMutation.isPending && statusMutation.variables?.id === item.id
-                      }
-                      favoriteLoading={
-                        favoriteMutation.isPending && favoriteMutation.variables?.id === item.id
-                      }
-                      onStatusChange={(id, status) =>
-                        statusMutation.mutate({
-                          id,
-                          status,
-                        })
-                      }
-                      onFavoriteChange={(id, favorite) =>
-                        favoriteMutation.mutate({
-                          id,
-                          favorite,
-                        })
-                      }
-                    />
-                  ))}
-                </SimpleGrid>
-              </Stack>
-            )}
-          </SimpleGrid>
-        )}
+          return (
+            <SimpleGrid
+              key={index}
+              cols={{
+                base: 1,
+                lg: 2,
+              }}
+              spacing="xl"
+            >
+              {row.map(renderMediaSection)}
+            </SimpleGrid>
+          );
+        })}
 
         {media.length === 0 && (
           <Paper withBorder radius="lg" p="xl" ta="center" className="bookshelf-card">
             <Title order={4}>{t('media.watchlist.collection')}</Title>
+
             <Text size="sm" c="dimmed">
               {t('media.watchlist.collectionDescription')}
             </Text>

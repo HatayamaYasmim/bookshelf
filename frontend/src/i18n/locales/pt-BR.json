@@ -297,6 +297,21 @@
       "favoriteRemoved": "Removido dos favoritos.",
       "searchError": "Não foi possível buscar filmes e séries.",
       "error": "Não foi possível concluir a operação."
-    }
+    },
+    "collection": {
+  "title": "Minha coleção",
+  "description": "Explore e organize todos os filmes e séries da sua coleção.",
+  "searchPlaceholder": "Buscar na coleção...",
+  "clearFilters": "Limpar filtros",
+  "resultCount_one": "{{count}} título encontrado",
+  "resultCount_other": "{{count}} títulos encontrados",
+  "noResults": "Nenhum título encontrado",
+  "noResultsDescription": "Tente alterar a busca ou os filtros.",
+  "filters": {
+    "all": "Todos",
+    "movies": "Filmes",
+    "series": "Séries"
+  }
+}
   }
 }

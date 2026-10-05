@@ -9,6 +9,7 @@ import { RegisterPage } from '../features/auth/RegisterPage';
 import { AccountPage } from '../features/account/AccountPage';
 import { VerifyEmailPage } from '../features/auth/VerifyEmailPage';
 import { MediaPage } from '../features/media/api/MediaPage';
+import { MediaCollectionPage } from '../features/media/MediaCollectionPage';
 
 function MainLayout() {
   return (
@@ -37,6 +38,7 @@ export function AppRoutes() {
 
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/media" element={<MediaPage />} />
+          <Route path="/media/collection" element={<MediaCollectionPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>

@@ -300,18 +300,26 @@
     }
   },
   "collection": {
-  "title": "My collection",
-  "description": "Explore and organize all the movies and TV shows in your collection.",
-  "searchPlaceholder": "Search your collection...",
-  "clearFilters": "Clear filters",
-  "resultCount_one": "{{count}} title found",
-  "resultCount_other": "{{count}} titles found",
-  "noResults": "No titles found",
-  "noResultsDescription": "Try changing your search or filters.",
-  "filters": {
-    "all": "All",
-    "movies": "Movies",
-    "series": "TV Shows"
+    "title": "My collection",
+    "description": "Explore and organize all the movies and TV shows in your collection.",
+    "searchPlaceholder": "Search your collection...",
+    "clearFilters": "Clear filters",
+    "resultCount_one": "{{count}} title found",
+    "resultCount_other": "{{count}} titles found",
+    "noResults": "No titles found",
+    "noResultsDescription": "Try changing your search or filters.",
+    "filters": {
+      "all": "All",
+      "movies": "Movies",
+      "series": "TV Shows"
+    },
+    "sort": {
+      "label": "Sort by",
+      "recent": "Most recent",
+      "oldest": "Oldest",
+      "titleAsc": "Title A-Z",
+      "titleDesc": "Title Z-A",
+      "ratingDesc": "Highest rated"
+    }
   }
-}
 }

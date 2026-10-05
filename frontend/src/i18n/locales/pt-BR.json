@@ -299,19 +299,27 @@
       "error": "Não foi possível concluir a operação."
     },
     "collection": {
-  "title": "Minha coleção",
-  "description": "Explore e organize todos os filmes e séries da sua coleção.",
-  "searchPlaceholder": "Buscar na coleção...",
-  "clearFilters": "Limpar filtros",
-  "resultCount_one": "{{count}} título encontrado",
-  "resultCount_other": "{{count}} títulos encontrados",
-  "noResults": "Nenhum título encontrado",
-  "noResultsDescription": "Tente alterar a busca ou os filtros.",
-  "filters": {
-    "all": "Todos",
-    "movies": "Filmes",
-    "series": "Séries"
-  }
-}
+      "title": "Minha coleção",
+      "description": "Explore e organize todos os filmes e séries da sua coleção.",
+      "searchPlaceholder": "Buscar na coleção...",
+      "clearFilters": "Limpar filtros",
+      "resultCount_one": "{{count}} título encontrado",
+      "resultCount_other": "{{count}} títulos encontrados",
+      "noResults": "Nenhum título encontrado",
+      "noResultsDescription": "Tente alterar a busca ou os filtros.",
+      "filters": {
+        "all": "Todos",
+        "movies": "Filmes",
+        "series": "Séries"
+      },
+      "sort": {
+        "label": "Ordenar por",
+        "recent": "Mais recentes",
+        "oldest": "Mais antigos",
+        "titleAsc": "Título A-Z",
+        "titleDesc": "Título Z-A",
+        "ratingDesc": "Melhor avaliação"
+      }
+    }
   }
 }

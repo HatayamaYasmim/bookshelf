@@ -29,6 +29,7 @@ import { MediaCard } from './components/MediaCard';
 import { AddMediaModal } from './components/AddMediaModal';
 
 import { getUserMedia, updateMediaFavorite, updateMediaStatus } from './media.api';
+import { TmdbAttribution } from './components/TmdbAttribution';
 
 interface MediaCarouselProps {
   title: string;
@@ -387,6 +388,7 @@ export function MediaPage() {
             </Button>
           </Paper>
         )}
+        <TmdbAttribution />
       </Stack>
 
       <AddMediaModal opened={addModalOpened} onClose={() => setAddModalOpened(false)} />

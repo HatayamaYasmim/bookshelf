@@ -10,7 +10,8 @@
   "navigation": {
     "dashboard": "Dashboard",
     "library": "Library",
-    "account": "Account"
+    "account": "Account",
+    "media": "Movies & TV Shows"
   },
   "dashboard": {
     "thisMonth": "This month",
@@ -227,6 +228,98 @@
       "page": {
         "loadError": "It was not possible to load the books."
       }
+    }
+  },
+  "media": {
+    "page": {
+      "title": "Movies & TV Shows",
+      "subtitle": "Organize the movies and TV shows you want to watch, are watching, or have completed.",
+      "addTitle": "Add title",
+      "ai": {
+        "eyebrow": "QUICK SESSION | SMART CURATION",
+        "title": "Short on time today?",
+        "description": "We selected titles under 100 minutes from your list so you can enjoy a complete story without staying up too late.",
+        "comingSoon": "Coming soon"
+      }
+    },
+    "search": {
+      "placeholder": "Search movies and TV shows...",
+      "results": "Search results",
+      "noResults": "No movies or TV shows found.",
+      "searching": "Searching..."
+    },
+    "addModal": {
+      "title": "Add movie or TV show",
+      "searchLabel": "Search TMDB",
+      "searchButton": "Search"
+    },
+    "sections": {
+      "watchlist": "Watchlist",
+      "watching": "Watching",
+      "watched": "Watched",
+      "favorites": "Favorites"
+    },
+    "status": {
+      "WATCHLIST": "Want to watch",
+      "WATCHING": "Watching",
+      "WATCHED": "Watched"
+    },
+    "type": {
+      "MOVIE": "Movie",
+      "TV": "TV Show"
+    },
+    "actions": {
+      "add": "Add to list",
+      "added": "Added",
+      "adding": "Adding...",
+      "startWatching": "Start watching",
+      "markWatched": "Mark as watched",
+      "favorite": "Add to favorites",
+      "unfavorite": "Remove from favorites",
+      "viewAll": "View all"
+    },
+    "stats": {
+      "watchlist": "Want to watch",
+      "watching": "Watching",
+      "watched": "Watched",
+      "favorites": "Favorites"
+    },
+    "watchlist": {
+      "title": "Watchlist",
+      "subtitle": "Your list of movies and TV shows waiting to be watched.",
+      "collection": "Your collection is empty.",
+      "collectionDescription": "Add movies and TV shows to start organizing what you want to watch."
+    },
+    "notifications": {
+      "added": "Title added to your list.",
+      "statusUpdated": "Status updated.",
+      "favoriteAdded": "Added to favorites.",
+      "favoriteRemoved": "Removed from favorites.",
+      "searchError": "Unable to search movies and TV shows.",
+      "error": "Unable to complete the operation."
+    }
+  },
+  "collection": {
+    "title": "My collection",
+    "description": "Explore and organize all the movies and TV shows in your collection.",
+    "searchPlaceholder": "Search your collection...",
+    "clearFilters": "Clear filters",
+    "resultCount_one": "{{count}} title found",
+    "resultCount_other": "{{count}} titles found",
+    "noResults": "No titles found",
+    "noResultsDescription": "Try changing your search or filters.",
+    "filters": {
+      "all": "All",
+      "movies": "Movies",
+      "series": "TV Shows"
+    },
+    "sort": {
+      "label": "Sort by",
+      "recent": "Most recent",
+      "oldest": "Oldest",
+      "titleAsc": "Title A-Z",
+      "titleDesc": "Title Z-A",
+      "ratingDesc": "Highest rated"
     }
   }
 }

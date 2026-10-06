@@ -10,6 +10,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
 import { AccountModule } from './account/account.module';
 import { MailModule } from './mail/mail.module';
+import { TmdbModule } from './tmdb/tmdb.module';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { MailModule } from './mail/mail.module';
     AuthModule,
     AccountModule,
     MailModule,
+    TmdbModule,
+    MediaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

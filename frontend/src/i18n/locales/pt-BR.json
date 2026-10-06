@@ -10,7 +10,8 @@
   "navigation": {
     "dashboard": "Dashboard",
     "library": "Biblioteca",
-    "account": "Conta"
+    "account": "Conta",
+    "media": "Filmes & Séries"
   },
   "dashboard": {
     "thisMonth": "Este mês",
@@ -226,6 +227,98 @@
       },
       "page": {
         "loadError": "Não foi possível carregar os livros."
+      }
+    }
+  },
+  "media": {
+    "page": {
+      "title": "Filmes & Séries",
+      "subtitle": "Organize os filmes e séries que você quer assistir, está assistindo ou já concluiu.",
+      "addTitle": "Adicionar título"
+    },
+    "ai": {
+      "eyebrow": "SESSÃO RÁPIDA | CURADORIA INTELIGENTE",
+      "title": "Tem pouco tempo hoje?",
+      "description": "Selecionamos títulos com menos de 100 minutos na sua lista para você curtir uma obra completa sem comprometer seu sono.",
+      "comingSoon": "Em breve"
+    },
+    "search": {
+      "placeholder": "Buscar filmes e séries...",
+      "results": "Resultados da busca",
+      "noResults": "Nenhum filme ou série encontrado.",
+      "searching": "Buscando..."
+    },
+    "addModal": {
+      "title": "Adicionar filme ou série",
+      "searchLabel": "Buscar na TMDB",
+      "searchButton": "Buscar"
+    },
+    "sections": {
+      "watchlist": "Para assistir",
+      "watching": "Assistindo",
+      "watched": "Assistidos",
+      "favorites": "Favoritos"
+    },
+    "status": {
+      "WATCHLIST": "Quero assistir",
+      "WATCHING": "Assistindo",
+      "WATCHED": "Assistido"
+    },
+    "type": {
+      "MOVIE": "Filme",
+      "TV": "Série"
+    },
+    "actions": {
+      "add": "Adicionar à lista",
+      "added": "Adicionado",
+      "adding": "Adicionando...",
+      "startWatching": "Começar",
+      "markWatched": "Marcar como assistido",
+      "favorite": "Adicionar aos favoritos",
+      "unfavorite": "Remover dos favoritos",
+      "viewAll": "Ver todos"
+    },
+    "stats": {
+      "watchlist": "Quero assistir",
+      "watching": "Assistindo",
+      "watched": "Assistidos",
+      "favorites": "Favoritos"
+    },
+    "watchlist": {
+      "title": "Quero Assistir",
+      "subtitle": "Sua lista de filmes e séries aguardando para serem assistidos.",
+      "collection": "Sua coleção está vazia",
+      "collectionDescription": "Adicione filmes e séries para começar a organizar o que você quer assistir."
+    },
+    "notifications": {
+      "added": "Título adicionado à sua lista.",
+      "statusUpdated": "Status atualizado.",
+      "favoriteAdded": "Adicionado aos favoritos.",
+      "favoriteRemoved": "Removido dos favoritos.",
+      "searchError": "Não foi possível buscar filmes e séries.",
+      "error": "Não foi possível concluir a operação."
+    },
+    "collection": {
+      "title": "Minha coleção",
+      "description": "Explore e organize todos os filmes e séries da sua coleção.",
+      "searchPlaceholder": "Buscar na coleção...",
+      "clearFilters": "Limpar filtros",
+      "resultCount_one": "{{count}} título encontrado",
+      "resultCount_other": "{{count}} títulos encontrados",
+      "noResults": "Nenhum título encontrado",
+      "noResultsDescription": "Tente alterar a busca ou os filtros.",
+      "filters": {
+        "all": "Todos",
+        "movies": "Filmes",
+        "series": "Séries"
+      },
+      "sort": {
+        "label": "Ordenar por",
+        "recent": "Mais recentes",
+        "oldest": "Mais antigos",
+        "titleAsc": "Título A-Z",
+        "titleDesc": "Título Z-A",
+        "ratingDesc": "Melhor avaliação"
       }
     }
   }

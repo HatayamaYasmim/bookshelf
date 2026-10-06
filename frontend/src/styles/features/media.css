@@ -1,0 +1,185 @@
+.bookshelf-media-search-card {
+  background: var(--bookshelf-surface);
+  color: var(--bookshelf-text);
+  border: 1px solid var(--bookshelf-glass-border);
+  box-shadow: var(--bookshelf-shadow-small);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+
+.bookshelf-media-search-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--bookshelf-primary-soft-strong);
+  box-shadow: var(--bookshelf-shadow-raised);
+}
+
+.bookshelf-media-poster-placeholder {
+  flex-shrink: 0;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--bookshelf-background);
+  box-shadow: var(--bookshelf-shadow-inset);
+}
+
+.bookshelf-media-action {
+  color: var(--bookshelf-text-muted);
+  background: var(--bookshelf-background);
+  border: 1px solid var(--bookshelf-glass-border);
+  box-shadow: var(--bookshelf-shadow-small);
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+
+.bookshelf-media-action:hover:not(:disabled) {
+  color: var(--bookshelf-primary);
+  background: var(--bookshelf-primary-soft);
+  transform: translateY(-1px);
+}
+
+.bookshelf-media-action-active {
+  color: var(--bookshelf-primary);
+  background: var(--bookshelf-primary-soft-strong);
+}
+
+.bookshelf-media-add-action {
+  color: var(--bookshelf-primary);
+}
+
+.bookshelf-media-result-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.75rem;
+}
+
+.bookshelf-media-result-title {
+  min-width: 0;
+}
+
+.bookshelf-media-result-actions {
+  flex-shrink: 0;
+}
+
+/* Tablet / mobile */
+@media (max-width: 48em) {
+  .bookshelf-media-result-header {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .bookshelf-media-result-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.bookshelf-media-search-form .mantine-TextInput-root {
+  flex: 1 1 260px;
+}
+
+@media (max-width: 36em) {
+  .bookshelf-media-search-form {
+    align-items: stretch;
+  }
+
+  .bookshelf-media-search-form .bookshelf-button {
+    width: 100%;
+  }
+}
+
+.bookshelf-media-card {
+  width: 100%;
+  overflow: hidden;
+}
+
+.bookshelf-media-stat-card {
+  background: var(--bookshelf-surface);
+  border: 1px solid var(--bookshelf-glass-border);
+  box-shadow: var(--bookshelf-shadow-small);
+}
+
+.bookshelf-media-stat-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: var(--bookshelf-primary);
+  background: var(--bookshelf-primary-soft);
+}
+
+.bookshelf-media-stat-pill {
+  min-height: 38px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--bookshelf-surface);
+  border: 1px solid var(--bookshelf-glass-border);
+  box-shadow: var(--bookshelf-shadow-small);
+}
+
+.bookshelf-media-stat-pill-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bookshelf-primary);
+}
+
+.bookshelf-media-collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 1rem;
+}
+
+.bookshelf-media-filter {
+  color: var(--bookshelf-text-muted);
+  border-radius: 999px;
+}
+
+.bookshelf-media-filter-active {
+  color: var(--bookshelf-primary);
+  background: var(--bookshelf-primary-soft);
+}
+
+@media (max-width: 22em) {
+  .bookshelf-media-collection-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bookshelf-media-carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 1rem) / 3);
+  gap: 0.5rem;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-inline: contain;
+
+  scrollbar-width: none;
+}
+
+.bookshelf-media-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.bookshelf-media-carousel-arrow {
+  color: var(--bookshelf-primary);
+}
+
+.bookshelf-media-carousel-arrow:hover {
+  background: var(--bookshelf-primary-soft);
+}
+
+@media (max-width: 48em) {
+  .bookshelf-media-carousel {
+    grid-auto-columns: calc((100% - 0.5rem) / 2);
+  }
+}

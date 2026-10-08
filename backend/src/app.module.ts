@@ -12,6 +12,7 @@ import { AccountModule } from './account/account.module';
 import { MailModule } from './mail/mail.module';
 import { TmdbModule } from './tmdb/tmdb.module';
 import { MediaModule } from './media/media.module';
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MediaModule } from './media/media.module';
     MailModule,
     TmdbModule,
     MediaModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

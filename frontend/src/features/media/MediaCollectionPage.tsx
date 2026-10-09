@@ -20,22 +20,15 @@ import { FiPlus, FiSearch, FiX } from 'react-icons/fi';
 
 import type { MediaStatus } from '../../types/media';
 
-import { AddMediaModal } from './api/components/AddMediaModal';
-import { MediaCard } from './api/components/MediaCard';
+import { AddMediaModal } from './components/AddMediaModal';
+import { MediaCard } from './components/MediaCard';
 
-import {
-  getUserMedia,
-  updateMediaFavorite,
-  updateMediaStatus,
-} from './api/media.api';
+import { getUserMedia, updateMediaFavorite, updateMediaStatus } from './api/media.api';
 import { bookshelfSelectClassNames } from '../../styles/mantine';
 
 type MediaTypeFilter = 'ALL' | 'MOVIE' | 'TV';
 
-type MediaStatusFilter =
-  | 'WATCHLIST'
-  | 'WATCHING'
-  | 'WATCHED';
+type MediaStatusFilter = 'WATCHLIST' | 'WATCHING' | 'WATCHED';
 
 interface TypeFilterOption {
   value: MediaTypeFilter;
@@ -103,17 +96,12 @@ const SORT_OPTIONS = [
 type MediaSort = (typeof SORT_OPTIONS)[number]['value'];
 
 function getFilterClassName(active: boolean) {
-  return [
-    'bookshelf-media-filter',
-    active ? 'bookshelf-media-filter-active' : '',
-  ]
+  return ['bookshelf-media-filter', active ? 'bookshelf-media-filter-active' : '']
     .filter(Boolean)
     .join(' ');
 }
 
-function getTypeFilter(
-  value: string | null,
-): MediaTypeFilter {
+function getTypeFilter(value: string | null): MediaTypeFilter {
   if (value === 'MOVIE' || value === 'TV') {
     return value;
   }
@@ -121,14 +109,8 @@ function getTypeFilter(
   return 'ALL';
 }
 
-function getStatusFilter(
-  value: string | null,
-): MediaStatusFilter | null {
-  if (
-    value === 'WATCHLIST' ||
-    value === 'WATCHING' ||
-    value === 'WATCHED'
-  ) {
+function getStatusFilter(value: string | null): MediaStatusFilter | null {
+  if (value === 'WATCHLIST' || value === 'WATCHING' || value === 'WATCHED') {
     return value;
   }
 
@@ -136,13 +118,9 @@ function getStatusFilter(
 }
 
 function getSort(value: string | null): MediaSort {
-  const validSort = SORT_OPTIONS.some(
-    (option) => option.value === value,
-  );
+  const validSort = SORT_OPTIONS.some((option) => option.value === value);
 
-  return validSort
-    ? (value as MediaSort)
-    : 'RECENT';
+  return validSort ? (value as MediaSort) : 'RECENT';
 }
 
 export function MediaCollectionPage() {
@@ -150,22 +128,15 @@ export function MediaCollectionPage() {
   const queryClient = useQueryClient();
 
   const [search, setSearch] = useState('');
-  const [addModalOpened, setAddModalOpened] =
-    useState(false);
+  const [addModalOpened, setAddModalOpened] = useState(false);
 
-  const [searchParams, setSearchParams] =
-    useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const typeFilter = getTypeFilter(
-    searchParams.get('type'),
-  );
+  const typeFilter = getTypeFilter(searchParams.get('type'));
 
-  const statusFilter = getStatusFilter(
-    searchParams.get('status'),
-  );
+  const statusFilter = getStatusFilter(searchParams.get('status'));
 
-  const favoritesOnly =
-    searchParams.get('favorite') === 'true';
+  const favoritesOnly = searchParams.get('favorite') === 'true';
 
   const sort = getSort(searchParams.get('sort'));
 
@@ -175,13 +146,8 @@ export function MediaCollectionPage() {
   });
 
   const statusMutation = useMutation({
-    mutationFn: ({
-      id,
-      status,
-    }: {
-      id: number;
-      status: MediaStatus;
-    }) => updateMediaStatus(id, status),
+    mutationFn: ({ id, status }: { id: number; status: MediaStatus }) =>
+      updateMediaStatus(id, status),
 
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -191,13 +157,8 @@ export function MediaCollectionPage() {
   });
 
   const favoriteMutation = useMutation({
-    mutationFn: ({
-      id,
-      favorite,
-    }: {
-      id: number;
-      favorite: boolean;
-    }) => updateMediaFavorite(id, favorite),
+    mutationFn: ({ id, favorite }: { id: number; favorite: boolean }) =>
+      updateMediaFavorite(id, favorite),
 
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -209,42 +170,21 @@ export function MediaCollectionPage() {
   const media = mediaQuery.data ?? [];
 
   const filteredMedia = useMemo(() => {
-    const normalizedSearch = search
-      .trim()
-      .toLowerCase();
+    const normalizedSearch = search.trim().toLowerCase();
 
     return media.filter((item) => {
       const matchesSearch =
-        !normalizedSearch ||
-        item.media.title
-          .toLowerCase()
-          .includes(normalizedSearch);
+        !normalizedSearch || item.media.title.toLowerCase().includes(normalizedSearch);
 
-      const matchesType =
-        typeFilter === 'ALL' ||
-        item.media.type === typeFilter;
+      const matchesType = typeFilter === 'ALL' || item.media.type === typeFilter;
 
-      const matchesStatus =
-        statusFilter === null ||
-        item.status === statusFilter;
+      const matchesStatus = statusFilter === null || item.status === statusFilter;
 
-      const matchesFavorite =
-        !favoritesOnly || item.favorite;
+      const matchesFavorite = !favoritesOnly || item.favorite;
 
-      return (
-        matchesSearch &&
-        matchesType &&
-        matchesStatus &&
-        matchesFavorite
-      );
+      return matchesSearch && matchesType && matchesStatus && matchesFavorite;
     });
-  }, [
-    media,
-    search,
-    typeFilter,
-    statusFilter,
-    favoritesOnly,
-  ]);
+  }, [media, search, typeFilter, statusFilter, favoritesOnly]);
 
   const sortedMedia = useMemo(() => {
     const items = [...filteredMedia];
@@ -252,63 +192,41 @@ export function MediaCollectionPage() {
     return items.sort((a, b) => {
       switch (sort) {
         case 'OLDEST':
-          return (
-            new Date(a.createdAt).getTime() -
-            new Date(b.createdAt).getTime()
-          );
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 
         case 'TITLE_ASC':
-          return a.media.title.localeCompare(
-            b.media.title,
-          );
+          return a.media.title.localeCompare(b.media.title);
 
         case 'TITLE_DESC':
-          return b.media.title.localeCompare(
-            a.media.title,
-          );
+          return b.media.title.localeCompare(a.media.title);
 
         case 'RATING_DESC':
-          return (
-            (b.media.rating ?? -1) -
-            (a.media.rating ?? -1)
-          );
+          return (b.media.rating ?? -1) - (a.media.rating ?? -1);
 
         case 'RECENT':
         default:
-          return (
-            new Date(b.createdAt).getTime() -
-            new Date(a.createdAt).getTime()
-          );
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }
     });
   }, [filteredMedia, sort]);
 
   const hasActiveFilters =
-    search.trim() !== '' ||
-    typeFilter !== 'ALL' ||
-    statusFilter !== null ||
-    favoritesOnly;
+    search.trim() !== '' || typeFilter !== 'ALL' || statusFilter !== null || favoritesOnly;
 
   const sortOptions = SORT_OPTIONS.map((option) => ({
     value: option.value,
     label: t(option.label),
   }));
 
-  function updateSearchParams(
-    callback: (params: URLSearchParams) => void,
-  ) {
-    const nextParams = new URLSearchParams(
-      searchParams,
-    );
+  function updateSearchParams(callback: (params: URLSearchParams) => void) {
+    const nextParams = new URLSearchParams(searchParams);
 
     callback(nextParams);
 
     setSearchParams(nextParams);
   }
 
-  function handleTypeChange(
-    nextType: MediaTypeFilter,
-  ) {
+  function handleTypeChange(nextType: MediaTypeFilter) {
     updateSearchParams((params) => {
       if (nextType === 'ALL') {
         params.delete('type');
@@ -319,9 +237,7 @@ export function MediaCollectionPage() {
     });
   }
 
-  function handleStatusChange(
-    nextStatus: MediaStatusFilter,
-  ) {
+  function handleStatusChange(nextStatus: MediaStatusFilter) {
     updateSearchParams((params) => {
       if (statusFilter === nextStatus) {
         params.delete('status');
@@ -343,9 +259,7 @@ export function MediaCollectionPage() {
     });
   }
 
-  function handleSortChange(
-    value: string | null,
-  ) {
+  function handleSortChange(value: string | null) {
     const nextSort = getSort(value);
 
     updateSearchParams((params) => {
@@ -381,9 +295,7 @@ export function MediaCollectionPage() {
   if (mediaQuery.isError) {
     return (
       <Container size="xl" py="xl">
-        <Text c="red">
-          {t('media.notifications.error')}
-        </Text>
+        <Text c="red">{t('media.notifications.error')}</Text>
       </Container>
     );
   }
@@ -391,58 +303,32 @@ export function MediaCollectionPage() {
   return (
     <Container size="xl" py="xl">
       <Stack gap="xl">
-        <Group
-          justify="space-between"
-          align="flex-end"
-          wrap="wrap"
-          gap="md"
-        >
+        <Group justify="space-between" align="flex-end" wrap="wrap" gap="md">
           <div>
-            <Title
-              order={2}
-              c="var(--bookshelf-primary)"
-            >
+            <Title order={2} c="var(--bookshelf-primary)">
               {t('media.collection.title')}
             </Title>
 
-            <Text c="dimmed">
-              {t(
-                'media.collection.description',
-              )}
-            </Text>
+            <Text c="dimmed">{t('media.collection.description')}</Text>
           </div>
 
           <Button
             leftSection={<FiPlus size={16} />}
-            onClick={() =>
-              setAddModalOpened(true)
-            }
+            onClick={() => setAddModalOpened(true)}
             className="bookshelf-button bookshelf-button-primary"
           >
             {t('media.page.addTitle')}
           </Button>
         </Group>
 
-        <Paper
-          p="lg"
-          radius="xl"
-          className="neo-raised"
-        >
+        <Paper p="lg" radius="xl" className="neo-raised">
           <Stack gap="md">
             <Group align="center" wrap="wrap">
               <TextInput
                 value={search}
-                onChange={(event) =>
-                  setSearch(
-                    event.currentTarget.value,
-                  )
-                }
-                placeholder={t(
-                  'media.collection.searchPlaceholder',
-                )}
-                leftSection={
-                  <FiSearch size={16} />
-                }
+                onChange={(event) => setSearch(event.currentTarget.value)}
+                placeholder={t('media.collection.searchPlaceholder')}
+                leftSection={<FiSearch size={16} />}
                 style={{
                   flex: '1 1 280px',
                 }}
@@ -456,9 +342,7 @@ export function MediaCollectionPage() {
                 onChange={handleSortChange}
                 data={sortOptions}
                 allowDeselect={false}
-                aria-label={t(
-                  'media.collection.sort.label',
-                )}
+                aria-label={t('media.collection.sort.label')}
                 style={{
                   flex: '0 1 210px',
                 }}
@@ -469,41 +353,26 @@ export function MediaCollectionPage() {
                 <Button
                   variant="transparent"
                   radius="xl"
-                  leftSection={
-                    <FiX size={18} />
-                  }
+                  leftSection={<FiX size={18} />}
                   className="bookshelf-clear-filters"
                   onClick={clearFilters}
                 >
-                  {t(
-                    'media.collection.clearFilters',
-                  )}
+                  {t('media.collection.clearFilters')}
                 </Button>
               )}
             </Group>
 
             <Group gap="xs" wrap="wrap">
               {TYPE_FILTERS.map((item) => {
-                const active =
-                  typeFilter === item.value;
+                const active = typeFilter === item.value;
 
                 return (
                   <Button
                     key={item.value}
                     size="xs"
-                    variant={
-                      active
-                        ? 'light'
-                        : 'subtle'
-                    }
-                    onClick={() =>
-                      handleTypeChange(
-                        item.value,
-                      )
-                    }
-                    className={getFilterClassName(
-                      active,
-                    )}
+                    variant={active ? 'light' : 'subtle'}
+                    onClick={() => handleTypeChange(item.value)}
+                    className={getFilterClassName(active)}
                   >
                     {t(item.label)}
                   </Button>
@@ -511,26 +380,15 @@ export function MediaCollectionPage() {
               })}
 
               {STATUS_FILTERS.map((item) => {
-                const active =
-                  statusFilter === item.value;
+                const active = statusFilter === item.value;
 
                 return (
                   <Button
                     key={item.value}
                     size="xs"
-                    variant={
-                      active
-                        ? 'light'
-                        : 'subtle'
-                    }
-                    onClick={() =>
-                      handleStatusChange(
-                        item.value,
-                      )
-                    }
-                    className={getFilterClassName(
-                      active,
-                    )}
+                    variant={active ? 'light' : 'subtle'}
+                    onClick={() => handleStatusChange(item.value)}
+                    className={getFilterClassName(active)}
                   >
                     {t(item.label)}
                   </Button>
@@ -539,21 +397,11 @@ export function MediaCollectionPage() {
 
               <Button
                 size="xs"
-                variant={
-                  favoritesOnly
-                    ? 'light'
-                    : 'subtle'
-                }
-                onClick={
-                  handleFavoriteFilterChange
-                }
-                className={getFilterClassName(
-                  favoritesOnly,
-                )}
+                variant={favoritesOnly ? 'light' : 'subtle'}
+                onClick={handleFavoriteFilterChange}
+                className={getFilterClassName(favoritesOnly)}
               >
-                {t(
-                  'media.sections.favorites',
-                )}
+                {t('media.sections.favorites')}
               </Button>
             </Group>
           </Stack>
@@ -571,29 +419,17 @@ export function MediaCollectionPage() {
               <MediaCard
                 key={item.id}
                 item={item}
-                statusLoading={
-                  statusMutation.isPending &&
-                  statusMutation.variables
-                    ?.id === item.id
-                }
+                statusLoading={statusMutation.isPending && statusMutation.variables?.id === item.id}
                 favoriteLoading={
-                  favoriteMutation.isPending &&
-                  favoriteMutation.variables
-                    ?.id === item.id
+                  favoriteMutation.isPending && favoriteMutation.variables?.id === item.id
                 }
-                onStatusChange={(
-                  id,
-                  status,
-                ) =>
+                onStatusChange={(id, status) =>
                   statusMutation.mutate({
                     id,
                     status,
                   })
                 }
-                onFavoriteChange={(
-                  id,
-                  favorite,
-                ) =>
+                onFavoriteChange={(id, favorite) =>
                   favoriteMutation.mutate({
                     id,
                     favorite,
@@ -603,55 +439,29 @@ export function MediaCollectionPage() {
             ))}
           </div>
         ) : (
-          <Paper
-            p="xl"
-            radius="xl"
-            ta="center"
-            className="neo-raised"
-          >
+          <Paper p="xl" radius="xl" ta="center" className="neo-raised">
             <Stack align="center" gap="sm">
               <Title order={4}>
-                {media.length === 0
-                  ? t(
-                      'media.empty.collection',
-                    )
-                  : t(
-                      'media.collection.noResults',
-                    )}
+                {media.length === 0 ? t('media.empty.collection') : t('media.collection.noResults')}
               </Title>
 
               <Text size="sm" c="dimmed">
                 {media.length === 0
-                  ? t(
-                      'media.empty.collectionDescription',
-                    )
-                  : t(
-                      'media.collection.noResultsDescription',
-                    )}
+                  ? t('media.empty.collectionDescription')
+                  : t('media.collection.noResultsDescription')}
               </Text>
 
               {media.length === 0 ? (
                 <Button
-                  leftSection={
-                    <FiPlus size={16} />
-                  }
-                  onClick={() =>
-                    setAddModalOpened(true)
-                  }
+                  leftSection={<FiPlus size={16} />}
+                  onClick={() => setAddModalOpened(true)}
                   className="bookshelf-button bookshelf-button-primary"
                 >
                   {t('media.page.addTitle')}
                 </Button>
               ) : (
-                <Button
-                  variant="outline"
-                  size="xs"
-                  radius="xl"
-                  onClick={clearFilters}
-                >
-                  {t(
-                    'media.collection.clearFilters',
-                  )}
+                <Button variant="outline" size="xs" radius="xl" onClick={clearFilters}>
+                  {t('media.collection.clearFilters')}
                 </Button>
               )}
             </Stack>
@@ -659,12 +469,7 @@ export function MediaCollectionPage() {
         )}
       </Stack>
 
-      <AddMediaModal
-        opened={addModalOpened}
-        onClose={() =>
-          setAddModalOpened(false)
-        }
-      />
+      <AddMediaModal opened={addModalOpened} onClose={() => setAddModalOpened(false)} />
     </Container>
   );
 }

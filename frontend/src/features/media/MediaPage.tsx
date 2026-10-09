@@ -21,12 +21,12 @@ import { Link } from 'react-router-dom';
 import { FiBookmark, FiChevronLeft, FiChevronRight, FiHeart, FiPlay, FiPlus } from 'react-icons/fi';
 import { LuTicketCheck } from 'react-icons/lu';
 
-import type { MediaStatus, UserMedia } from '../../../types/media';
+import type { MediaStatus, UserMedia } from '../../types/media';
 
 import { MediaCard } from './components/MediaCard';
 import { AddMediaModal } from './components/AddMediaModal';
 
-import { getUserMedia, updateMediaFavorite, updateMediaStatus } from './media.api';
+import { getUserMedia, updateMediaFavorite, updateMediaStatus } from './api/media.api';
 import { TmdbAttribution } from './components/TmdbAttribution';
 import { AiRecommendationsPreview } from './components/AiRecommendationsPreview';
 

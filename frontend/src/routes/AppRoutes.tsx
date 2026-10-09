@@ -8,7 +8,7 @@ import { DashboardPage } from '../features/dashboard/DashboardPage';
 import { RegisterPage } from '../features/auth/RegisterPage';
 import { AccountPage } from '../features/account/AccountPage';
 import { VerifyEmailPage } from '../features/auth/VerifyEmailPage';
-import { MediaPage } from '../features/media/api/MediaPage';
+import { MediaPage } from '../features/media/MediaPage';
 import { MediaCollectionPage } from '../features/media/MediaCollectionPage';
 
 function MainLayout() {

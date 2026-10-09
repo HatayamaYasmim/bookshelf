@@ -19,9 +19,9 @@ import { useTranslation } from 'react-i18next';
 import { FiBookmark, FiHeart, FiPlay, FiSearch } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 
-import type { MediaStatus, MediaType } from '../../../../types/media';
-import { BookshelfModal } from '../../../../components/ui/BookshellfModal';
-import { addMediaToCollection, searchMedia } from '../media.api';
+import type { MediaStatus, MediaType } from '../../../types/media';
+import { BookshelfModal } from '../../../components/ui/BookshellfModal';
+import { addMediaToCollection, searchMedia } from '../api/media.api';
 import { LuTicketCheck } from 'react-icons/lu';
 import { MdMovieFilter } from 'react-icons/md';
 

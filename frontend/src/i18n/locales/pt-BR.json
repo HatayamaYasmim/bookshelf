@@ -253,7 +253,16 @@
       "synopsis": "Sinopse",
       "noSynopsis": "Sinopse não disponível.",
       "myCollection": "Minha coleção",
-      "collectionDescription": "Marque este título sem sair das recomendações."
+      "collectionDescription": "Marque este título sem sair das recomendações.",
+      "agent": {
+        "talkToCurator": "Conversar com o curador",
+        "title": "Curador inteligente",
+        "name": "Curador",
+        "welcome": "O que você está com vontade de assistir hoje?",
+        "hint": "Você pode falar sobre gênero, clima, duração, algo parecido com um título que gostou ou até o que não quer assistir.",
+        "placeholder": "Ex.: Quero algo de suspense, mas não muito pesado...",
+        "send": "Enviar"
+      }
     },
     "search": {
       "placeholder": "Buscar filmes e séries...",

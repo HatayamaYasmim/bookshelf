@@ -1,24 +1,13 @@
-import {
-  ActionIcon,
-  Group,
-  Tooltip,
-} from '@mantine/core';
+import { ActionIcon, Group, Tooltip } from '@mantine/core';
 
 import { useTranslation } from 'react-i18next';
 
-import {
-  FiBookmark,
-  FiHeart,
-  FiPlay,
-} from 'react-icons/fi';
+import { FiBookmark, FiHeart, FiPlay } from 'react-icons/fi';
 
 import { FaHeart } from 'react-icons/fa';
 import { LuTicketCheck } from 'react-icons/lu';
 
-import type {
-  MediaStatus,
-  MediaType,
-} from '../../../../types/media';
+import type { MediaStatus, MediaType } from '../../../types/media';
 
 export interface MediaSelection {
   status: MediaStatus | null;
@@ -32,16 +21,9 @@ interface MediaSelectionActionsProps {
 
   loading?: boolean;
 
-  onStatusChange: (
-    tmdbId: number,
-    type: MediaType,
-    status: MediaStatus,
-  ) => void;
+  onStatusChange: (tmdbId: number, type: MediaType, status: MediaStatus) => void;
 
-  onFavoriteChange: (
-    tmdbId: number,
-    type: MediaType,
-  ) => void;
+  onFavoriteChange: (tmdbId: number, type: MediaType) => void;
 }
 
 export function MediaSelectionActions({
@@ -62,18 +44,10 @@ export function MediaSelectionActions({
           radius="xl"
           loading={loading}
           className={`bookshelf-media-action ${
-            selection.status === 'WATCHLIST'
-              ? 'bookshelf-media-action-active'
-              : ''
+            selection.status === 'WATCHLIST' ? 'bookshelf-media-action-active' : ''
           }`}
           aria-label={t('media.status.WATCHLIST')}
-          onClick={() =>
-            onStatusChange(
-              tmdbId,
-              type,
-              'WATCHLIST',
-            )
-          }
+          onClick={() => onStatusChange(tmdbId, type, 'WATCHLIST')}
         >
           <FiBookmark size={15} />
         </ActionIcon>
@@ -85,18 +59,10 @@ export function MediaSelectionActions({
           radius="xl"
           loading={loading}
           className={`bookshelf-media-action ${
-            selection.status === 'WATCHING'
-              ? 'bookshelf-media-action-active'
-              : ''
+            selection.status === 'WATCHING' ? 'bookshelf-media-action-active' : ''
           }`}
           aria-label={t('media.status.WATCHING')}
-          onClick={() =>
-            onStatusChange(
-              tmdbId,
-              type,
-              'WATCHING',
-            )
-          }
+          onClick={() => onStatusChange(tmdbId, type, 'WATCHING')}
         >
           <FiPlay size={15} />
         </ActionIcon>
@@ -108,53 +74,31 @@ export function MediaSelectionActions({
           radius="xl"
           loading={loading}
           className={`bookshelf-media-action ${
-            selection.status === 'WATCHED'
-              ? 'bookshelf-media-action-active'
-              : ''
+            selection.status === 'WATCHED' ? 'bookshelf-media-action-active' : ''
           }`}
           aria-label={t('media.status.WATCHED')}
-          onClick={() =>
-            onStatusChange(
-              tmdbId,
-              type,
-              'WATCHED',
-            )
-          }
+          onClick={() => onStatusChange(tmdbId, type, 'WATCHED')}
         >
           <LuTicketCheck size={18} />
         </ActionIcon>
       </Tooltip>
 
       <Tooltip
-        label={
-          selection.favorite
-            ? t('media.actions.unfavorite')
-            : t('media.actions.favorite')
-        }
+        label={selection.favorite ? t('media.actions.unfavorite') : t('media.actions.favorite')}
       >
         <ActionIcon
           size={30}
           radius="xl"
           loading={loading}
           className={`bookshelf-media-action ${
-            selection.favorite
-              ? 'bookshelf-media-action-active'
-              : ''
+            selection.favorite ? 'bookshelf-media-action-active' : ''
           }`}
           aria-label={
-            selection.favorite
-              ? t('media.actions.unfavorite')
-              : t('media.actions.favorite')
+            selection.favorite ? t('media.actions.unfavorite') : t('media.actions.favorite')
           }
-          onClick={() =>
-            onFavoriteChange(tmdbId, type)
-          }
+          onClick={() => onFavoriteChange(tmdbId, type)}
         >
-          {selection.favorite ? (
-            <FaHeart size={14} />
-          ) : (
-            <FiHeart size={15} />
-          )}
+          {selection.favorite ? <FaHeart size={14} /> : <FiHeart size={15} />}
         </ActionIcon>
       </Tooltip>
     </Group>

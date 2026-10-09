@@ -2,7 +2,7 @@ import { ActionIcon, Badge, Card, Group, Image, Stack, Text } from '@mantine/cor
 import { useTranslation } from 'react-i18next';
 import { FiBookmark, FiHeart, FiPlay } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
-import type { MediaStatus, UserMedia } from '../../../../types/media';
+import type { MediaStatus, UserMedia } from '../../../types/media';
 import { LuTicketCheck } from 'react-icons/lu';
 
 interface MediaCardProps {

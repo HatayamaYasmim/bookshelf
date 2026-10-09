@@ -252,7 +252,16 @@
         "synopsis": "Synopsis",
         "noSynopsis": "Synopsis not available.",
         "myCollection": "My collection",
-        "collectionDescription": "Update this title without leaving your recommendations."
+        "collectionDescription": "Update this title without leaving your recommendations.",
+        "agent": {
+          "talkToCurator": "Talk to the curator",
+          "title": "Smart curator",
+          "name": "Curator",
+          "welcome": "What are you in the mood to watch today?",
+          "hint": "You can mention genre, mood, length, something similar to a title you liked, or even what you don't want to watch.",
+          "placeholder": "E.g. I want something suspenseful, but not too heavy...",
+          "send": "Send"
+        }
       }
     },
     "search": {

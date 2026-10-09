@@ -237,9 +237,22 @@
       "addTitle": "Add title",
       "ai": {
         "eyebrow": "QUICK SESSION | SMART CURATION",
-        "title": "Short on time today?",
-        "description": "We selected titles under 100 minutes from your list so you can enjoy a complete story without staying up too late.",
-        "comingSoon": "Coming soon"
+        "title": "Discover what to watch next",
+        "description": "We analyze your collection, favorites, and watch history to find movies and TV shows that match your taste.",
+        "comingSoon": "Coming soon",
+        "generateRecommendations": "Generate recommendations",
+        "refreshRecommendations": "Refresh recommendations",
+        "analyzing": "Analyzing your taste...",
+        "analyzingDescription": "We're looking for titles that match your collection.",
+        "tryAgain": "Try again",
+        "error": "We couldn't generate recommendations right now.",
+        "previousRecommendations": "Previous recommendations",
+        "nextRecommendations": "Next recommendations",
+        "noPoster": "No poster",
+        "synopsis": "Synopsis",
+        "noSynopsis": "Synopsis not available.",
+        "myCollection": "My collection",
+        "collectionDescription": "Update this title without leaving your recommendations."
       }
     },
     "search": {

@@ -30,6 +30,7 @@ import { AddMediaModal } from './components/AddMediaModal';
 
 import { getUserMedia, updateMediaFavorite, updateMediaStatus } from './media.api';
 import { TmdbAttribution } from './components/TmdbAttribution';
+import { AiRecommendationsPreview } from './components/AiRecommendationsPreview';
 
 interface MediaCarouselProps {
   title: string;
@@ -284,14 +285,7 @@ export function MediaPage() {
             {t('media.page.addTitle')}
           </Button>
         </Group>
-
-        <SimpleGrid
-          cols={{
-            base: 1,
-            md: 2,
-          }}
-          spacing="xl"
-        >
+        <Stack gap="xl">
           <Stack gap="md">
             <div>
               <Title order={2} c="var(--bookshelf-primary)" fw={700}>
@@ -318,36 +312,8 @@ export function MediaPage() {
             </Group>
           </Stack>
 
-          <Stack gap="sm" className="bookshelf-media-ai-preview">
-            <Group gap="xs">
-              <BsStars size={14} color="var(--bookshelf-primary)" />
-
-              <Text size="xs" fw={400} c="var(--bookshelf-primary)">
-                {t('media.ai.eyebrow')}
-              </Text>
-            </Group>
-
-            <Title order={4} c="dimmed">
-              {t('media.ai.title')}
-            </Title>
-
-            <Text size="sm" c="dimmed">
-              {t('media.ai.description')}
-            </Text>
-
-            <Group mt="auto">
-              <Badge
-                variant="light"
-                style={{
-                  color: 'var(--bookshelf-primary)',
-                  background: 'var(--bookshelf-primary-soft)',
-                }}
-              >
-                {t('media.ai.comingSoon')}
-              </Badge>
-            </Group>
-          </Stack>
-        </SimpleGrid>
+          <AiRecommendationsPreview />
+        </Stack>
 
         {sectionRows.map((row, index) => {
           const hasItems = row.some((section) => section.items.length > 0);

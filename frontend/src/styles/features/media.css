@@ -183,3 +183,53 @@
     grid-auto-columns: calc((100% - 0.5rem) / 2);
   }
 }
+
+.bookshelf-ai-recommendations-carousel {
+  display: flex;
+  gap: 10px;
+
+  width: 100%;
+  min-width: 0;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  padding: 2px 2px 6px;
+}
+
+.bookshelf-ai-recommendations-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.bookshelf-ai-recommendation {
+  width: 145px;
+  flex: 0 0 145px;
+
+  text-align: left;
+}
+
+.bookshelf-ai-recommendation-card {
+  width: 100%;
+  height: 100%;
+
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease;
+}
+
+.bookshelf-ai-recommendation-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+
+  object-fit: cover;
+}
+
+.bookshelf-ai-recommendation:hover
+  .bookshelf-ai-recommendation-card {
+  transform: translateY(-2px);
+
+  border-color: var(--bookshelf-primary);
+}

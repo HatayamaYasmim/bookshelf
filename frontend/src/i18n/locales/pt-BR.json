@@ -238,9 +238,22 @@
     },
     "ai": {
       "eyebrow": "SESSÃO RÁPIDA | CURADORIA INTELIGENTE",
-      "title": "Tem pouco tempo hoje?",
-      "description": "Selecionamos títulos com menos de 100 minutos na sua lista para você curtir uma obra completa sem comprometer seu sono.",
-      "comingSoon": "Em breve"
+      "title": "Descubra o que assistir a seguir",
+      "description": "Analisamos sua coleção, favoritos e histórico para encontrar filmes e séries que combinam com você.",
+      "comingSoon": "Em breve",
+      "generateRecommendations": "Gerar recomendações",
+      "refreshRecommendations": "Atualizar recomendações",
+      "analyzing": "Analisando seu gosto...",
+      "analyzingDescription": "Estamos buscando títulos que combinam com sua coleção.",
+      "tryAgain": "Tentar novamente",
+      "error": "Não foi possível gerar recomendações agora.",
+      "previousRecommendations": "Recomendações anteriores",
+      "nextRecommendations": "Próximas recomendações",
+      "noPoster": "Sem poster",
+      "synopsis": "Sinopse",
+      "noSynopsis": "Sinopse não disponível.",
+      "myCollection": "Minha coleção",
+      "collectionDescription": "Marque este título sem sair das recomendações."
     },
     "search": {
       "placeholder": "Buscar filmes e séries...",

@@ -274,7 +274,15 @@ export function MediaPage() {
   return (
     <Container size="xl" py="xl">
       <Stack gap="xl">
-        <Group justify="flex-end">
+        <Group justify="space-between" align="flex-end" wrap="wrap" gap="md">
+          <div>
+            <Title order={2} c="var(--bookshelf-primary)" fw={700}>
+              {t('media.page.title')}
+            </Title>
+
+            <Text className="bookshelf-text-muted">{t('media.page.subtitle')}</Text>
+          </div>
+
           <Button
             leftSection={<FiPlus size={16} />}
             onClick={() => setAddModalOpened(true)}
@@ -285,14 +293,6 @@ export function MediaPage() {
         </Group>
         <Stack gap="xl">
           <Stack gap="md">
-            <div>
-              <Title order={2} c="var(--bookshelf-primary)" fw={700}>
-                {t('media.page.title')}
-              </Title>
-
-              <Text className="bookshelf-text-muted">{t('media.page.subtitle')}</Text>
-            </div>
-
             <Group gap="sm" wrap="wrap">
               {stats.map((stat) => (
                 <Group key={stat.label} gap={6} className="bookshelf-media-stat-pill">

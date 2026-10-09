@@ -155,7 +155,7 @@ export function AiRecommendationsPreview() {
                   leftSection={<FiMessageCircle size={15} />}
                   onClick={() => setAgentOpened(true)}
                 >
-                  {t('media.ai.talkToCurator')}
+                  {t('media.ai.agent.talkToCurator')}
                 </Button>
 
                 <Button size="xs" radius="xl" variant="outline" onClick={generateRecommendations}>

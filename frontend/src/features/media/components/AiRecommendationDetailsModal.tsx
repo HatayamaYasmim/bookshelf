@@ -1,4 +1,4 @@
-import { Badge, Image, Modal, SimpleGrid, Stack, Text } from '@mantine/core';
+import { Badge, Group, Image, Modal, SimpleGrid, Stack, Text } from '@mantine/core';
 
 import { useTranslation } from 'react-i18next';
 
@@ -73,42 +73,31 @@ export function AiRecommendationDetailsModal({
         </Stack>
 
         <Stack gap="md" align="stretch" justify="flex-start">
-          <Stack gap="xs">
+          <Group gap="xs">
             <Text size="sm" c="dimmed">
               {t(`media.type.${recommendation.type}`)}
             </Text>
 
-            <Stack gap="xs">
-              <Stack gap={4}>
-                <Text size="sm" fw={600}>
-                  {t('media.ai.details')}
-                </Text>
+            {recommendation.rating > 0 && (
+              <Badge variant="light" w="fit-content">
+                ⭐ {recommendation.rating.toFixed(1)}
+              </Badge>
+            )}
 
-                <Stack gap={4}>
-                  {recommendation.rating > 0 && (
-                    <Badge variant="light" w="fit-content">
-                      ⭐ {recommendation.rating.toFixed(1)}
-                    </Badge>
-                  )}
-
-                  {year && (
-                    <Badge variant="light" w="fit-content">
-                      {year}
-                    </Badge>
-                  )}
-                </Stack>
-              </Stack>
-
-              <MediaSelectionActions
-                tmdbId={recommendation.tmdbId}
-                type={recommendation.type}
-                selection={selection}
-                loading={loading}
-                onStatusChange={onStatusChange}
-                onFavoriteChange={onFavoriteChange}
-              />
-            </Stack>
-          </Stack>
+            {year && (
+              <Badge variant="light" w="fit-content">
+                {year}
+              </Badge>
+            )}
+            <MediaSelectionActions
+              tmdbId={recommendation.tmdbId}
+              type={recommendation.type}
+              selection={selection}
+              loading={loading}
+              onStatusChange={onStatusChange}
+              onFavoriteChange={onFavoriteChange}
+            />
+          </Group>
 
           <div>
             <Text size="sm" fw={600} mb={4}>

@@ -3,7 +3,6 @@ import { useRef, useState, type ReactNode } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
-  Badge,
   Button,
   Container,
   Group,
@@ -21,7 +20,6 @@ import { Link } from 'react-router-dom';
 
 import { FiBookmark, FiChevronLeft, FiChevronRight, FiHeart, FiPlay, FiPlus } from 'react-icons/fi';
 import { LuTicketCheck } from 'react-icons/lu';
-import { BsStars } from 'react-icons/bs';
 
 import type { MediaStatus, UserMedia } from '../../../types/media';
 

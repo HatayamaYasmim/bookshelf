@@ -34,18 +34,9 @@ export function AiCuratorDrawer({ opened, onClose }: AiCuratorDrawerProps) {
         backgroundOpacity: 0.45,
         blur: 2,
       }}
-      styles={{
-        content: {
-          display: 'flex',
-          flexDirection: 'column',
-        },
-
-        body: {
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 1,
-          minHeight: 0,
-        },
+      classNames={{
+        content: 'bookshelf-ai-drawer-content',
+        body: 'bookshelf-ai-drawer-body',
       }}
     >
       <Stack
@@ -98,7 +89,7 @@ export function AiCuratorDrawer({ opened, onClose }: AiCuratorDrawerProps) {
             radius="xl"
             rightSection={<FiSend size={15} />}
             disabled={message.trim().length === 0}
-            className="bookshelf-button bookshelf-button-primary"
+            className="bookshelf-button"
           >
             {t('media.ai.agent.send')}
           </Button>

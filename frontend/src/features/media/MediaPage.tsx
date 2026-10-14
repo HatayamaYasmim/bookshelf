@@ -104,7 +104,7 @@ function MediaCarousel({
           )}
 
           {showViewAll && (
-            <Button component={Link} to={viewAllUrl} variant="outline" radius="xl" size="xs">
+            <Button component={Link} to={viewAllUrl} variant="outline" radius="xl" size="xs" >
               {viewAllLabel}
             </Button>
           )}

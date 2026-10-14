@@ -224,8 +224,27 @@
   object-fit: cover;
 }
 
-.bookshelf-ai-recommendation:hover
-  .bookshelf-ai-recommendation-card {
+.bookshelf-ai-recommendation:hover .bookshelf-ai-recommendation-card {
   transform: translateY(-2px);
   border-color: var(--bookshelf-primary);
+}
+
+.bookshelf-ai-drawer-content {
+  width: 480px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bookshelf-ai-drawer-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 48em) {
+  .bookshelf-ai-drawer-content {
+    width: 100%;
+  }
 }

@@ -33,7 +33,6 @@ body {
   color: var(--bookshelf-text-muted) !important;
 }
 
-
 /*  Card */
 .bookshelf-card {
   min-height: 150px;
@@ -46,30 +45,28 @@ body {
     box-shadow 0.2s ease;
 }
 
+/* Button */
+.bookshelf-button-primary {
+  color: var(--bookshelf-primary) !important;
+}
+
 .bookshelf-button {
   min-height: 42px;
-
   padding-inline: 24px;
-
+  color: var(--bookshelf-primary) !important;
   background: var(--bookshelf-surface) !important;
-  color: var(--bookshelf-text) !important;
-
-  border: none !important;
+  border: 1px solid var(--bookshelf-glass-border) !important;
   border-radius: 999px !important;
-
   box-shadow: var(--bookshelf-shadow-raised);
 }
 
 .bookshelf-button:hover {
-  background: var(--bookshelf-surface) !important;
+  background: var(--bookshelf-primary-soft) !important;
 }
 
 .bookshelf-button:active {
-  box-shadow: var(--bookshelf-shadow-inset);
-}
-
-.bookshelf-button-primary {
-  color: var(--bookshelf-primary) !important;
+  transform: translateY(1px);
+  box-shadow: var(--bookshelf-shadow-inset) !important;
 }
 
 /* Icon action buttons */
@@ -98,7 +95,6 @@ body {
 .bookshelf-grid-action-danger:hover {
   color: var(--bookshelf-danger) !important;
 }
-
 
 /* Badge  */
 

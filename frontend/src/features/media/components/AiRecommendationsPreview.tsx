@@ -101,7 +101,7 @@ export function AiRecommendationsPreview() {
               {error}
             </Text>
 
-            <Button size="xs" variant="outline" radius="xl" onClick={generateRecommendations}>
+            <Button size="xs" variant="outline" radius="xl" onClick={generateRecommendations} className="bookshelf-button">
               {t('media.ai.tryAgain')}
             </Button>
           </Stack>
@@ -154,11 +154,12 @@ export function AiRecommendationsPreview() {
                   variant="outline"
                   leftSection={<FiMessageCircle size={15} />}
                   onClick={() => setAgentOpened(true)}
+                  className="bookshelf-button bookshelf-button-primary"
                 >
                   {t('media.ai.agent.talkToCurator')}
                 </Button>
 
-                <Button size="xs" radius="xl" variant="outline" onClick={generateRecommendations}>
+                <Button size="xs" radius="xl" variant="outline" onClick={generateRecommendations} className="bookshelf-button bookshelf-button-primary">
                   {t('media.ai.refreshRecommendations')}
                 </Button>
               </Group>

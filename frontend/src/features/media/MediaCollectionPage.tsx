@@ -455,12 +455,18 @@ export function MediaCollectionPage() {
                 <Button
                   leftSection={<FiPlus size={16} />}
                   onClick={() => setAddModalOpened(true)}
-                  className="bookshelf-button bookshelf-button-primary"
+                  className="bookshelf-button"
                 >
                   {t('media.page.addTitle')}
                 </Button>
               ) : (
-                <Button variant="outline" size="xs" radius="xl" onClick={clearFilters}>
+                <Button
+                  variant="outline"
+                  size="xs"
+                  radius="xl"
+                  onClick={clearFilters}
+                  className="bookshelf-button"
+                >
                   {t('media.collection.clearFilters')}
                 </Button>
               )}

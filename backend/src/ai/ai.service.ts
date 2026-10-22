@@ -1,43 +1,38 @@
 import {
   BadRequestException,
   HttpException,
-  HttpStatus,
   Injectable,
   ServiceUnavailableException,
 } from '@nestjs/common';
 
-import { GoogleGenAI } from '@google/genai';
-
 import { MediaService } from 'src/media/media.service';
 import { TmdbService } from 'src/tmdb/tmdb.service';
+import { OpenRouterService } from './openrouter.service';
+
+type MediaTasteProfile = {
+  summary: string;
+  genres: string[];
+  themes: string[];
+  mood: string[];
+};
 
 type AiRecommendation = {
   title: string;
   type: 'MOVIE' | 'TV';
 };
 
-type AiRecommendationResponse = {
+type AiRecommendationsResult = {
+  profile: MediaTasteProfile;
   recommendations: AiRecommendation[];
 };
 
 @Injectable()
 export class AiService {
-  private readonly ai: GoogleGenAI;
-
   constructor(
     private readonly mediaService: MediaService,
     private readonly tmdbService: TmdbService,
-  ) {
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    if (!apiKey) {
-      throw new Error('GEMINI_API_KEY is not configured');
-    }
-
-    this.ai = new GoogleGenAI({
-      apiKey,
-    });
-  }
+    private readonly openRouterService: OpenRouterService,
+  ) {}
 
   async generateMediaProfile(userId: number) {
     const collection = await this.mediaService.findAllByUser(userId);
@@ -48,34 +43,10 @@ export class AiService {
       );
     }
 
-    const favorites = collection
-      .filter((item) => item.favorite)
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const watched = collection
-      .filter((item) => item.status === 'WATCHED')
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const watching = collection
-      .filter((item) => item.status === 'WATCHING')
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const watchlist = collection
-      .filter((item) => item.status === 'WATCHLIST')
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const preferences = {
-      favorites,
-      watched,
-      watching,
-      watchlist,
-    };
+    const preferences = this.buildPreferences(collection);
 
     try {
-      const response = await this.ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-
-        contents: `
+      const response = await this.openRouterService.generate(`
 Analyze the user's movie and TV preferences using only the collection data below.
 
 Collection:
@@ -88,57 +59,25 @@ Use these signals with different importance:
 3. Currently watching titles are a moderate signal.
 4. Watchlist titles indicate curiosity or future interest and should have lower weight.
 
-Do not recommend titles yet.
-Do not invent information about titles that are not present in the collection.
+Rules:
+- Do not recommend titles yet.
+- Do not invent information about titles that are not present in the collection.
+- Generate a concise taste profile describing the user's likely genre, theme and mood preferences.
+- Return ONLY valid JSON.
+- Do not use markdown.
+- Do not wrap the JSON in code fences.
 
-Generate a concise taste profile describing the user's likely genre, theme and mood preferences.
-        `,
+Return exactly this structure:
 
-        config: {
-          temperature: 0.2,
+{
+  "summary": "string",
+  "genres": ["string"],
+  "themes": ["string"],
+  "mood": ["string"]
+}
+`);
 
-          responseMimeType: 'application/json',
-
-          responseSchema: {
-            type: 'object',
-
-            properties: {
-              summary: {
-                type: 'string',
-              },
-
-              genres: {
-                type: 'array',
-                items: {
-                  type: 'string',
-                },
-              },
-
-              themes: {
-                type: 'array',
-                items: {
-                  type: 'string',
-                },
-              },
-
-              mood: {
-                type: 'array',
-                items: {
-                  type: 'string',
-                },
-              },
-            },
-
-            required: ['summary', 'genres', 'themes', 'mood'],
-          },
-        },
-      });
-
-      if (!response.text) {
-        throw new Error('Gemini returned an empty response');
-      }
-
-      return JSON.parse(response.text);
+      return this.parseJsonResponse<MediaTasteProfile>(response);
     } catch (error) {
       this.handleAiError(error);
     }
@@ -153,34 +92,10 @@ Generate a concise taste profile describing the user's likely genre, theme and m
       );
     }
 
-    const favorites = collection
-      .filter((item) => item.favorite)
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const watched = collection
-      .filter((item) => item.status === 'WATCHED')
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const watching = collection
-      .filter((item) => item.status === 'WATCHING')
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const watchlist = collection
-      .filter((item) => item.status === 'WATCHLIST')
-      .map((item) => `${item.media.title} (${item.media.type})`);
-
-    const preferences = {
-      favorites,
-      watched,
-      watching,
-      watchlist,
-    };
+    const preferences = this.buildPreferences(collection);
 
     try {
-      const response = await this.ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-
-        contents: `
+      const response = await this.openRouterService.generate(`
 Analyze the user's movie and TV preferences using the collection below.
 
 Collection:
@@ -208,95 +123,33 @@ Rules:
 - Do not recommend anything already present in the collection above.
 - Include a mix of movies and TV series when appropriate.
 - Prefer recommendations that strongly match the user's genres, themes and mood.
-- Do not explain the recommendations yet.
-`,
+- Do not explain the recommendations.
+- Return exactly 15 recommendations when possible.
+- The type must be exactly "MOVIE" or "TV".
+- Return ONLY valid JSON.
+- Do not use markdown.
+- Do not wrap the JSON in code fences.
 
-        config: {
-          temperature: 0.7,
+Return exactly this structure:
 
-          responseMimeType: 'application/json',
+{
+  "profile": {
+    "summary": "string",
+    "genres": ["string"],
+    "themes": ["string"],
+    "mood": ["string"]
+  },
+  "recommendations": [
+    {
+      "title": "string",
+      "type": "MOVIE"
+    }
+  ]
+}
+`);
 
-          responseSchema: {
-            type: 'object',
-
-            properties: {
-              profile: {
-                type: 'object',
-
-                properties: {
-                  summary: {
-                    type: 'string',
-                  },
-
-                  genres: {
-                    type: 'array',
-                    items: {
-                      type: 'string',
-                    },
-                  },
-
-                  themes: {
-                    type: 'array',
-                    items: {
-                      type: 'string',
-                    },
-                  },
-
-                  mood: {
-                    type: 'array',
-                    items: {
-                      type: 'string',
-                    },
-                  },
-                },
-
-                required: ['summary', 'genres', 'themes', 'mood'],
-              },
-
-              recommendations: {
-                type: 'array',
-
-                items: {
-                  type: 'object',
-
-                  properties: {
-                    title: {
-                      type: 'string',
-                    },
-
-                    type: {
-                      type: 'string',
-                      enum: ['MOVIE', 'TV'],
-                    },
-                  },
-
-                  required: ['title', 'type'],
-                },
-              },
-            },
-
-            required: ['profile', 'recommendations'],
-          },
-        },
-      });
-
-      if (!response.text) {
-        throw new Error('Gemini returned an empty response');
-      }
-
-      const aiResult = JSON.parse(response.text) as {
-        profile: {
-          summary: string;
-          genres: string[];
-          themes: string[];
-          mood: string[];
-        };
-
-        recommendations: {
-          title: string;
-          type: 'MOVIE' | 'TV';
-        }[];
-      };
+      const aiResult =
+        this.parseJsonResponse<AiRecommendationsResult>(response);
 
       const validated = await Promise.all(
         aiResult.recommendations.map((suggestion) =>
@@ -330,26 +183,54 @@ Rules:
     }
   }
 
+  private buildPreferences(
+    collection: Awaited<ReturnType<MediaService['findAllByUser']>>,
+  ) {
+    const favorites = collection
+      .filter((item) => item.favorite)
+      .map((item) => `${item.media.title} (${item.media.type})`);
+
+    const watched = collection
+      .filter((item) => item.status === 'WATCHED')
+      .map((item) => `${item.media.title} (${item.media.type})`);
+
+    const watching = collection
+      .filter((item) => item.status === 'WATCHING')
+      .map((item) => `${item.media.title} (${item.media.type})`);
+
+    const watchlist = collection
+      .filter((item) => item.status === 'WATCHLIST')
+      .map((item) => `${item.media.title} (${item.media.type})`);
+
+    return {
+      favorites,
+      watched,
+      watching,
+      watchlist,
+    };
+  }
+
+  private parseJsonResponse<T>(response: string): T {
+    try {
+      const cleaned = response
+        .replace(/^```json\s*/i, '')
+        .replace(/^```\s*/i, '')
+        .replace(/\s*```$/i, '')
+        .trim();
+
+      return JSON.parse(cleaned) as T;
+    } catch {
+      console.error('Invalid AI JSON response:', response);
+
+      throw new ServiceUnavailableException('AI returned an invalid response.');
+    }
+  }
+
   private handleAiError(error: unknown): never {
     console.error('AI service error:', error);
 
     if (error instanceof HttpException) {
       throw error;
-    }
-
-    if (typeof error === 'object' && error !== null && 'status' in error) {
-      if (error.status === 429) {
-        throw new HttpException(
-          'AI request limit reached. Please try again later.',
-          HttpStatus.TOO_MANY_REQUESTS,
-        );
-      }
-
-      if (error.status === 503) {
-        throw new ServiceUnavailableException(
-          'AI service is temporarily busy. Please try again in a few moments.',
-        );
-      }
     }
 
     throw new ServiceUnavailableException(

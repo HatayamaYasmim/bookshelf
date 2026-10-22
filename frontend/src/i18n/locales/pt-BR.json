@@ -261,7 +261,9 @@
         "welcome": "O que você está com vontade de assistir hoje?",
         "hint": "Você pode falar sobre gênero, clima, duração, algo parecido com um título que gostou ou até o que não quer assistir.",
         "placeholder": "Ex.: Quero algo de suspense, mas não muito pesado...",
-        "send": "Enviar"
+        "send": "Enviar",
+        "thinking": "Pensando...",
+        "error": "Não foi possível enviar sua mensagem. Tente novamente."
       }
     },
     "search": {

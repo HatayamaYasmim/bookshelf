@@ -248,3 +248,44 @@
     width: 100%;
   }
 }
+
+.bookshelf-ai-message-user,
+.bookshelf-ai-message-assistant {
+  padding: 10px 14px;
+  border-radius: 14px;
+}
+
+.bookshelf-ai-message-user {
+  background: var(--bookshelf-primary-soft);
+}
+
+.bookshelf-ai-message-assistant {
+  background: var(--mantine-color-dark-6);
+}
+
+.bookshelf-ai-message-content {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.bookshelf-ai-message-content p {
+  margin: 0 0 8px;
+}
+
+.bookshelf-ai-message-content p:last-child {
+  margin-bottom: 0;
+}
+
+.bookshelf-ai-message-content ul,
+.bookshelf-ai-message-content ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.bookshelf-ai-message-content li {
+  margin-bottom: 6px;
+}
+
+.bookshelf-ai-message-content strong {
+  font-weight: 700;
+}

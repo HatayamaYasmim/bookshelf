@@ -260,7 +260,9 @@
           "welcome": "What are you in the mood to watch today?",
           "hint": "You can mention genre, mood, length, something similar to a title you liked, or even what you don't want to watch.",
           "placeholder": "E.g. I want something suspenseful, but not too heavy...",
-          "send": "Send"
+          "send": "Send",
+          "thinking": "Thinking...",
+          "error": "We couldn't send your message. Please try again."
         }
       }
     },
